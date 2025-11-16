@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ImageCompressorController extends Controller
+class BackgroundRemoverController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.image_compressor');
+        $tool = config('tools.background_remover');
 
         $seo = [
             'title' => $tool['title'],
@@ -22,7 +22,7 @@ class ImageCompressorController extends Controller
             'url' => $tool['canonical'],
         ];
 
-        return Inertia::render('Compressor/Index', [
+        return Inertia::render('BackgroundRemover/Index', [
             'seo' => $seo,
         ]);
     }
