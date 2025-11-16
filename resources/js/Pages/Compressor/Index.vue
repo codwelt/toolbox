@@ -464,14 +464,14 @@ onBeforeUnmount(() => {
                             Próximamente encontrarás en Toolbox Codwelt otras herramientas
                             gratuitas como
                             <a
-                                href="/redimensionar-imagenes-online"
+                                href="/redimensionar-imagenes-online-gratis"
                                 class="link-primary"
                             >
                                 redimensionar imágenes online
                             </a>
                             y
                             <a
-                                href="/convertir-imagenes"
+                                href="/convertir-imagenes-gratis"
                                 class="link-primary"
                             >
                                 conversores de formato para JPG, PNG y WebP.

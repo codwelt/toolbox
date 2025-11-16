@@ -540,10 +540,10 @@ onBeforeUnmount(() => {
                     <section aria-label="otras-herramientas">
                         <p class="small text-muted">
                             Complementa esta herramienta con
-                            <a href="/comprimir-imagenes-online" class="link-primary">comprimir imágenes online</a>,
-                            <a href="/redimensionar-imagenes-online" class="link-primary">redimensionar imágenes</a>
+                            <a href="/comprimir-imagenes-online-gratis" class="link-primary">comprimir imágenes online</a>,
+                            <a href="/redimensionar-imagenes-online-gratis" class="link-primary">redimensionar imágenes</a>
                             y
-                            <a href="/quitar-fondo-imagen" class="link-primary">quitar fondos de imágenes</a>
+                            <a href="/quitar-fondo-imagen-gratis" class="link-primary">quitar fondos de imágenes</a>
                             para optimizar todo tu contenido visual en Toolbox Codwelt.
                         </p>
                     </section>

@@ -498,11 +498,11 @@ onBeforeUnmount(() => {
                         <p class="small text-muted">
                             También puedes probar otras herramientas gratuitas de Toolbox Codwelt,
                             como
-                            <a href="/comprimir-imagenes-online" class="link-primary">
+                            <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                 comprimir imágenes online
                             </a>
                             y
-                            <a href="/redimensionar-imagenes-online" class="link-primary">
+                            <a href="/redimensionar-imagenes-online-gratis" class="link-primary">
                                 redimensionar imágenes para web y redes sociales.
                             </a>
                         </p>
