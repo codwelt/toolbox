@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://toolbox.codwelt.com/sitemap.xml

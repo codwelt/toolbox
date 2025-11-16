@@ -3,8 +3,8 @@
 return [
     'image_compressor' => [
         'route' => 'tools.image-compressor',
-        'slug' => 'comprimir-imagenes-online',
-        'path' => '/comprimir-imagenes-online',
+        'slug' => 'comprimir-imagenes-online-gratis',
+        'path' => '/comprimir-imagenes-online-gratis',
         'title' => 'Comprimir imágenes online gratis sin perder calidad | Toolbox Codwelt',
         'description' => 'Reduce el peso de tus imágenes JPG, PNG y WebP sin perder calidad visible. Comprime varias imágenes online gratis con Toolbox de Codwelt.',
         'h1' => 'Comprimir imágenes online gratis',
@@ -14,7 +14,7 @@ return [
             'comprimir fotos sin perder calidad',
             'optimizar imágenes para web',
         ],
-        'canonical' => 'https://toolbox.codwelt.com/comprimir-imagenes-online-gratis',
+        'canonical' => 'https://toolsbox.codwelt.com/comprimir-imagenes-online-gratis',
         'faq' => [
             [
                 'question' => '¿Cómo comprimir imágenes sin perder calidad visible?',
@@ -28,8 +28,8 @@ return [
     ],
     'background_remover' => [
         'route' => 'tools.background-remover',
-        'slug' => 'quitar-fondo-imagen',
-        'path' => '/quitar-fondo-imagen',
+        'slug' => 'quitar-fondo-imagen-gratis',
+        'path' => '/quitar-fondo-imagen-gratis',
         'title' => 'Quitar fondo de imágenes online gratis | Toolbox Codwelt',
         'description' => 'Elimina el fondo de tus imágenes automáticamente con inteligencia artificial. Descarga tu imagen en PNG transparente en distintos tamaños, lista para usar en tu web o redes sociales.',
         'h1' => 'Quitar fondo de imágenes online',
@@ -40,7 +40,7 @@ return [
             'png transparente online',
             'remove background',
         ],
-        'canonical' => 'https://toolbox.codwelt.com/quitar-fondo-imagen-gratuito',
+        'canonical' => 'https://toolsbox.codwelt.com/quitar-fondo-imagen-gratis',
         'faq' => [
             [
                 'question' => '¿Cómo funciona la herramienta para quitar el fondo de una imagen?',
@@ -58,8 +58,8 @@ return [
     ],
     'image_resizer' => [
         'route' => 'tools.image-resizer',
-        'slug' => 'redimensionar-imagenes-online',
-        'path' => '/redimensionar-imagenes-online',
+        'slug' => 'redimensionar-imagenes-online-gratis',
+        'path' => '/redimensionar-imagenes-online-gratis',
         'title' => 'Redimensionar imágenes online gratis | Toolbox Codwelt',
         'description' => 'Cambia el tamaño de tus imágenes online en píxeles o proporción, manteniendo la calidad y el formato. Ideal para redes sociales, páginas web y tiendas virtuales.',
         'h1' => 'Redimensionar imágenes online gratis',
@@ -70,7 +70,7 @@ return [
             'redimensionar fotos para redes sociales',
             'resize imagen para web',
         ],
-        'canonical' => 'https://toolbox.codwelt.com/redimensionar-imagenes-online-gratuito',
+        'canonical' => 'https://toolsbox.codwelt.com/redimensionar-imagenes-online-gratis',
         'faq' => [
             [
                 'question' => '¿Cómo redimensionar una imagen sin perder demasiada calidad?',
@@ -88,8 +88,8 @@ return [
     ],
     'webp_to_png' => [
         'route' => 'tools.webp-to-png',
-        'slug' => 'convertir-webp-a-png',
-        'path' => '/convertir-webp-a-png',
+        'slug' => 'convertir-webp-a-png-gratis',
+        'path' => '/convertir-webp-a-png-gratis',
         'title' => 'Convertir WebP a PNG online gratis | Toolbox Codwelt',
         'description' => 'Convierte archivos WebP a imágenes PNG online de forma rápida y gratuita. Sube tu archivo WebP o pega una URL y descarga la versión en PNG compatible con todos los navegadores y editores.',
         'h1' => 'Convertir WebP a PNG online',
@@ -100,7 +100,7 @@ return [
             'convertidor webp png',
             'webp to png',
         ],
-        'canonical' => 'https://toolbox.codwelt.com/convertir-webp-a-png-gratis',
+        'canonical' => 'https://toolsbox.codwelt.com/convertir-webp-a-png-gratis',
         'faq' => [
             [
                 'question' => '¿Qué es un archivo WebP?',
@@ -118,8 +118,8 @@ return [
     ],
     'watermark_image' => [
         'route' => 'tools.watermark',
-        'slug' => 'poner-marca-de-agua-imagen',
-        'path' => '/poner-marca-de-agua-imagen',
+        'slug' => 'poner-marca-de-agua-imagen-gratis',
+        'path' => '/poner-marca-de-agua-imagen-gratis',
         'title' => 'Poner marca de agua a imágenes online gratis | Toolbox Codwelt',
         'description' => 'Agrega marcas de agua a tus imágenes online de forma fácil y gratuita. Sube tu imagen y tu logo, elige la posición, la opacidad y el tamaño de la marca de agua, y descarga el resultado listo para usar.',
         'h1' => 'Poner marca de agua a imágenes online',
@@ -130,7 +130,7 @@ return [
             'watermark imagen online',
             'poner logo sobre foto',
         ],
-        'canonical' => 'https://toolbox.codwelt.com/poner-marca-de-agua-imagen-gratuito',
+        'canonical' => 'https://toolsbox.codwelt.com/poner-marca-de-agua-imagen-gratis',
         'faq' => [
             [
                 'question' => '¿Cómo poner una marca de agua a una imagen?',
@@ -146,6 +146,4 @@ return [
             ],
         ],
     ],
-
-
 ];
