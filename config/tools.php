@@ -40,7 +40,7 @@ return [
             'png transparente online',
             'remove background',
         ],
-        'canonical' => 'https://toolbox.codwelt.com/quitar-fondo-imagen',
+        'canonical' => 'https://toolbox.codwelt.com/quitar-fondo-imagen-gratuito',
         'faq' => [
             [
                 'question' => '¿Cómo funciona la herramienta para quitar el fondo de una imagen?',
@@ -56,4 +56,96 @@ return [
             ],
         ],
     ],
+    'image_resizer' => [
+        'route' => 'tools.image-resizer',
+        'slug' => 'redimensionar-imagenes-online',
+        'path' => '/redimensionar-imagenes-online',
+        'title' => 'Redimensionar imágenes online gratis | Toolbox Codwelt',
+        'description' => 'Cambia el tamaño de tus imágenes online en píxeles o proporción, manteniendo la calidad y el formato. Ideal para redes sociales, páginas web y tiendas virtuales.',
+        'h1' => 'Redimensionar imágenes online gratis',
+        'keywords' => [
+            'redimensionar imágenes online',
+            'cambiar tamaño de imágenes',
+            'ajustar resolución de fotos',
+            'redimensionar fotos para redes sociales',
+            'resize imagen para web',
+        ],
+        'canonical' => 'https://toolbox.codwelt.com/redimensionar-imagenes-online-gratuito',
+        'faq' => [
+            [
+                'question' => '¿Cómo redimensionar una imagen sin perder demasiada calidad?',
+                'answer' => 'Sube tu imagen, define el ancho y alto deseados o usa un tamaño predefinido, y descarga la versión redimensionada. La herramienta mantiene el mejor equilibrio posible entre nitidez y tamaño.',
+            ],
+            [
+                'question' => '¿Puedo mantener la proporción original de la imagen?',
+                'answer' => 'Sí. Si activas la opción de mantener proporción, el ancho y el alto se ajustan automáticamente para no deformar la imagen.',
+            ],
+            [
+                'question' => '¿Es posible redimensionar varias imágenes a la vez?',
+                'answer' => 'Sí. Puedes subir varias imágenes y aplicar la misma configuración de tamaño a todas para descargarlas redimensionadas.',
+            ],
+        ],
+    ],
+    'webp_to_png' => [
+        'route' => 'tools.webp-to-png',
+        'slug' => 'convertir-webp-a-png',
+        'path' => '/convertir-webp-a-png',
+        'title' => 'Convertir WebP a PNG online gratis | Toolbox Codwelt',
+        'description' => 'Convierte archivos WebP a imágenes PNG online de forma rápida y gratuita. Sube tu archivo WebP o pega una URL y descarga la versión en PNG compatible con todos los navegadores y editores.',
+        'h1' => 'Convertir WebP a PNG online',
+        'keywords' => [
+            'convertir webp a png',
+            'webp a png online',
+            'pasar webp a png',
+            'convertidor webp png',
+            'webp to png',
+        ],
+        'canonical' => 'https://toolbox.codwelt.com/convertir-webp-a-png-gratis',
+        'faq' => [
+            [
+                'question' => '¿Qué es un archivo WebP?',
+                'answer' => 'WebP es un formato de imagen moderno que ofrece buena calidad con menor peso. Sin embargo, no todas las aplicaciones lo soportan, por eso es útil convertirlo a PNG.',
+            ],
+            [
+                'question' => '¿Puedo convertir una imagen WebP desde una URL?',
+                'answer' => 'Sí. Solo pegas la URL de la imagen WebP pública y la herramienta genera automáticamente una versión en PNG lista para descargar.',
+            ],
+            [
+                'question' => '¿La conversión WebP a PNG afecta la calidad de la imagen?',
+                'answer' => 'La conversión respeta la resolución original de la imagen. El archivo PNG resultante tendrá una calidad equivalente a la del archivo WebP original.',
+            ],
+        ],
+    ],
+    'watermark_image' => [
+        'route' => 'tools.watermark',
+        'slug' => 'poner-marca-de-agua-imagen',
+        'path' => '/poner-marca-de-agua-imagen',
+        'title' => 'Poner marca de agua a imágenes online gratis | Toolbox Codwelt',
+        'description' => 'Agrega marcas de agua a tus imágenes online de forma fácil y gratuita. Sube tu imagen y tu logo, elige la posición, la opacidad y el tamaño de la marca de agua, y descarga el resultado listo para usar.',
+        'h1' => 'Poner marca de agua a imágenes online',
+        'keywords' => [
+            'poner marca de agua imagen',
+            'marca de agua online',
+            'proteger fotos con marca de agua',
+            'watermark imagen online',
+            'poner logo sobre foto',
+        ],
+        'canonical' => 'https://toolbox.codwelt.com/poner-marca-de-agua-imagen-gratuito',
+        'faq' => [
+            [
+                'question' => '¿Cómo poner una marca de agua a una imagen?',
+                'answer' => 'Solo debes subir tu imagen principal, subir tu logo o marca de agua, elegir la posición, opacidad y tamaño, y descargar la imagen final.',
+            ],
+            [
+                'question' => '¿Puedo ajustar la opacidad de la marca de agua?',
+                'answer' => 'Sí. Puedes controlar cuán visible será la marca de agua usando un control de opacidad antes de generar la imagen final.',
+            ],
+            [
+                'question' => '¿La herramienta reduce la calidad de la imagen original?',
+                'answer' => 'La herramienta trabaja sobre una copia de tu imagen y genera un archivo en formato PNG o JPEG manteniendo la mayor calidad posible.',
+            ],
+        ],
+    ],
+
+
 ];
