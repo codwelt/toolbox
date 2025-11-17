@@ -23,95 +23,106 @@ class FaviconsApiController extends Controller
 
         $file = $request->file('image');
 
-        // Carpeta temporal única para este set de favicons
+        // Directorio relativo al disco "public"
         $token = uniqid('fav_', true);
-        $baseFolder = "public/favicons/{$token}";
-        Storage::makeDirectory($baseFolder);
+        $dir = "favicons/{$token}";
 
-        $inputPath = $file->store("tmp/favicons_input");
-        $inputAbs = Storage::path($inputPath);
+        // Creamos el directorio en storage/app/public/favicons/{token}
+        Storage::makeDirectory($dir); // Ojo: sin "public/" aquí, ya estamos en el disco
 
-        // Tamaños que vamos a generar
+        // Guardamos el input original en tmp
+        $inputPathRelative = $file->store("tmp/favicons_input");
+        $inputAbs = Storage::path($inputPathRelative);
+
+        // Tamaños PNG que vamos a generar
         $sizesPng = [
             16,
             32,
             48,
             96,
-            180, // Apple touch icon
-            192, // Android / PWA
+            180,
+            192,
         ];
 
         try {
             $imagesForIco = [];
 
-            // Generar PNGs
             foreach ($sizesPng as $size) {
                 $imagick = new \Imagick($inputAbs);
                 $imagick->setImageFormat('png');
                 $imagick->resizeImage($size, $size, \Imagick::FILTER_LANCZOS, 1, true);
 
                 $filename = "favicon-{$size}x{$size}.png";
-                $output = Storage::path("{$baseFolder}/{$filename}");
-                $imagick->writeImage($output);
+                $outputRelative = "{$dir}/{$filename}";
+                $outputAbs = Storage::path($outputRelative);
+
+                $imagick->writeImage($outputAbs);
 
                 if (in_array($size, [16, 32, 48])) {
-                    $imagesForIco[] = $output;
+                    $imagesForIco[] = $outputAbs;
                 }
 
                 $imagick->destroy();
             }
 
-            // Generar favicon.ico a partir de varias resoluciones
+            // Generar favicon.ico con varias resoluciones
             $ico = new \Imagick();
             foreach ($imagesForIco as $path) {
                 $frame = new \Imagick($path);
                 $ico->addImage($frame);
                 $ico->setImageFormat('ico');
             }
-            $icoPath = Storage::path("{$baseFolder}/favicon.ico");
-            $ico->writeImages($icoPath, true);
+            $icoRelative = "{$dir}/favicon.ico";
+            $icoAbs = Storage::path($icoRelative);
+            $ico->writeImages($icoAbs, true);
             $ico->destroy();
 
-            // Crear ZIP con todos los archivos
+            // Crear ZIP (favicons_XXXX.zip)
             $zipName = "favicons_{$token}.zip";
-            $zipPath = Storage::path("{$baseFolder}/{$zipName}");
+            $zipRelative = "{$dir}/{$zipName}";
+            $zipAbs = Storage::path($zipRelative);
 
             $zip = new ZipArchive();
-            if ($zip->open($zipPath, ZipArchive::CREATE) === true) {
-                $files = Storage::files($baseFolder);
+            if ($zip->open($zipAbs, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+                // Agregamos todos los archivos PNG + ICO (no el ZIP)
+                $files = Storage::files($dir);
                 foreach ($files as $f) {
+                    if (basename($f) === $zipName) {
+                        continue; // no agregamos el propio zip dentro de sí mismo
+                    }
                     $zip->addFile(Storage::path($f), basename($f));
                 }
                 $zip->close();
             }
 
-            $publicBaseUrl = asset("storage/favicons/{$token}");
+            // URL públicas usando disco "public"
+            $publicBaseUrl = Storage::url($dir);          // /storage/favicons/{token}
+            $zipUrl = Storage::url($zipRelative);  // /storage/favicons/{token}/favicons_...
 
-            // HTML snippet
+            $faviconBaseUrl = rtrim($publicBaseUrl, '/');
+
             $html = <<<HTML
 <!-- Favicons generados con Toolbox Codwelt -->
-<link rel="icon" type="image/x-icon" href="{$publicBaseUrl}/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="{$publicBaseUrl}/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="{$publicBaseUrl}/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="{$publicBaseUrl}/favicon-48x48.png">
-<link rel="icon" type="image/png" sizes="96x96" href="{$publicBaseUrl}/favicon-96x96.png">
-<link rel="apple-touch-icon" sizes="180x180" href="{$publicBaseUrl}/favicon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="{$publicBaseUrl}/favicon-192x192.png">
+<link rel="icon" type="image/x-icon" href="{$faviconBaseUrl}/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="{$faviconBaseUrl}/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{$faviconBaseUrl}/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="{$faviconBaseUrl}/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="{$faviconBaseUrl}/favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="{$faviconBaseUrl}/favicon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="{$faviconBaseUrl}/favicon-192x192.png">
 HTML;
 
-            $zipUrl = "{$publicBaseUrl}/{$zipName}";
-
-            // Limpiar input original
-            Storage::delete($inputPath);
+            // Borramos el input original de tmp
+            Storage::delete($inputPathRelative);
 
             return response()->json([
                 'zip_url' => $zipUrl,
                 'html_tags' => $html,
-                'publicBase' => $publicBaseUrl,
+                'publicBase' => $faviconBaseUrl,
             ]);
         } catch (\Throwable $e) {
-            Storage::deleteDirectory($baseFolder);
-            Storage::delete($inputPath);
+            Storage::deleteDirectory($dir);
+            Storage::delete($inputPathRelative);
 
             return response()->json([
                 'message' => 'Ocurrió un error al generar los favicons.',
