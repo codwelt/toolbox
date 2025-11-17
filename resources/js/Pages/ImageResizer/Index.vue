@@ -525,11 +525,11 @@ onBeforeUnmount(() => {
                     <section aria-label="otras-herramientas">
                         <p class="small text-muted">
                             También puedes aprovechar otras herramientas gratuitas de Toolbox Codwelt, como
-                            <a href="/comprimir-imagenes-online" class="link-primary">
+                            <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                 comprimir imágenes online
                             </a>
                             y
-                            <a href="/quitar-fondo-imagen" class="link-primary">
+                            <a href="/quitar-fondo-imagen-gratis" class="link-primary">
                                 quitar el fondo de tus imágenes
                             </a>
                             de forma automática.

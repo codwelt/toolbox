@@ -8,13 +8,19 @@ use App\Http\Controllers\Api\WebpToPngSimpleController;
 use App\Http\Controllers\Web\ImageResizerController;
 use App\Http\Controllers\Api\WebpToPngApiController;
 use App\Http\Controllers\Api\WatermarkApiController;
+use App\Http\Controllers\Api\FaviconsApiController;
 use App\Http\Controllers\Web\WebpToPngController;
 use App\Http\Controllers\Web\WatermarkController;
-use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\FaviconsController;
 use App\Http\Controllers\Web\SitemapController;
+use App\Http\Controllers\Web\HomeController;
+
+
+Route::get('/generador-favicons-online', [FaviconsController::class, 'index'])->name('tools.favicons');
+
+Route::post('/api/tools/favicons', [FaviconsApiController::class, 'generate'])->name('api.tools.favicons');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
-
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

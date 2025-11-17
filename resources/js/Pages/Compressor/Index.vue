@@ -9,20 +9,16 @@ const props = defineProps({
     },
 });
 
-// -------------------- ESTADO Y LÓGICA DE COMPRESIÓN --------------------
-const files = ref([]);
+// -------------------- ESTADO --------------------
+const files = ref([]); // objetos con { id, file, name, size, type, previewUrl }
 const compressed = ref([]);
 const quality = ref(0.7);
 const maxWidth = ref(1920);
 const maxHeight = ref(1080);
 const isProcessing = ref(false);
+const progress = ref(0); // 0–100
 
-function handleFileChange(e) {
-    const selected = Array.from(e.target.files || []);
-    files.value = selected;
-    compressed.value = [];
-}
-
+// -------------------- UTILIDADES --------------------
 function formatBytes(bytes) {
     if (!bytes && bytes !== 0) return '';
     const sizes = ['B', 'KB', 'MB', 'GB'];
@@ -31,19 +27,70 @@ function formatBytes(bytes) {
     return `${value.toFixed(2)} ${sizes[i]}`;
 }
 
-async function compressImages() {
-    if (!files.value.length) return;
-    isProcessing.value = true;
-    compressed.value = [];
-
-    for (const file of files.value) {
-        const result = await compressSingle(file);
-        if (result) {
-            compressed.value.push(result);
+function clearCompressed() {
+    compressed.value.forEach((item) => {
+        if (item.url) {
+            URL.revokeObjectURL(item.url);
         }
-    }
+    });
+    compressed.value = [];
+}
 
-    isProcessing.value = false;
+function clearFiles() {
+    files.value.forEach((item) => {
+        if (item.previewUrl) {
+            URL.revokeObjectURL(item.previewUrl);
+        }
+    });
+    files.value = [];
+}
+
+// -------------------- MANEJO DE ARCHIVOS --------------------
+function handleFileChange(e) {
+    const selected = Array.from(e.target.files || []);
+    const valid = selected.filter((f) => f.type.startsWith('image/'));
+
+    // Limpiar previos
+    clearFiles();
+    clearCompressed();
+
+    files.value = valid.map((file, index) => ({
+        id: `${Date.now()}-${index}-${file.name}`,
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        previewUrl: URL.createObjectURL(file),
+    }));
+}
+
+function removeFile(id) {
+    const index = files.value.findIndex((f) => f.id === id);
+    if (index !== -1) {
+        const item = files.value[index];
+        if (item.previewUrl) {
+            URL.revokeObjectURL(item.previewUrl);
+        }
+        files.value.splice(index, 1);
+    }
+}
+
+// -------------------- COMPRESIÓN --------------------
+function createCanvas(img) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = img.width;
+    let height = img.height;
+
+    const ratio = Math.min(maxWidth.value / width, maxHeight.value / height, 1);
+    width = width * ratio;
+    height = height * ratio;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    return { canvas, ctx };
 }
 
 function compressSingle(file) {
@@ -80,23 +127,41 @@ function compressSingle(file) {
     });
 }
 
-function createCanvas(img) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+async function compressImages() {
+    if (!files.value.length || isProcessing.value) return;
 
-    let width = img.width;
-    let height = img.height;
+    isProcessing.value = true;
+    progress.value = 0;
+    clearCompressed();
 
-    const ratio = Math.min(maxWidth.value / width, maxHeight.value / height, 1);
-    width = width * ratio;
-    height = height * ratio;
+    const total = files.value.length;
+    const queue = [...files.value]; // copiamos la cola actual
+    let processed = 0;
 
-    canvas.width = width;
-    canvas.height = height;
+    for (const item of queue) {
+        const result = await compressSingle(item.file);
+        if (result) {
+            compressed.value.push(result);
+        }
 
-    return { canvas, ctx };
+        // Eliminar la imagen original de la lista de seleccionadas
+        const index = files.value.findIndex((f) => f.id === item.id);
+        if (index !== -1) {
+            const fileItem = files.value[index];
+            if (fileItem.previewUrl) {
+                URL.revokeObjectURL(fileItem.previewUrl);
+            }
+            files.value.splice(index, 1);
+        }
+
+        processed++;
+        progress.value = Math.round((processed / total) * 100);
+    }
+
+    isProcessing.value = false;
 }
 
+// -------------------- DESCARGAS --------------------
 function download(file) {
     const a = document.createElement('a');
     a.href = file.url;
@@ -112,16 +177,18 @@ function downloadAll() {
     });
 }
 
-// -------------------- JSON-LD / SEO STRUCTURED DATA --------------------
+// -------------------- JSON-LD / SEO --------------------
 const jsonLd = computed(() => {
-    const faqStructured = (props.seo.faq || []).map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer,
-        },
-    }));
+    const faqStructured = Array.isArray(props.seo.faq)
+        ? props.seo.faq.map((item) => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: item.answer,
+              },
+          }))
+        : [];
 
     return JSON.stringify({
         '@context': 'https://schema.org',
@@ -157,6 +224,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+    clearCompressed();
+    clearFiles();
     if (jsonLdScriptEl.value && jsonLdScriptEl.value.parentNode) {
         jsonLdScriptEl.value.parentNode.removeChild(jsonLdScriptEl.value);
     }
@@ -215,7 +284,6 @@ onBeforeUnmount(() => {
                                 <div class="upload-area mx-auto mb-3">
                                     <label class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer">
                                         <div class="mb-2 display-6 text-primary">
-                                            <!-- Puedes cambiar por icono de Bootstrap Icons si los usas -->
                                             📷
                                         </div>
                                         <p class="fw-semibold mb-1">
@@ -298,6 +366,26 @@ onBeforeUnmount(() => {
                                 </button>
                             </div>
 
+                            <!-- BARRA DE PROGRESO -->
+                            <div
+                                v-if="isProcessing"
+                                class="mt-3"
+                            >
+                                <div class="progress" style="height: 8px;">
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        :style="{ width: progress + '%' }"
+                                        :aria-valuenow="progress"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"
+                                    ></div>
+                                </div>
+                                <p class="small text-muted mt-2 mb-0 text-center">
+                                    Comprimiendo imágenes... {{ progress }}% completado
+                                </p>
+                            </div>
+
                             <p class="small text-muted mt-3 mb-0">
                                 Todas las imágenes se comprimen manteniendo el equilibrio entre
                                 calidad visual y peso del archivo.
@@ -323,15 +411,32 @@ onBeforeUnmount(() => {
                             <ul class="list-group list-group-flush">
                                 <li
                                     v-for="f in files"
-                                    :key="f.name"
-                                    class="list-group-item d-flex justify-content-between align-items-center px-2"
+                                    :key="f.id"
+                                    class="list-group-item d-flex align-items-center"
                                 >
-                                    <span class="text-truncate me-2">
-                                        {{ f.name }}
-                                    </span>
-                                    <span class="badge bg-light text-secondary">
-                                        {{ formatBytes(f.size) }}
-                                    </span>
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <img
+                                            :src="f.previewUrl"
+                                            alt="Vista previa de la imagen"
+                                            class="me-3 rounded"
+                                            style="width: 48px; height: 48px; object-fit: cover;"
+                                        />
+                                        <div class="me-2 flex-grow-1">
+                                            <div class="text-truncate small fw-semibold">
+                                                {{ f.name }}
+                                            </div>
+                                            <div class="small text-muted">
+                                                {{ formatBytes(f.size) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        @click="removeFile(f.id)"
+                                    >
+                                        Quitar
+                                    </button>
                                 </li>
                             </ul>
                         </div>

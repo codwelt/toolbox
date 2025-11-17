@@ -146,4 +146,34 @@ return [
             ],
         ],
     ],
+    'favicons_generator' => [
+        'route' => 'tools.favicons',
+        'slug' => 'generador-favicons-online',
+        'path' => '/generador-favicons-online',
+        'title' => 'Generador de favicons online gratis | Toolbox Codwelt',
+        'description' => 'Sube una imagen y genera automáticamente tu favicon.ico, iconos PNG en distintos tamaños y el código HTML necesario para integrarlos en tu sitio web.',
+        'h1' => 'Generador de favicons online',
+        'keywords' => [
+            'generar favicon',
+            'crear favicon online',
+            'favicon.ico',
+            'iconos para navegador',
+            'favicon html etiquetas',
+        ],
+        'canonical' => 'https://toolbox.codwelt.com/generador-favicons-online',
+        'faq' => [
+            [
+                'question' => '¿Qué imagen debo subir para generar un favicon?',
+                'answer' => 'Lo ideal es subir una imagen cuadrada de al menos 512x512 píxeles en formato PNG o JPG. La herramienta generará las distintas versiones necesarias para navegadores y dispositivos.',
+            ],
+            [
+                'question' => '¿Dónde debo pegar las etiquetas HTML del favicon?',
+                'answer' => 'Debes copiar el código generado y pegarlo dentro de la etiqueta <head> de tu sitio web, antes del cierre </head>. En Laravel, normalmente se coloca en la vista de layout principal; en WordPress, en el archivo header.php o mediante opciones del tema.',
+            ],
+            [
+                'question' => '¿Qué archivos de favicon se generan?',
+                'answer' => 'Se generan favicon.ico y varios iconos PNG en tamaños 16x16, 32x32, 48x48, 96x96, 180x180 (Apple touch icon) y 192x192 para atajos y PWA.',
+            ],
+        ],
+    ],
 ];

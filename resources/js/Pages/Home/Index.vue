@@ -50,6 +50,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="bg-light min-vh-100">
+
         <Head :title="seo.title">
             <meta name="description" :content="seo.description" />
             <meta property="og:type" content="website" />
@@ -84,15 +85,8 @@ onBeforeUnmount(() => {
             <div class="row gy-4">
                 <div class="col-lg-10 mx-auto">
                     <div class="row g-3">
-                        <div
-                            v-for="tool in tools"
-                            :key="tool.key"
-                            class="col-md-6 col-xl-4"
-                        >
-                            <a
-                                class="text-decoration-none text-reset"
-                                :href="tool.path"
-                            >
+                        <div v-for="tool in tools" :key="tool.key" class="col-md-6 col-xl-4">
+                            <a class="text-decoration-none text-reset" :href="tool.path">
                                 <div class="card shadow-sm border-0 h-100 tool-card">
                                     <div class="card-body">
                                         <h2 class="h6 fw-bold mb-2">
