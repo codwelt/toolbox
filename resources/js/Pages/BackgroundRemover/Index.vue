@@ -2,6 +2,10 @@
 import { Head } from '@inertiajs/vue3';
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
 import axios from 'axios';
+import AppLayout from './../../Layouts/AppLayout.vue';
+defineOptions({
+    layout: AppLayout,
+});
 
 const props = defineProps({
     seo: {

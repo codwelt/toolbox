@@ -2,7 +2,6 @@
 import { Head } from '@inertiajs/vue3';
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
 import AppLayout from './../../Layouts/AppLayout.vue';
-
 defineOptions({
     layout: AppLayout,
 });
