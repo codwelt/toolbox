@@ -1,4 +1,8 @@
 {
+  "public/img/codwelt.gif": {
+    "file": "assets/codwelt-D1i_8C9L.gif",
+    "src": "public/img/codwelt.gif"
+  },
   "resources/css/app.css": {
     "file": "assets/app-tn0RQdqM.css",
     "src": "resources/css/app.css",
@@ -9,13 +13,16 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-TX2b7o1n.js",
+    "file": "assets/app-DWzzY1Se.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-Hhsj34Ko.css",
+      "assets/app-C44yAOAZ.css",
       "assets/app-tn0RQdqM.css"
+    ],
+    "assets": [
+      "assets/codwelt-D1i_8C9L.gif"
     ]
   }
 }
