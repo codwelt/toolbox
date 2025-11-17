@@ -23,18 +23,21 @@ class FaviconsApiController extends Controller
 
         $file = $request->file('image');
 
-        // Directorio relativo al disco "public"
+        // Usamos SIEMPRE el disco "public"
+        $disk = Storage::disk('public');
+
+        // Directorio relativo al disco public: storage/app/public/favicons/{token}
         $token = uniqid('fav_', true);
-        $dir = "favicons/{$token}";
+        $dir   = "favicons/{$token}";
 
-        // Creamos el directorio en storage/app/public/favicons/{token}
-        Storage::makeDirectory($dir); // Ojo: sin "public/" aquí, ya estamos en el disco
+        // Creamos el directorio en el disco public
+        $disk->makeDirectory($dir);
 
-        // Guardamos el input original en tmp
-        $inputPathRelative = $file->store("tmp/favicons_input");
-        $inputAbs = Storage::path($inputPathRelative);
+        // Guardamos la imagen original también en el disco public (puede borrarse luego)
+        $inputRelative = $file->store("favicons_input/{$token}", 'public');
+        $inputAbs      = $disk->path($inputRelative);
 
-        // Tamaños PNG que vamos a generar
+        // Tamaños PNG a generar
         $sizesPng = [
             16,
             32,
@@ -52,9 +55,9 @@ class FaviconsApiController extends Controller
                 $imagick->setImageFormat('png');
                 $imagick->resizeImage($size, $size, \Imagick::FILTER_LANCZOS, 1, true);
 
-                $filename = "favicon-{$size}x{$size}.png";
+                $filename       = "favicon-{$size}x{$size}.png";
                 $outputRelative = "{$dir}/{$filename}";
-                $outputAbs = Storage::path($outputRelative);
+                $outputAbs      = $disk->path($outputRelative);
 
                 $imagick->writeImage($outputAbs);
 
@@ -65,41 +68,39 @@ class FaviconsApiController extends Controller
                 $imagick->destroy();
             }
 
-            // Generar favicon.ico con varias resoluciones
+            // Generar favicon.ico
             $ico = new \Imagick();
             foreach ($imagesForIco as $path) {
                 $frame = new \Imagick($path);
                 $ico->addImage($frame);
                 $ico->setImageFormat('ico');
             }
+
             $icoRelative = "{$dir}/favicon.ico";
-            $icoAbs = Storage::path($icoRelative);
+            $icoAbs      = $disk->path($icoRelative);
             $ico->writeImages($icoAbs, true);
             $ico->destroy();
 
-            // Crear ZIP (favicons_XXXX.zip)
-            $zipName = "favicons_{$token}.zip";
+            // Crear ZIP dentro de favicons/{token}
+            $zipName     = "favicons_{$token}.zip";
             $zipRelative = "{$dir}/{$zipName}";
-            $zipAbs = Storage::path($zipRelative);
+            $zipAbs      = $disk->path($zipRelative);
 
             $zip = new ZipArchive();
             if ($zip->open($zipAbs, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-                // Agregamos todos los archivos PNG + ICO (no el ZIP)
-                $files = Storage::files($dir);
+                $files = $disk->files($dir);
                 foreach ($files as $f) {
                     if (basename($f) === $zipName) {
-                        continue; // no agregamos el propio zip dentro de sí mismo
+                        continue; // no metemos el propio ZIP dentro de sí mismo
                     }
-                    $zip->addFile(Storage::path($f), basename($f));
+                    $zip->addFile($disk->path($f), basename($f));
                 }
                 $zip->close();
             }
 
-            // URL públicas usando disco "public"
-            $publicBaseUrl = Storage::url($dir);          // /storage/favicons/{token}
-            $zipUrl = Storage::url($zipRelative);  // /storage/favicons/{token}/favicons_...
-
-            $faviconBaseUrl = rtrim($publicBaseUrl, '/');
+            // URLs públicas usando disco public (→ /storage/favicons/...)
+            $faviconBaseUrl = rtrim($disk->url($dir), '/');
+            $zipUrl         = $disk->url($zipRelative);
 
             $html = <<<HTML
 <!-- Favicons generados con Toolbox Codwelt -->
@@ -112,17 +113,18 @@ class FaviconsApiController extends Controller
 <link rel="icon" type="image/png" sizes="192x192" href="{$faviconBaseUrl}/favicon-192x192.png">
 HTML;
 
-            // Borramos el input original de tmp
-            Storage::delete($inputPathRelative);
+            // Limpieza del input original
+            $disk->delete($inputRelative);
 
             return response()->json([
-                'zip_url' => $zipUrl,
-                'html_tags' => $html,
+                'zip_url'    => $zipUrl,
+                'html_tags'  => $html,
                 'publicBase' => $faviconBaseUrl,
             ]);
         } catch (\Throwable $e) {
-            Storage::deleteDirectory($dir);
-            Storage::delete($inputPathRelative);
+            // Limpieza si algo falla
+            $disk->deleteDirectory($dir);
+            $disk->delete($inputRelative);
 
             return response()->json([
                 'message' => 'Ocurrió un error al generar los favicons.',

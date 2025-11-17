@@ -10,7 +10,7 @@ class WatermarkController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.watermark_image');
+        $tool = config('tools.categories.images.items.watermark_image');
 
         $seo = [
             'title' => $tool['title'],

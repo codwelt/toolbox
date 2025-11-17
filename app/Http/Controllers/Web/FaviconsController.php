@@ -10,7 +10,7 @@ class FaviconsController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.favicons_generator');
+        $tool = config('tools.categories.images.items.favicons_generator');
 
         $seo = [
             'title' => $tool['title'],

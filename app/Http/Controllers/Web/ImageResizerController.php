@@ -10,7 +10,7 @@ class ImageResizerController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.image_resizer');
+        $tool = config('tools.categories.images.items.image_resizer');
 
         $seo = [
             'title' => $tool['title'],

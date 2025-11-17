@@ -10,7 +10,7 @@ class BackgroundRemoverController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.background_remover');
+        $tool = config('tools.categories.images.items.background_remover');
 
         $seo = [
             'title' => $tool['title'],

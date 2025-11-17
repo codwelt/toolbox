@@ -22,40 +22,49 @@ class SitemapController extends Controller
                 'priority'   => '1.0',
             ];
 
-            // 2) Página de listado de herramientas (cuando la tengas)
-            // Ajusta la ruta o coméntala si aún no existe
-          /**  $urls[] = [
+            // 2) (Opcional) página de listado de herramientas si la creas
+            /*
+            $urls[] = [
                 'loc'        => URL::to('/herramientas'),
                 'lastmod'    => now()->toAtomString(),
                 'changefreq' => 'daily',
                 'priority'   => '0.9',
-            ]; */
+            ];
+            */
 
-            // 3) Cada herramienta definida en config/tools.php
-            $tools = config('tools', []);
+            // 3) Recorrer categorías y sus herramientas desde config/tools.php
+            $categories = config('tools.categories', []);
 
-            foreach ($tools as $key => $tool) {
-                // Intentamos primero por nombre de ruta
-                $loc = null;
+            foreach ($categories as $categoryKey => $category) {
 
-                if (!empty($tool['route']) && \Route::has($tool['route'])) {
-                    $loc = route($tool['route']);
-                } elseif (!empty($tool['path'])) {
-                    // Fallback al path definido en config (e.g. /comprimir-imagenes-online-gratis)
-                    $path = ltrim($tool['path'], '/');
-                    $loc = URL::to($path);
-                } elseif (!empty($tool['canonical'])) {
-                    // Última opción: usar la canonical si viene completa
-                    $loc = $tool['canonical'];
-                }
+                $items = $category['items'] ?? [];
 
-                if ($loc) {
-                    $urls[] = [
-                        'loc'        => $loc,
-                        'lastmod'    => now()->toAtomString(), // si luego añades 'lastmod' al config, lo usamos
-                        'changefreq' => 'weekly',
-                        'priority'   => '0.8',
-                    ];
+                foreach ($items as $toolKey => $tool) {
+                    $loc = null;
+
+                    // 1. Si tiene route y existe, usamos route()
+                    if (!empty($tool['route']) && \Route::has($tool['route'])) {
+                        $loc = route($tool['route']);
+                    }
+                    // 2. Si no, usamos el path configurado
+                    elseif (!empty($tool['path'])) {
+                        $path = ltrim($tool['path'], '/');
+                        $loc = URL::to($path);
+                    }
+                    // 3. Último recurso: canonical completa
+                    elseif (!empty($tool['canonical'])) {
+                        $loc = $tool['canonical'];
+                    }
+
+                    if ($loc) {
+                        $urls[] = [
+                            'loc'        => $loc,
+                            'lastmod'    => now()->toAtomString(),
+                            // Permite override desde el tool o la categoría, con fallback
+                            'changefreq' => $tool['changefreq'] ?? ($category['changefreq'] ?? 'weekly'),
+                            'priority'   => $tool['priority'] ?? ($category['priority'] ?? '0.8'),
+                        ];
+                    }
                 }
             }
 

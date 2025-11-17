@@ -10,8 +10,7 @@ class ImageCompressorController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.image_compressor');
-
+        $tool = config('tools.categories.images.items.image_compressor');
         $seo = [
             'title' => $tool['title'],
             'description' => $tool['description'],

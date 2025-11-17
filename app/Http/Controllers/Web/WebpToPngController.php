@@ -10,7 +10,7 @@ class WebpToPngController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.webp_to_png');
+        $tool = config('tools.categories.images.items.webp_to_png');
 
         $seo = [
             'title' => $tool['title'],
