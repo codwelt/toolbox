@@ -1,5 +1,5 @@
 <?php
- 
+
 return [
     'categories' => [
         'images' => [
@@ -187,19 +187,39 @@ return [
                 ],
             ],
         ],
-
-        // Categorías futuras
-        'development' => [
-            'label' => 'Desarrollo',
+        'videos' => [
+            'label' => 'Videos',
             'items' => [
-                // aquí irán tus tools de dev
-            ],
-        ],
-
-        'finance' => [
-            'label' => 'Finanzas',
-            'items' => [
-                // aquí irán tus simuladores / calculadoras
+                'video_compressor' => [
+                    'route' => 'tools.video-compressor',
+                    'slug' => 'comprimir-videos-online',
+                    'path' => '/comprimir-videos-online',
+                    'title' => 'Comprimir videos online gratis | Toolbox Codwelt',
+                    'description' => 'Reduce el tamaño de tus videos MP4 y MOV online, eligiendo el porcentaje de compresión y la resolución ideal para web, redes sociales o mensajería, y descarga el resultado en MP4.',
+                    'h1' => 'Comprimir videos online gratis',
+                    'keywords' => [
+                        'comprimir videos online',
+                        'reducir peso video mp4',
+                        'comprimir video para whatsapp',
+                        'comprimir video para redes sociales',
+                        'comprimir video mov a mp4',
+                    ],
+                    'canonical' => 'https://toolbox.codwelt.com/comprimir-videos-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué formatos de video puedo comprimir?',
+                            'answer' => 'La herramienta está optimizada para comprimir videos en formato MP4 y MOV. El resultado final siempre se entrega en MP4 por compatibilidad.',
+                        ],
+                        [
+                            'question' => '¿Puedo elegir el tamaño y calidad del video comprimido?',
+                            'answer' => 'Sí. Puedes elegir un porcentaje de compresión, una resolución máxima y también usar configuraciones recomendadas para WhatsApp, redes sociales o YouTube.',
+                        ],
+                        [
+                            'question' => '¿Hay un límite de peso para los videos?',
+                            'answer' => 'Por defecto se recomienda trabajar con videos de hasta 200 MB, pero puedes ajustar los límites según los recursos de tu servidor y configuración de PHP.',
+                        ],
+                    ],
+                ],
             ],
         ],
     ],

@@ -97,6 +97,9 @@ const isCategoryActive = (category) => {
 </template>
 
 <style scoped>
+.nav-item{
+    margin: 0 15px;
+}
 .nav-link:hover,
 .dropdown-item:hover {
     color: #3ab08b !important;

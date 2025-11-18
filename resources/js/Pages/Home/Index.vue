@@ -35,7 +35,7 @@ const jsonLd = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'ItemList',
-        name: 'Toolbox Codwelt - Herramientas online',
+        name: 'Toolbsox Codwelt - Herramientas online',
         itemListElement: items,
     });
 });

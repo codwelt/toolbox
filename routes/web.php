@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ImageCompressorController;
-use App\Http\Controllers\Web\BackgroundRemoverController;
 use App\Http\Controllers\Api\BackgroundRemoverApiController;
+use App\Http\Controllers\Api\VideoCompressorApiController;
+use App\Http\Controllers\Web\BackgroundRemoverController;
 use App\Http\Controllers\Api\WebpToPngSimpleController;
+use App\Http\Controllers\Web\VideoCompressorController;
 use App\Http\Controllers\Web\ImageResizerController;
 use App\Http\Controllers\Api\WebpToPngApiController;
 use App\Http\Controllers\Api\WatermarkApiController;
@@ -14,6 +16,12 @@ use App\Http\Controllers\Web\WatermarkController;
 use App\Http\Controllers\Web\FaviconsController;
 use App\Http\Controllers\Web\SitemapController;
 use App\Http\Controllers\Web\HomeController;
+
+
+
+Route::get('/comprimir-videos-online', [VideoCompressorController::class, 'index'])->name('tools.video-compressor');
+
+Route::post('/api/tools/video-compressor', [VideoCompressorApiController::class, 'process'])->name('api.tools.video-compressor');
 
 
 Route::get('/generador-favicons-online', [FaviconsController::class, 'index'])->name('tools.favicons');
