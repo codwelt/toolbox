@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "build:emoji-library": "node scripts/buildEmojiLibrary.js"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^2.0.0",
@@ -19,6 +20,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
-        "bootstrap": "^5.3.8"
+        "bootstrap": "^5.3.8",
+        "unicode-emoji-json": "^0.8.0"
     }
 }

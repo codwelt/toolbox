@@ -11,7 +11,6 @@ class VideoCompressorController extends Controller
     public function index(Request $request)
     {
         $tool = config('tools.categories.videos.items.video_compressor');
-
         $seo = [
             'title'       => $tool['title'],
             'description' => $tool['description'],

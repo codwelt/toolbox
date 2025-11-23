@@ -687,8 +687,8 @@ onBeforeUnmount(() => {
                                     redimensionar imágenes online
                                 </a>
                                 y
-                                <a href="/convertir-imagenes-gratis" class="link-primary">
-                                    conversores de formato para JPG, PNG y WebP.
+                                <a href="/convertir-webp-a-png-gratis" class="link-primary">
+                                    conversores de formato para WebP a Png.
                                 </a>
                             </p>
                         </section>

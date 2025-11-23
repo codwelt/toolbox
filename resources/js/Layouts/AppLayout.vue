@@ -76,6 +76,14 @@ const isCategoryActive = (category) => {
                                 </li>
                             </ul>
                         </li>
+                        <!-- Inicio -->
+                        <li class="nav-item">
+                            <a href="https://codwelt.com/empresa-de-paginas-web-tiendas-virtuales-aplicaciones/" class="nav-link" target="_blank">¿Quiénes somos?
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://codwelt.com/categorias/tutoriales/" class="nav-link" target="_blank">Blog</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -90,7 +98,7 @@ const isCategoryActive = (category) => {
         <footer class="border-top bg-white mt-4">
             <div class="container py-3 d-flex justify-content-between small text-muted">
                 <span>© {{ new Date().getFullYear() }} Codwelt SAS - Toolsbox</span>
-                <span>Desarrollado por Codwelt</span>
+                <span>Desarrollado por <a href="https://codwelt.com/" target="_blank">codwelt.com</a></span>
             </div>
         </footer>
     </div>

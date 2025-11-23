@@ -18,7 +18,7 @@ return [
                         'comprimir fotos sin perder calidad',
                         'optimizar imágenes para web',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/comprimir-imagenes-online-gratis',
+                    'canonical' => 'https://toolsbox.codwelt.com/comprimir-imagenes-online-gratis',
                     'faq' => [
                         [
                             'question' => '¿Cómo comprimir imágenes sin perder calidad visible?',
@@ -45,7 +45,7 @@ return [
                         'png transparente online',
                         'remove background',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/quitar-fondo-imagen-gratis',
+                    'canonical' => 'https://toolsbox.codwelt.com/quitar-fondo-imagen-gratis',
                     'faq' => [
                         [
                             'question' => '¿Cómo funciona la herramienta para quitar el fondo de una imagen?',
@@ -76,7 +76,7 @@ return [
                         'redimensionar fotos para redes sociales',
                         'resize imagen para web',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/redimensionar-imagenes-online-gratis',
+                    'canonical' => 'https://toolsbox.codwelt.com/redimensionar-imagenes-online-gratis',
                     'faq' => [
                         [
                             'question' => '¿Cómo redimensionar una imagen sin perder demasiada calidad?',
@@ -107,7 +107,7 @@ return [
                         'convertidor webp png',
                         'webp to png',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/convertir-webp-a-png-gratis',
+                    'canonical' => 'https://toolsbox.codwelt.com/convertir-webp-a-png-gratis',
                     'faq' => [
                         [
                             'question' => '¿Qué es un archivo WebP?',
@@ -138,7 +138,7 @@ return [
                         'watermark imagen online',
                         'poner logo sobre foto',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/poner-marca-de-agua-imagen-gratis',
+                    'canonical' => 'https://toolsbox.codwelt.com/poner-marca-de-agua-imagen-gratis',
                     'faq' => [
                         [
                             'question' => '¿Cómo poner una marca de agua a una imagen?',
@@ -169,7 +169,7 @@ return [
                         'iconos para navegador',
                         'favicon html etiquetas',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/generador-favicons-online',
+                    'canonical' => 'https://toolsbox.codwelt.com/generador-favicons-online',
                     'faq' => [
                         [
                             'question' => '¿Qué imagen debo subir para generar un favicon?',
@@ -204,7 +204,7 @@ return [
                         'comprimir video para redes sociales',
                         'comprimir video mov a mp4',
                     ],
-                    'canonical' => 'https://toolbox.codwelt.com/comprimir-videos-online',
+                    'canonical' => 'https://toolsbox.codwelt.com/comprimir-videos-online',
                     'faq' => [
                         [
                             'question' => '¿Qué formatos de video puedo comprimir?',
@@ -222,5 +222,70 @@ return [
                 ],
             ],
         ],
+        'herramientas' => [
+            'label' => 'Herramientas',
+            'items' => [
+                'whatsapp_link_generator' => [
+                    'route' => 'tools.whatsapp-link-generator',
+                    'slug' => 'generador-links-whatsapp',
+                    'path' => '/generador-links-whatsapp',
+                    'title' => 'Generador de links de WhatsApp para páginas web | Toolbox Codwelt',
+                    'description' => 'Crea enlaces de WhatsApp personalizados para tu página web con mensaje predefinido, formato de texto, emojis y plantillas rápidas para ventas, soporte y consultas.',
+                    'h1' => 'Generador de links de WhatsApp para tu página web',
+                    'keywords' => [
+                        'generador link whatsapp',
+                        'crear enlace whatsapp',
+                        'link whatsapp con mensaje',
+                        'url whatsapp para página web',
+                        'botón de whatsapp para web',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/generador-links-whatsapp',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo creo un link de WhatsApp con mensaje predefinido?',
+                            'answer' => 'Solo debes ingresar el código de país, el número de WhatsApp y escribir el mensaje. La herramienta genera automáticamente la URL lista para copiar y pegar en tu página web.',
+                        ],
+                        [
+                            'question' => '¿Puedo usar negrilla, cursiva y otros formatos en el mensaje?',
+                            'answer' => 'Sí. Puedes usar los formatos de WhatsApp como *negrilla*, _cursiva_, ~tachado~ y ```monoespacio``` escribiéndolos directamente en el mensaje.',
+                        ],
+                        [
+                            'question' => '¿El link funciona tanto en móvil como en escritorio?',
+                            'answer' => 'Los enlaces generados utilizan el formato oficial de WhatsApp, por lo que funcionan en móviles con la app instalada y en WhatsApp Web/Escritorio.',
+                        ],
+                    ],
+                ],
+                'emoji_library' => [
+                    'route' => 'tools.emoji-library',
+                    'slug' => 'biblioteca-emojis',
+                    'path' => '/biblioteca-emojis',
+                    'title' => 'Biblioteca de emojis estilo WhatsApp con buscador | Toolbox Codwelt',
+                    'description' => 'Explora y copia emojis organizados por categorías al estilo WhatsApp. Filtra por tipo de emoji, búscalos por nombre o palabra clave y cópialos con un solo clic para usar en tus mensajes y páginas web.',
+                    'h1' => 'Biblioteca de emojis estilo WhatsApp',
+                    'keywords' => [
+                        'biblioteca de emojis',
+                        'emojis para copiar',
+                        'emojis estilo whatsapp',
+                        'buscador de emojis',
+                        'lista de emojis',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/biblioteca-emojis',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo copio un emoji desde la biblioteca?',
+                            'answer' => 'Solo tienes que hacer clic sobre el emoji que quieras y se copiará automáticamente al portapapeles para que lo pegues en WhatsApp, redes sociales o tu página web.',
+                        ],
+                        [
+                            'question' => '¿Los emojis están organizados igual que en WhatsApp?',
+                            'answer' => 'Sí. La biblioteca agrupa los emojis por categorías similares a WhatsApp como caritas, personas, comida, actividades, símbolos, banderas y más.',
+                        ],
+                        [
+                            'question' => '¿Puedo buscar emojis por nombre o palabra clave?',
+                            'answer' => 'La biblioteca incluye un buscador que te permite encontrar emojis por su nombre, shortcode o palabras clave relacionadas.',
+                        ],
+                    ],
+                ],
+            ]
+        ]
     ],
 ];
