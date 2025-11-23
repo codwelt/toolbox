@@ -286,6 +286,42 @@ return [
                     ],
                 ],
             ]
+        ],
+        'utilities' => [
+            'label' => 'Utilidades',
+            'items' => [
+                'country_library' => [
+                    'route' => 'tools.country-library',
+                    'slug' => 'biblioteca-paises-mundo',
+                    'path' => '/biblioteca-paises-mundo',
+                    'title' => 'Biblioteca de países del mundo: códigos, indicativos y banderas | Toolbox Codwelt',
+                    'h1' => 'Biblioteca de países del mundo',
+                    'description' => 'Consulta países del mundo con su código ISO, indicativo telefónico, bandera y moneda. Ideal para formularios, integraciones de WhatsApp y herramientas digitales.',
+                    'keywords' => [
+                        'países del mundo',
+                        'indicativos telefónicos internacionales',
+                        'banderas de países',
+                        'códigos ISO de países',
+                        'monedas por país',
+                        'biblioteca de países online',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/biblioteca-paises-mundo',
+                    'faq' => [
+                        [
+                            'question' => '¿Para qué sirve la biblioteca de países de Toolbox Codwelt?',
+                            'answer' => 'Te permite consultar de forma rápida el indicativo telefónico, código ISO, bandera y moneda de cada país del mundo para usarlos en formularios, integraciones o automatizaciones.',
+                        ],
+                        [
+                            'question' => '¿Puedo usar esta biblioteca para configurar enlaces de WhatsApp?',
+                            'answer' => 'Sí. Puedes tomar el indicativo y el código corto del país para construir enlaces de WhatsApp o formularios de contacto internacional.',
+                        ],
+                        [
+                            'question' => '¿La información de países está organizada por continente?',
+                            'answer' => 'Sí. La biblioteca agrupa automáticamente los países por continente y además permite buscar por nombre, indicativo o código corto.',
+                        ],
+                    ],
+                ]
+            ]
         ]
     ],
 ];

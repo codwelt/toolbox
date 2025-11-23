@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\BackgroundRemoverController;
 use App\Http\Controllers\Web\ImageCompressorController;
 use App\Http\Controllers\Api\WebpToPngSimpleController;
 use App\Http\Controllers\Web\VideoCompressorController;
+use App\Http\Controllers\Web\CountryLibraryController;
 use App\Http\Controllers\Web\EmojiLibraryController;
 use App\Http\Controllers\Web\ImageResizerController;
 use App\Http\Controllers\Api\WebpToPngApiController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Web\FaviconsController;
 use App\Http\Controllers\Web\SitemapController;
 use App\Http\Controllers\Web\HomeController;
 
+Route::get('/biblioteca-paises-mundo', [CountryLibraryController::class, 'index'])->name('tools.country-library');
 Route::get('/biblioteca-emojis', [EmojiLibraryController::class, 'index'])->name('tools.emoji-library');
 Route::get('/generador-links-whatsapp', [WhatsappLinkGeneratorController::class, 'index'])->name('tools.whatsapp-link-generator');
 Route::get('/comprimir-videos-online', [VideoCompressorController::class, 'index'])->name('tools.video-compressor');

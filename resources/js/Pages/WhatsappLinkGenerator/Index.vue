@@ -2,7 +2,6 @@
 import { Head } from '@inertiajs/vue3';
 import { computed, ref, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import { emojiCategories } from '@/emoji/emojiLibrary';
-
 import AppLayout from './../../Layouts/AppLayout.vue';
 defineOptions({
     layout: AppLayout,

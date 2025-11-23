@@ -5,7 +5,8 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "build:emoji-library": "node scripts/buildEmojiLibrary.js"
+        "build:emoji-library": "node scripts/buildEmojiLibrary.js",
+        "generate:countries": "node scripts/generateCountries.js"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^2.0.0",
