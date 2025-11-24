@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
 import AppLayout from './../../Layouts/AppLayout.vue';
+import { useOgImage } from '@/composables/useOgImage';
 defineOptions({
     layout: AppLayout,
 });
@@ -16,6 +17,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+const { ogImageUrl } = useOgImage(props.seo);
 
 // Flatten de todas las herramientas (para JSON-LD)
 const allTools = computed(() =>
@@ -65,9 +68,12 @@ onBeforeUnmount(() => {
             <meta property="og:title" :content="seo.title" />
             <meta property="og:description" :content="seo.description" />
             <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:image" :content="ogImageUrl" />
+            <meta property="og:image:alt" :content="seo.title" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" :content="seo.title" />
             <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:image" :content="ogImageUrl" />
             <link rel="canonical" :href="seo.canonical" />
         </Head>
 
@@ -131,7 +137,7 @@ onBeforeUnmount(() => {
                     </div>
 
                     <p class="small text-muted mt-4">
-                        Seguiremos sumando nuevas herramientas a Toolbox Codwelt para facilitar el día a día
+                        Seguiremos sumando nuevas herramientas a Toolsbox Codwelt para facilitar el día a día
                         de desarrolladores, diseñadores, equipos de marketing y áreas financieras.
                     </p>
                 </div>

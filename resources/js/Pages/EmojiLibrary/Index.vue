@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { emojiCategories } from '@/emoji/emojiLibrary';
 import AppLayout from './../../Layouts/AppLayout.vue';
+import { useOgImage } from '@/composables/useOgImage';
 
 defineOptions({
     layout: AppLayout,
@@ -14,6 +15,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+const { ogImageUrl } = useOgImage(props.seo);
 
 // ---- Estado de filtros / selección ----
 const search = ref('');
@@ -152,9 +155,12 @@ onBeforeUnmount(() => {
             <meta property="og:title" :content="seo.title" />
             <meta property="og:description" :content="seo.description" />
             <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:image" :content="ogImageUrl" />
+            <meta property="og:image:alt" :content="seo.title" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" :content="seo.title" />
             <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:image" :content="ogImageUrl" />
             <link rel="canonical" :href="seo.canonical" />
         </Head>
 

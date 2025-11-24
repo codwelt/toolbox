@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
 import axios from 'axios';
 import AppLayout from './../../Layouts/AppLayout.vue';
+import { useOgImage } from '@/composables/useOgImage';
 defineOptions({
     layout: AppLayout,
 });
@@ -12,6 +13,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+const { ogImageUrl } = useOgImage(props.seo);
 
 // -------------------- ESTADO --------------------
 const baseFile = ref(null);
@@ -211,9 +214,12 @@ onBeforeUnmount(() => {
             <meta property="og:title" :content="seo.title" />
             <meta property="og:description" :content="seo.description" />
             <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:image" :content="ogImageUrl" />
+            <meta property="og:image:alt" :content="seo.title" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" :content="seo.title" />
             <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:image" :content="ogImageUrl" />
             <link rel="canonical" :href="seo.canonical" />
         </Head>
 

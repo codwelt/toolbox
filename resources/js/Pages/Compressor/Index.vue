@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { computed, ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import AppLayout from './../../Layouts/AppLayout.vue';
+import { useOgImage } from '@/composables/useOgImage';
 
 defineOptions({
     layout: AppLayout,
@@ -342,6 +343,8 @@ const jsonLdScriptEl = ref(null);
 // Drag & drop
 const isDragging = ref(false);
 
+const { ogImageUrl } = useOgImage(props.seo);
+
 function processFiles(selected, { append = false } = {}) {
     const valid = selected.filter((f) => f.type.startsWith('image/'));
 
@@ -427,11 +430,14 @@ onBeforeUnmount(() => {
             <meta property="og:title" :content="seo.title" />
             <meta property="og:description" :content="seo.description" />
             <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:image" :content="ogImageUrl" />
+            <meta property="og:image:alt" :content="seo.title" />
 
             <!-- Twitter Cards -->
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" :content="seo.title" />
             <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:image" :content="ogImageUrl" />
 
             <!-- Canonical -->
             <link rel="canonical" :href="seo.canonical" />
