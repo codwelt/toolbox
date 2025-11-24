@@ -1,7 +1,11 @@
 {
-  "public/img/codwelt.gif": {
-    "file": "assets/codwelt-D1i_8C9L.gif",
-    "src": "public/img/codwelt.gif"
+  "public/img/icono.png": {
+    "file": "assets/icono-B_NOuYom.png",
+    "src": "public/img/icono.png"
+  },
+  "public/unicornio.png": {
+    "file": "assets/unicornio-W8kfl5ug.png",
+    "src": "public/unicornio.png"
   },
   "resources/css/app.css": {
     "file": "assets/app-tn0RQdqM.css",
@@ -13,16 +17,17 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Cls18Or5.js",
+    "file": "assets/app-BJWWYDrm.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-A84F0A_P.css",
+      "assets/app-C1307il2.css",
       "assets/app-tn0RQdqM.css"
     ],
     "assets": [
-      "assets/codwelt-D1i_8C9L.gif"
+      "assets/icono-B_NOuYom.png",
+      "assets/unicornio-W8kfl5ug.png"
     ]
   }
 }
