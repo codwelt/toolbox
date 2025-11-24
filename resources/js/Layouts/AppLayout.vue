@@ -34,13 +34,15 @@ const isCategoryActive = (category) => {
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
             <div class="container">
                 <!-- Logo -->
-                <Link href="/" class="navbar-brand d-flex align-items-center">
-                <div class="rounded-circle d-flex align-items-center justify-content-center me-2">
-                    <img src="/public/img/codwelt.gif" alt="Toolsbox codwelt" style="width: 50px;">
+                 <div class="rounded-circle d-flex align-items-center justify-content-center me-2">
+                    <img src="/public/img/icono.png" alt="Toolsbox codwelt" style="width: 80px;">
                 </div>
-                <span class="fw-semibold text-dark">
+                <Link href="/" class="navbar-brand d-flex align-items-center">
+                    <span class="fw-semibold text-dark">
                     Toolsbox
                 </span>
+                
+                
                 </Link>
 
                 <!-- Toggler -->

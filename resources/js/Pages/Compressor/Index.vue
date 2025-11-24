@@ -118,28 +118,7 @@ function clearFiles() {
 // -------------------- MANEJO DE ARCHIVOS --------------------
 function handleFileChange(e) {
     const selected = Array.from(e.target.files || []);
-    const valid = selected.filter((f) => f.type.startsWith('image/'));
-
-    clearFiles();
-    clearCompressed();
-
-    if (valid.length) {
-        files.value = valid.map((file, index) => ({
-            id: `${Date.now()}-${index}-${file.name}`,
-            file,
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            previewUrl: URL.createObjectURL(file),
-        }));
-        uploadMessage.value = `${valid.length} imagen(es) cargada(s) correctamente.`;
-    } else if (selected.length) {
-        uploadMessage.value = 'Los archivos seleccionados no son imágenes válidas.';
-        files.value = [];
-    } else {
-        uploadMessage.value = '';
-        files.value = [];
-    }
+    processFiles(selected, { append: true });
 }
 
 function removeFile(id) {
@@ -222,7 +201,7 @@ function createCanvas(img) {
     return { canvas, ctx };
 }
 
-function compressSingle(file) {
+function compressSingle(file, newName = null) {
     return new Promise((resolve) => {
         const reader = new FileReader();
 
@@ -239,7 +218,7 @@ function compressSingle(file) {
                         }
                         const url = URL.createObjectURL(blob);
                         resolve({
-                            name: file.name,
+                            name: newName || file.name,
                             originalSize: file.size,
                             newSize: blob.size,
                             url,
@@ -268,7 +247,22 @@ async function compressImages() {
     let processed = 0;
 
     for (const item of queue) {
-        const result = await compressSingle(item.file);
+        const nameExtension = (() => {
+            const nameParts = item.file.name.split('.');
+            if (nameParts.length > 1) {
+                return nameParts.pop();
+            }
+            const mimeExtensionMap = {
+                'image/jpeg': 'jpg',
+                'image/png': 'png',
+                'image/webp': 'webp',
+            };
+            return mimeExtensionMap[item.file.type] || 'jpg';
+        })();
+
+        const newName = `toolsbox-compress-${processed + 1}.${nameExtension}`;
+
+        const result = await compressSingle(item.file, newName);
         if (result) {
             compressed.value.push(result);
         }
@@ -295,7 +289,7 @@ async function compressImages() {
 function download(file) {
     const a = document.createElement('a');
     a.href = file.url;
-    a.download = file.name.replace(/\.(\w+)$/, '_compressed.$1');
+    a.download = file.name;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -345,6 +339,65 @@ const jsonLd = computed(() => {
 
 const jsonLdScriptEl = ref(null);
 
+// Drag & drop
+const isDragging = ref(false);
+
+function processFiles(selected, { append = false } = {}) {
+    const valid = selected.filter((f) => f.type.startsWith('image/'));
+
+    if (!append) {
+        clearFiles();
+        clearCompressed();
+    }
+
+    if (!valid.length) {
+        if (selected.length) {
+            uploadMessage.value = 'Los archivos seleccionados no son imágenes válidas.';
+        }
+        return;
+    }
+
+    const existingSignatures = new Set(
+        files.value.map((f) => `${f.name}-${f.size}-${f.type}`)
+    );
+    const additions = valid
+        .filter((file) => !existingSignatures.has(`${file.name}-${file.size}-${file.type}`))
+        .map((file, index) => ({
+            id: `${Date.now()}-${index}-${file.name}`,
+            file,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            previewUrl: URL.createObjectURL(file),
+        }));
+
+    if (append) {
+        files.value = [...files.value, ...additions];
+    } else {
+        files.value = additions;
+    }
+
+    if (additions.length) {
+        uploadMessage.value = `${additions.length} imagen(es) agregada(s) correctamente.`;
+    }
+}
+
+function handleDrop(event) {
+    event.preventDefault();
+    isDragging.value = false;
+    const dropped = Array.from(event.dataTransfer?.files || []);
+    processFiles(dropped, { append: true });
+}
+
+function handleDragOver(event) {
+    event.preventDefault();
+    isDragging.value = true;
+}
+
+function handleDragLeave() {
+    isDragging.value = false;
+}
+
 onMounted(() => {
     const el = document.createElement('script');
     el.type = 'application/ld+json';
@@ -389,7 +442,7 @@ onBeforeUnmount(() => {
             <div class="row mb-4">
                 <div class="col-lg-10 mx-auto text-center">
                     <h1 class="display-5 fw-bold mb-3">
-                        {{ seo.h1 }}
+                        {{ seo.h1 }} 💻
                     </h1>
                     <p class="lead text-muted mb-2">
                         {{ seo.description }}
@@ -407,7 +460,9 @@ onBeforeUnmount(() => {
                     <div class="card shadow-sm border-0">
                         <div class="card-body p-4 p-md-5 text-center">
                             <div class="mb-3">
-                                <div class="upload-area mx-auto mb-2">
+                                <div class="upload-area mx-auto mb-2" :class="{ 'is-dragging': isDragging }"
+                                    @dragover.prevent="handleDragOver" @dragenter.prevent="handleDragOver"
+                                    @dragleave="handleDragLeave" @drop.prevent="handleDrop">
                                     <label
                                         class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer">
                                         <div class="mb-2 display-6 text-primary">
@@ -714,5 +769,10 @@ onBeforeUnmount(() => {
     border-color: #0d6efd;
     transform: translateY(-1px);
     cursor: pointer;
+}
+
+.upload-area.is-dragging {
+    background-color: #e7f1ff;
+    border-color: #0d6efd;
 }
 </style>
