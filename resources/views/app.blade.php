@@ -4,6 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @php
+        $serverSeo = null;
+        $toolsCategories = config('tools.categories', []);
+        $currentPath = '/' . trim(request()->path(), '/');
+
+        foreach ($toolsCategories as $category) {
+            foreach ($category['items'] ?? [] as $tool) {
+                if (($tool['path'] ?? null) === $currentPath) {
+                    $serverSeo = [
+                        'title' => $tool['title'] ?? config('app.name', 'ToolsBox'),
+                        'description' => $tool['description'] ?? '',
+                        'canonical' => $tool['canonical'] ?? url()->current(),
+                    ];
+                    break 2;
+                }
+            }
+        }
+
+        $ogImage = url('/unicornio.png');
+    @endphp
+
     <!-- Favicons generados con Toolbox Codwelt -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -36,6 +57,25 @@
     @routes
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @inertiaHead
+
+    @if($serverSeo)
+        <meta name="description" content="{{ $serverSeo['description'] }}">
+        <link rel="canonical" href="{{ $serverSeo['canonical'] }}">
+
+        <!-- Open Graph / WhatsApp -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $serverSeo['title'] }}">
+        <meta property="og:description" content="{{ $serverSeo['description'] }}">
+        <meta property="og:url" content="{{ $serverSeo['canonical'] }}">
+        <meta property="og:image" content="{{ $ogImage }}">
+        <meta property="og:image:alt" content="{{ $serverSeo['title'] }}">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $serverSeo['title'] }}">
+        <meta name="twitter:description" content="{{ $serverSeo['description'] }}">
+        <meta name="twitter:image" content="{{ $ogImage }}">
+    @endif
 
 </head>
 
