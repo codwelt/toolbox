@@ -15,55 +15,98 @@ const props = defineProps({
 });
 
 const { ogImageUrl } = useOgImage(props.seo);
+const displayTitle = computed(() =>
+    props.seo.h1?.toLowerCase().includes('webp') && props.seo.h1?.toLowerCase().includes('png')
+        ? 'Convertir imágenes a cualquier formato online'
+        : props.seo.h1
+);
+const displayDescription = computed(() =>
+    props.seo.description?.toLowerCase().includes('webp') && props.seo.description?.toLowerCase().includes('png')
+        ? 'Convierte imágenes entre formatos (PNG, JPG, WEBP, GIF, BMP o TIFF), subiendo varias a la vez, seleccionando cuáles procesar y descargando cada resultado por separado.'
+        : props.seo.description
+);
+const displayHeadTitle = computed(() =>
+    props.seo.title?.toLowerCase().includes('webp') && props.seo.title?.toLowerCase().includes('png')
+        ? 'Convertir imágenes a cualquier formato online gratis | Toolbox Codwelt'
+        : props.seo.title
+);
+const availableFormats = [
+    { value: 'png', label: 'PNG', helper: 'Mantiene transparencia y alta compatibilidad.' },
+    { value: 'jpg', label: 'JPG', helper: 'Ideal para fotos y menor peso.' },
+    { value: 'webp', label: 'WEBP', helper: 'Buena compresión con calidad equilibrada.' },
+    { value: 'gif', label: 'GIF', helper: 'Animaciones o imágenes simples.' },
+    { value: 'bmp', label: 'BMP', helper: 'Formato sin compresión.' },
+    { value: 'tiff', label: 'TIFF', helper: 'Flujos de trabajo de impresión.' },
+];
 
 // -------------------- ESTADO --------------------
 const mode = ref('file'); // file | url
 
-const selectedFile = ref(null);
-const fileInfo = ref(null);
+const files = ref([]);
+const results = ref([]);
 
 const imageUrl = ref('');
-const previewOriginal = ref(null);
-const previewResult = ref(null);
+const targetFormat = ref('png');
 
 const isProcessing = ref(false);
 const errorMessage = ref(null);
+const targetFormatLabel = computed(() => {
+    const found = availableFormats.find((format) => format.value === targetFormat.value);
+    return found ? found.label : targetFormat.value.toUpperCase();
+});
+
+const selectedFiles = computed(() => files.value.filter((file) => file.selected));
 
 // -------------------- HANDLERS --------------------
 function onFileChange(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const fileList = e.target.files;
+    handleNewFiles(fileList);
+}
 
-    selectedFile.value = file;
-    fileInfo.value = {
-        name: file.name,
-        size: formatBytes(file.size),
-        type: file.type,
-    };
+function onFileDrop(e) {
+    const fileList = e.dataTransfer?.files;
+    handleNewFiles(fileList);
+}
+
+function handleNewFiles(fileList) {
+    const list = Array.from(fileList || []);
+    const newFiles = list.filter((file) => file.type?.startsWith('image/'));
+
+    if (!newFiles.length) return;
+
+    newFiles.forEach((file) => {
+        const id = `${file.name}-${file.lastModified}-${Math.random().toString(16).slice(2)}`;
+        const preview = URL.createObjectURL(file);
+
+        files.value.push({
+            id,
+            file,
+            name: file.name,
+            size: formatBytes(file.size),
+            type: file.type,
+            preview,
+            selected: true,
+        });
+    });
+
     errorMessage.value = null;
-    previewResult.value = null;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        previewOriginal.value = event.target?.result || null;
-    };
-    reader.readAsDataURL(file);
+    results.value = [];
 }
 
 function useUrlMode() {
     mode.value = 'url';
-    selectedFile.value = null;
-    fileInfo.value = null;
-    previewOriginal.value = null;
-    previewResult.value = null;
+    files.value.forEach((f) => f.preview && URL.revokeObjectURL(f.preview));
+    files.value = [];
+    results.value.forEach((r) => URL.revokeObjectURL(r.url));
+    results.value = [];
     errorMessage.value = null;
 }
 
 function useFileMode() {
     mode.value = 'file';
     imageUrl.value = '';
-    previewOriginal.value = null;
-    previewResult.value = null;
+    results.value.forEach((r) => URL.revokeObjectURL(r.url));
+    results.value = [];
     errorMessage.value = null;
 }
 
@@ -78,41 +121,61 @@ function formatBytes(bytes) {
 // -------------------- CONVERSIÓN --------------------
 async function convert() {
     errorMessage.value = null;
-    previewResult.value = null;
-
-    const formData = new FormData();
-
-    if (mode.value === 'file') {
-        if (!selectedFile.value) {
-            errorMessage.value = 'Por favor selecciona un archivo .webp.';
-            return;
-        }
-        formData.append('source_type', 'file');
-        formData.append('image', selectedFile.value);
-    } else {
-        if (!imageUrl.value) {
-            errorMessage.value = 'Por favor ingresa una URL de imagen WebP.';
-            return;
-        }
-        formData.append('source_type', 'url');
-        formData.append('image_url', imageUrl.value);
-        previewOriginal.value = imageUrl.value;
-    }
+    results.value.forEach((r) => URL.revokeObjectURL(r.url));
+    results.value = [];
 
     isProcessing.value = true;
 
     try {
-        const response = await axios.post(
-            '/api/tools/webp-to-png',
-            formData,
-            {
-                responseType: 'blob',
+        if (mode.value === 'file') {
+            if (!selectedFiles.value.length) {
+                errorMessage.value = 'Selecciona al menos una imagen para convertir.';
+                return;
             }
-        );
 
-        const blob = response.data;
-        const url = URL.createObjectURL(blob);
-        previewResult.value = url;
+            for (const item of selectedFiles.value) {
+                const formData = new FormData();
+                formData.append('source_type', 'file');
+                formData.append('image', item.file);
+                formData.append('target_format', targetFormat.value);
+
+                const response = await axios.post('/api/tools/webp-to-png', formData, {
+                    responseType: 'blob',
+                });
+
+                const blob = response.data;
+                const url = URL.createObjectURL(blob);
+                results.value.push({
+                    id: item.id,
+                    name: item.name,
+                    url,
+                    format: targetFormat.value,
+                });
+            }
+        } else {
+            if (!imageUrl.value) {
+                errorMessage.value = 'Por favor ingresa una URL de imagen.';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('source_type', 'url');
+            formData.append('image_url', imageUrl.value);
+            formData.append('target_format', targetFormat.value);
+
+            const response = await axios.post('/api/tools/webp-to-png', formData, {
+                responseType: 'blob',
+            });
+
+            const blob = response.data;
+            const url = URL.createObjectURL(blob);
+            results.value.push({
+                id: 'url',
+                name: imageUrl.value,
+                url,
+                format: targetFormat.value,
+            });
+        }
     } catch (error) {
         console.error(error);
         if (error.response?.data?.message) {
@@ -125,22 +188,27 @@ async function convert() {
     }
 }
 
-function downloadResult() {
-    if (!previewResult.value) return;
+function downloadResult(result) {
+    if (!result?.url) return;
 
-    let filename = 'imagen_convertida.png';
-
-    if (mode.value === 'file' && selectedFile.value) {
-        const baseName = selectedFile.value.name.replace(/\.[^.]+$/, '');
-        filename = `${baseName}.png`;
-    }
+    const baseName = result.name?.toString().split('/').pop()?.replace(/\.[^.]+$/, '') || 'imagen_convertida';
+    const filename = `${baseName}.${result.format || targetFormat.value}`;
 
     const a = document.createElement('a');
-    a.href = previewResult.value;
+    a.href = result.url;
     a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
+}
+
+function removeFile(id) {
+    const file = files.value.find((f) => f.id === id);
+    if (file?.preview) {
+        URL.revokeObjectURL(file.preview);
+    }
+    files.value = files.value.filter((f) => f.id !== id);
+    results.value = results.value.filter((r) => r.id !== id);
 }
 
 // -------------------- JSON-LD SEO --------------------
@@ -157,7 +225,7 @@ const jsonLd = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: props.seo.title,
+        name: displayHeadTitle.value || props.seo.title,
         url: props.seo.url,
         applicationCategory: 'Multimedia',
         offers: {
@@ -165,7 +233,7 @@ const jsonLd = computed(() => {
             price: '0',
             priceCurrency: 'USD',
         },
-        description: props.seo.description,
+        description: displayDescription.value || props.seo.description,
         potentialAction: {
             '@type': 'UseAction',
             target: props.seo.url,
@@ -191,6 +259,9 @@ onBeforeUnmount(() => {
     if (jsonLdScriptEl.value && jsonLdScriptEl.value.parentNode) {
         jsonLdScriptEl.value.parentNode.removeChild(jsonLdScriptEl.value);
     }
+
+    files.value.forEach((f) => f.preview && URL.revokeObjectURL(f.preview));
+    results.value.forEach((r) => r.url && URL.revokeObjectURL(r.url));
 });
 </script>
 
@@ -198,18 +269,18 @@ onBeforeUnmount(() => {
     <div class="bg-light min-vh-100">
         <!-- HEAD SEO -->
 
-        <Head :title="seo.title">
-            <meta name="description" :content="seo.description" />
+        <Head :title="displayHeadTitle || seo.title">
+            <meta name="description" :content="displayDescription || seo.description" />
             <meta v-if="seo.keywords && seo.keywords.length" name="keywords" :content="seo.keywords.join(', ')" />
             <meta property="og:type" content="website" />
-            <meta property="og:title" :content="seo.title" />
-            <meta property="og:description" :content="seo.description" />
+            <meta property="og:title" :content="displayHeadTitle || seo.title" />
+            <meta property="og:description" :content="displayDescription || seo.description" />
             <meta property="og:url" :content="seo.canonical" />
             <meta property="og:image" :content="ogImageUrl" />
-            <meta property="og:image:alt" :content="seo.title" />
+            <meta property="og:image:alt" :content="displayHeadTitle || seo.title" />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" :content="seo.title" />
-            <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:title" :content="displayHeadTitle || seo.title" />
+            <meta name="twitter:description" :content="displayDescription || seo.description" />
             <meta name="twitter:image" :content="ogImageUrl" />
             <link rel="canonical" :href="seo.canonical" />
         </Head>
@@ -219,14 +290,14 @@ onBeforeUnmount(() => {
             <div class="row mb-4">
                 <div class="col-lg-10 mx-auto text-center">
                     <h1 class="display-5 fw-bold mb-3">
-                        {{ seo.h1 }}
+                        {{ displayTitle || seo.h1 }}
                     </h1>
                     <p class="lead text-muted mb-2">
-                        {{ seo.description }}
+                        {{ displayDescription || seo.description }}
                     </p>
                     <p class="text-secondary">
-                        Convierte tus archivos WebP a PNG para asegurar compatibilidad con todos los navegadores,
-                        editores y CMS.
+                        Convierte una o varias imágenes al formato que necesites, elige cuáles procesar y descarga cada
+                        resultado listo para editores, CMS o proyectos web.
                     </p>
                 </div>
             </div>
@@ -256,37 +327,60 @@ onBeforeUnmount(() => {
                                     <div v-if="mode === 'file'">
                                         <div class="mb-3 text-center text-lg-start">
                                             <h2 class="h6 fw-bold mb-2">
-                                                Sube tu archivo WebP
+                                                Sube tu imagen
                                             </h2>
                                             <p class="small text-muted mb-0">
-                                                Formato admitido: WebP. Tamaño máximo: 5 MB.
+                                                Formatos admitidos: PNG, JPG, WEBP, GIF, BMP y TIFF. Tamaño máximo: 5
+                                                MB.
+                                            </p>
+                                            <p class="small text-muted mb-0">
+                                                Carga varias imágenes a la vez, actívalas con el checkbox y decide cuáles
+                                                quieres convertir.
                                             </p>
                                         </div>
 
-                                        <div class="upload-area mb-3 mx-auto mx-lg-0">
+                                        <div class="upload-area mb-3 mx-auto mx-lg-0" @dragover.prevent
+                                            @dragenter.prevent @drop.prevent="onFileDrop">
                                             <label
                                                 class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer">
                                                 <div class="mb-2 display-6 text-primary">
                                                     🖼️
                                                 </div>
                                                 <p class="fw-semibold mb-1">
-                                                    Selecciona un archivo .webp o suéltalo aquí
+                                                    Selecciona una imagen o suéltala aquí
                                                 </p>
                                                 <p class="small text-muted mb-0">
-                                                    La imagen se convertirá automáticamente a PNG.
+                                                    Elige el formato de salida y generaremos copias optimizadas de todas
+                                                    las imágenes seleccionadas.
                                                 </p>
-                                                <input type="file" class="d-none" accept="image/webp"
+                                                <input type="file" class="d-none" accept="image/*" multiple
                                                     @change="onFileChange" />
                                             </label>
                                         </div>
 
-                                        <div v-if="fileInfo" class="mb-3">
-                                            <div class="border rounded p-2 bg-white small">
-                                                <div class="fw-semibold text-truncate">
-                                                    {{ fileInfo.name }}
-                                                </div>
-                                                <div class="text-muted">
-                                                    {{ fileInfo.size }} · {{ fileInfo.type }}
+                                        <div v-if="files.length" class="mb-3">
+                                            <p class="small text-muted mb-2">
+                                            Selecciona qué imágenes convertir o elimínalas de la lista.
+                                            </p>
+                                            <div class="list-group small">
+                                                <div class="list-group-item d-flex align-items-center justify-content-between gap-2"
+                                                    v-for="file in files" :key="file.id">
+                                                    <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                                        <input class="form-check-input mt-0" type="checkbox"
+                                                            v-model="file.selected" :id="`file-${file.id}`" />
+                                                        <label class="form-check-label w-100" :for="`file-${file.id}`">
+                                                            <div class="fw-semibold text-truncate">
+                                                                {{ file.name }}
+                                                            </div>
+                                                            <div class="text-muted">
+                                                                {{ file.size }} · {{ file.type }}
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-link text-danger btn-sm p-0"
+                                                        @click="removeFile(file.id)">
+                                                        Eliminar
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -296,37 +390,50 @@ onBeforeUnmount(() => {
                                     <div v-else>
                                         <div class="mb-3 text-center text-lg-start">
                                             <h2 class="h6 fw-bold mb-2">
-                                                Usa una URL de imagen WebP
+                                                Usa una URL de imagen
                                             </h2>
                                             <p class="small text-muted mb-0">
-                                                Pega la URL pública de una imagen .webp para convertirla a PNG.
+                                                Pega la URL pública de cualquier imagen (png, jpg, webp, gif...) para
+                                                convertirla.
                                             </p>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label small text-muted mb-1">
-                                                URL de la imagen WebP
+                                                URL de la imagen
                                             </label>
                                             <input type="url" class="form-control form-control-sm"
-                                                placeholder="https://ejemplo.com/imagen.webp" v-model="imageUrl" />
+                                                placeholder="https://ejemplo.com/imagen.jpg" v-model="imageUrl" />
                                         </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label small text-muted mb-1">
+                                            Formato de salida
+                                        </label>
+                                        <select class="form-select form-select-sm" v-model="targetFormat">
+                                            <option v-for="option in availableFormats" :key="option.value"
+                                                :value="option.value">
+                                                {{ option.label }} — {{ option.helper }}
+                                            </option>
+                                        </select>
                                     </div>
 
                                     <div class="d-grid gap-2">
                                         <button type="button" class="btn btn-primary" :disabled="isProcessing ||
-                                            (mode === 'file' && !selectedFile) ||
+                                            (mode === 'file' && !selectedFiles.length) ||
                                             (mode === 'url' && !imageUrl)
                                             " @click="convert">
                                             <span v-if="!isProcessing">
-                                                Convertir a PNG
+                                                Convertir a {{ targetFormatLabel }}
                                             </span>
                                             <span v-else>
                                                 Procesando...
                                             </span>
                                         </button>
                                         <p class="small text-muted mb-0">
-                                            El archivo resultante se generará en formato PNG manteniendo la resolución
-                                            original.
+                                            El archivo resultante se generará en formato {{ targetFormatLabel }}
+                                            manteniendo la resolución original siempre que el formato lo permita.
                                         </p>
                                     </div>
 
@@ -340,12 +447,20 @@ onBeforeUnmount(() => {
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <h3 class="h6 fw-bold mb-2 text-center">
-                                                Imagen original
+                                                Imágenes originales
                                             </h3>
                                             <div
                                                 class="preview-box border rounded bg-white d-flex align-items-center justify-content-center">
-                                                <img v-if="previewOriginal" :src="previewOriginal"
-                                                    alt="Vista previa original" class="img-fluid" />
+                                                <div v-if="files.length"
+                                                    class="d-flex flex-wrap gap-2 w-100 h-100 overflow-auto p-2">
+                                                    <div v-for="file in files" :key="file.id"
+                                                        class="border rounded p-1 d-flex flex-column align-items-center"
+                                                        style="width: 110px;">
+                                                        <img :src="file.preview" :alt="file.name"
+                                                            class="img-fluid rounded" />
+                                                        <small class="text-truncate w-100 mt-1">{{ file.name }}</small>
+                                                    </div>
+                                                </div>
                                                 <span v-else class="text-muted small text-center px-2">
                                                     Aún no has cargado ninguna imagen.
                                                 </span>
@@ -354,31 +469,37 @@ onBeforeUnmount(() => {
 
                                         <div class="col-md-6">
                                             <h3 class="h6 fw-bold mb-2 text-center">
-                                                Imagen convertida a PNG
+                                                Imágenes convertidas a {{ targetFormatLabel }}
                                             </h3>
                                             <div
                                                 class="preview-box border rounded bg-white d-flex align-items-center justify-content-center">
-                                                <img v-if="previewResult" :src="previewResult" alt="Vista previa en PNG"
-                                                    class="img-fluid" />
+                                                <div v-if="results.length"
+                                                    class="d-flex flex-wrap gap-2 w-100 h-100 overflow-auto p-2">
+                                                    <div v-for="result in results" :key="result.id"
+                                                        class="border rounded p-1 d-flex flex-column align-items-center"
+                                                        style="width: 110px;">
+                                                        <img :src="result.url" :alt="`Vista previa en ${targetFormatLabel}`"
+                                                            class="img-fluid rounded" />
+                                                        <small class="text-truncate w-100 mt-1">
+                                                            {{ result.name }}
+                                                        </small>
+                                                        <button type="button" class="btn btn-outline-primary btn-sm mt-1 w-100"
+                                                            @click="downloadResult(result)">
+                                                            Descargar
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <span v-else class="text-muted small text-center px-2">
                                                     El resultado aparecerá aquí una vez se complete la conversión.
                                                 </span>
-                                            </div>
-
-                                            <div v-if="previewResult" class="text-center mt-3">
-                                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    @click="downloadResult">
-                                                    Descargar PNG
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <p class="small text-muted mt-3 mb-0">
-                                        Esta herramienta es ideal cuando descargas recursos en WebP desde la web y
-                                        necesitas
-                                        transformarlos a PNG para usarlos en editores, CMS o piezas gráficas sin
-                                        complicaciones.
+                                        Esta herramienta es ideal para transformar imágenes en lote cuando un programa
+                                        no soporta el formato original, necesitas optimizar para web o quieres copiar
+                                        una librería completa a otro tipo de archivo.
                                     </p>
                                 </div>
                             </div>
@@ -392,15 +513,16 @@ onBeforeUnmount(() => {
                 <div class="col-lg-10 mx-auto">
                     <section aria-labelledby="how-it-works">
                         <h2 id="how-it-works" class="h4 fw-bold mb-3">
-                            ¿Cómo funciona el conversor de WebP a PNG de Toolbox Codwelt?
+                            ¿Cómo funciona el conversor de imágenes de Toolbox Codwelt?
                         </h2>
                         <p class="text-muted small mb-2">
-                            La herramienta recibe tu archivo WebP (cargado desde tu equipo o descargado desde una URL),
-                            lo procesa en el servidor y genera una versión equivalente en formato PNG.
+                            La herramienta recibe tus imágenes (subidas en bloque o desde una URL), las procesa en el
+                            servidor y genera versiones equivalentes en el formato que elijas.
                         </p>
                         <p class="text-muted small mb-0">
-                            Así obtienes archivos compatibles con la mayoría de aplicaciones, manteniendo la calidad
-                            y resolución original de la imagen.
+                            Sube varias imágenes, marca las que quieras convertir, elige el formato de salida (PNG, JPG,
+                            WEBP, GIF, BMP o TIFF) y descarga cada resultado por separado manteniendo la mejor calidad
+                            posible para cada formato.
                         </p>
                     </section>
                 </div>
@@ -410,23 +532,23 @@ onBeforeUnmount(() => {
                 <div class="col-lg-10 mx-auto">
                     <section aria-labelledby="faq">
                         <h2 id="faq" class="h4 fw-bold mb-3">
-                            Preguntas frecuentes sobre convertir WebP a PNG online
+                            Preguntas frecuentes sobre convertir imágenes online
                         </h2>
 
-                        <div class="accordion" id="accordionFaqWebpPng">
+                        <div class="accordion" id="accordionFaqImageConverter">
                             <div class="accordion-item" v-for="(item, index) in seo.faq" :key="index">
-                                <h2 class="accordion-header" :id="`heading-webp-png-${index}`">
+                                <h2 class="accordion-header" :id="`heading-image-converter-${index}`">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        :data-bs-target="`#collapse-webp-png-${index}`" aria-expanded="false"
-                                        :aria-controls="`collapse-webp-png-${index}`">
+                                        :data-bs-target="`#collapse-image-converter-${index}`" aria-expanded="false"
+                                        :aria-controls="`collapse-image-converter-${index}`">
                                         <span class="small fw-semibold">
                                             {{ item.question }}
                                         </span>
                                     </button>
                                 </h2>
-                                <div :id="`collapse-webp-png-${index}`" class="accordion-collapse collapse"
-                                    :aria-labelledby="`heading-webp-png-${index}`"
-                                    data-bs-parent="#accordionFaqWebpPng">
+                                <div :id="`collapse-image-converter-${index}`" class="accordion-collapse collapse"
+                                    :aria-labelledby="`heading-image-converter-${index}`"
+                                    data-bs-parent="#accordionFaqImageConverter">
                                     <div class="accordion-body small text-muted">
                                         {{ item.answer }}
                                     </div>
@@ -482,7 +604,7 @@ onBeforeUnmount(() => {
 .preview-box {
     width: 100%;
     height: 260px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .preview-box img {
