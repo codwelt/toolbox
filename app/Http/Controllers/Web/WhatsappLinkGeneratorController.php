@@ -10,7 +10,7 @@ class WhatsappLinkGeneratorController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.categories.herramientas.items.whatsapp_link_generator');
+        $tool = config('tools.categories.utilities.items.whatsapp_link_generator');
         $seo = [
             'title' => $tool['title'],
             'description' => $tool['description'],

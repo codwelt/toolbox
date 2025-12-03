@@ -11,7 +11,7 @@ class EmojiLibraryController extends Controller
     public function index(Request $request)
     {
         
-        $tool = config('tools.categories.herramientas.items.emoji_library');
+        $tool = config('tools.categories.utilities.items.emoji_library');
         
         $seo = [
             'title' => $tool['title'],
