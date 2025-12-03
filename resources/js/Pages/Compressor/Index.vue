@@ -15,6 +15,14 @@ const props = defineProps({
     },
 });
 
+const seoData = computed(() => props.seo || {});
+const pageTitle = computed(() => seoData.value.title || 'Comprimir imágenes online gratis');
+const pageDescription = computed(
+    () =>
+        seoData.value.description ||
+        'Reduce el peso de tus imágenes JPG, PNG o WebP con control de calidad y tamaño, listo para web.'
+);
+
 // -------------------- ESTADO --------------------
 const files = ref([]); // objetos con { id, file, name, size, type, previewUrl }
 const compressed = ref([]);
@@ -304,8 +312,8 @@ function downloadAll() {
 
 // -------------------- JSON-LD / SEO --------------------
 const jsonLd = computed(() => {
-    const faqStructured = Array.isArray(props.seo.faq)
-        ? props.seo.faq.map((item) => ({
+    const faqStructured = Array.isArray(seoData.value.faq)
+        ? seoData.value.faq.map((item) => ({
             '@type': 'Question',
             name: item.question,
             acceptedAnswer: {
@@ -318,18 +326,18 @@ const jsonLd = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: props.seo.title,
-        url: props.seo.url,
+        name: pageTitle.value,
+        url: seoData.value.url,
         applicationCategory: 'Multimedia',
         offers: {
             '@type': 'Offer',
             price: '0',
             priceCurrency: 'USD',
         },
-        description: props.seo.description,
+        description: pageDescription.value,
         potentialAction: {
             '@type': 'UseAction',
-            target: props.seo.url,
+            target: seoData.value.url,
         },
         mainEntity: {
             '@type': 'FAQPage',
@@ -343,7 +351,7 @@ const jsonLdScriptEl = ref(null);
 // Drag & drop
 const isDragging = ref(false);
 
-const { ogImageUrl } = useOgImage(props.seo);
+const { ogImageUrl } = useOgImage(seoData.value);
 
 function processFiles(selected, { append = false } = {}) {
     const valid = selected.filter((f) => f.type.startsWith('image/'));
@@ -421,44 +429,51 @@ onBeforeUnmount(() => {
 <template>
         <!-- HEAD SEO -->
 
-        <Head :title="seo.title">
-            <meta name="description" :content="seo.description" />
-            <meta v-if="seo.keywords && seo.keywords.length" name="keywords" :content="seo.keywords.join(', ')" />
+        <Head :title="pageTitle">
+            <meta name="description" :content="pageDescription" />
+            <meta v-if="seoData.keywords && seoData.keywords.length" name="keywords" :content="seoData.keywords.join(', ')" />
+            <meta name="robots" content="index,follow" />
 
             <!-- Open Graph -->
             <meta property="og:type" content="website" />
-            <meta property="og:title" :content="seo.title" />
-            <meta property="og:description" :content="seo.description" />
-            <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:title" :content="pageTitle" />
+            <meta property="og:description" :content="pageDescription" />
+            <meta property="og:url" :content="seoData.canonical" />
             <meta property="og:image" :content="ogImageUrl" />
-            <meta property="og:image:alt" :content="seo.title" />
+            <meta property="og:image:alt" :content="pageTitle" />
 
             <!-- Twitter Cards -->
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" :content="seo.title" />
-            <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:title" :content="pageTitle" />
+            <meta name="twitter:description" :content="pageDescription" />
             <meta name="twitter:image" :content="ogImageUrl" />
 
             <!-- Canonical -->
-            <link rel="canonical" :href="seo.canonical" />
+            <link rel="canonical" :href="seoData.canonical" />
         </Head>
 
-        <div class="container py-5">
-            <!-- HERO -->
-            <div class="row mb-4">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h1 class="display-5 fw-bold mb-3">
-                        {{ seo.h1 }} 💻
-                    </h1>
-                    <p class="lead text-muted mb-2">
-                        {{ seo.description }}
-                    </p>
-                    <p class="text-secondary">
-                        Optimiza tus imágenes para web, tiendas virtuales y campañas digitales
-                        con una experiencia rápida y sencilla.
-                    </p>
+        <section class="py-5 bg-dark text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-10">
+                        <p class="text-uppercase small mb-2 text-info fw-semibold">Compresor de imágenes</p>
+                        <h1 class="display-5 fw-bold mb-3">
+                            {{ seoData.h1 }} 💻
+                        </h1>
+                        <p class="lead text-white-50 mb-3">
+                            {{ pageDescription }}
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-info text-dark">Controla calidad</span>
+                            <span class="badge bg-info text-dark">Ajusta dimensiones</span>
+                            <span class="badge bg-info text-dark">Optimizado SEO</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="container py-5">
 
             <!-- TARJETA PRINCIPAL DE HERRAMIENTA -->
             <div class="row justify-content-center mb-4">
@@ -716,7 +731,7 @@ onBeforeUnmount(() => {
                                 Preguntas frecuentes sobre la compresión de imágenes online
                             </h2>
                             <div class="accordion" id="accordionFaq">
-                                <div class="accordion-item" v-for="(item, index) in seo.faq" :key="index">
+                                <div class="accordion-item" v-for="(item, index) in seoData.faq" :key="index">
                                     <h2 class="accordion-header" :id="`heading-${index}`">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" :data-bs-target="`#collapse-${index}`"

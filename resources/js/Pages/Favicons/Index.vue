@@ -15,12 +15,20 @@ const props = defineProps({
     },
 });
 
-const { ogImageUrl } = useOgImage(props.seo);
+const seoData = computed(() => props.seo || {});
+const pageTitle = computed(() => seoData.value.title || 'Generador de favicons online gratis');
+const pageDescription = computed(
+    () =>
+        seoData.value.description ||
+        'Sube una imagen y obtén favicon.ico, iconos PNG y el código HTML listo para tu sitio web.'
+);
+const { ogImageUrl } = useOgImage(seoData.value);
 
 // ESTADO
 const selectedFile = ref(null);
 const fileInfo = ref(null);
 const preview = ref(null);
+const isDragging = ref(false);
 
 const isProcessing = ref(false);
 const errorMessage = ref(null);
@@ -29,8 +37,7 @@ const htmlSnippet = ref('');
 const zipUrl = ref('');
 
 // HANDLERS
-function onFileChange(e) {
-    const file = e.target.files?.[0];
+function applySelectedFile(file) {
     if (!file) return;
 
     selectedFile.value = file;
@@ -48,6 +55,27 @@ function onFileChange(e) {
         preview.value = event.target?.result || null;
     };
     reader.readAsDataURL(file);
+}
+
+function onFileChange(e) {
+    const file = e.target.files?.[0];
+    applySelectedFile(file);
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    isDragging.value = true;
+}
+
+function handleDragLeave() {
+    isDragging.value = false;
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    isDragging.value = false;
+    const file = e.dataTransfer?.files?.[0];
+    applySelectedFile(file);
 }
 
 function formatBytes(bytes) {
@@ -99,7 +127,7 @@ function downloadZip() {
 
 // JSON-LD
 const jsonLd = computed(() => {
-    const faqStructured = (props.seo.faq || []).map((item) => ({
+    const faqStructured = (seoData.value.faq || []).map((item) => ({
         '@type': 'Question',
         name: item.question,
         acceptedAnswer: {
@@ -111,18 +139,18 @@ const jsonLd = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: props.seo.title,
-        url: props.seo.url,
+        name: pageTitle.value,
+        url: seoData.value.url,
         applicationCategory: 'Multimedia',
         offers: {
             '@type': 'Offer',
             price: '0',
             priceCurrency: 'USD',
         },
-        description: props.seo.description,
+        description: pageDescription.value,
         potentialAction: {
             '@type': 'UseAction',
-            target: props.seo.url,
+            target: seoData.value.url,
         },
         mainEntity: {
             '@type': 'FAQPage',
@@ -152,38 +180,43 @@ onBeforeUnmount(() => {
     <div class="bg-light min-vh-100">
         <!-- HEAD SEO -->
 
-        <Head :title="seo.title">
-            <meta name="description" :content="seo.description" />
-            <meta v-if="seo.keywords && seo.keywords.length" name="keywords" :content="seo.keywords.join(', ')" />
+        <Head :title="pageTitle">
+            <meta name="description" :content="pageDescription" />
+            <meta v-if="seoData.keywords && seoData.keywords.length" name="keywords" :content="seoData.keywords.join(', ')" />
+            <meta name="robots" content="index,follow" />
             <meta property="og:type" content="website" />
-            <meta property="og:title" :content="seo.title" />
-            <meta property="og:description" :content="seo.description" />
-            <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:title" :content="pageTitle" />
+            <meta property="og:description" :content="pageDescription" />
+            <meta property="og:url" :content="seoData.canonical" />
             <meta property="og:image" :content="ogImageUrl" />
-            <meta property="og:image:alt" :content="seo.title" />
+            <meta property="og:image:alt" :content="pageTitle" />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" :content="seo.title" />
-            <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:title" :content="pageTitle" />
+            <meta name="twitter:description" :content="pageDescription" />
             <meta name="twitter:image" :content="ogImageUrl" />
-            <link rel="canonical" :href="seo.canonical" />
+            <link rel="canonical" :href="seoData.canonical" />
         </Head>
 
-        <div class="container py-5">
-            <!-- HERO -->
-            <div class="row mb-4">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h1 class="display-5 fw-bold mb-3">
-                        {{ seo.h1 }}
-                    </h1>
-                    <p class="lead text-muted mb-2">
-                        {{ seo.description }}
-                    </p>
-                    <p class="text-secondary">
-                        Sube una imagen cuadrada (ideal 512x512px) y recibe un paquete de favicons
-                        listos para usar más el código HTML para integrarlos en tu sitio web.
-                    </p>
+        <section class="py-5 bg-dark text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-10">
+                        <p class="text-uppercase small mb-2 text-info fw-semibold">Favicons</p>
+                        <h1 class="display-5 fw-bold mb-3">{{ seoData.h1 }}</h1>
+                        <p class="lead text-white-50 mb-3">
+                            {{ pageDescription }}
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-info text-dark">favicon.ico + PNG</span>
+                            <span class="badge bg-info text-dark">Snippet HTML listo</span>
+                            <span class="badge bg-info text-dark">Optimizado SEO</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="container py-5">
 
             <!-- TARJETA PRINCIPAL -->
             <div class="row justify-content-center mb-4">
@@ -203,7 +236,14 @@ onBeforeUnmount(() => {
                                         </p>
                                     </div>
 
-                                    <div class="upload-area mb-3 mx-auto mx-lg-0">
+                                    <div
+                                        class="upload-area mb-3 mx-auto mx-lg-0"
+                                        :class="{ 'is-dragging': isDragging }"
+                                        @dragover.prevent="handleDragOver"
+                                        @dragenter.prevent="handleDragOver"
+                                        @dragleave="handleDragLeave"
+                                        @drop="handleDrop"
+                                    >
                                         <label
                                             class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer">
                                             <div class="mb-2 display-6 text-primary">
@@ -354,7 +394,7 @@ onBeforeUnmount(() => {
                         </h2>
 
                         <div class="accordion" id="accordionFaqFavicons">
-                            <div class="accordion-item" v-for="(item, index) in seo.faq" :key="index">
+                            <div class="accordion-item" v-for="(item, index) in seoData.faq" :key="index">
                                 <h2 class="accordion-header" :id="`heading-favicon-${index}`">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         :data-bs-target="`#collapse-favicon-${index}`" aria-expanded="false"
@@ -384,7 +424,7 @@ onBeforeUnmount(() => {
                         <p class="small text-muted">
                             Complementa tus favicons con otras herramientas gratuitas de
                             Toolbox Codwelt, como
-                            <a href="/comprimir-imagenes-online" class="link-primary">
+                            <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                 comprimir imágenes online
                             </a>,
                             <a href="/redimensionar-imagenes-online" class="link-primary">
@@ -418,6 +458,11 @@ onBeforeUnmount(() => {
     border-color: #0d6efd;
     transform: translateY(-1px);
     cursor: pointer;
+}
+
+.upload-area.is-dragging {
+    background-color: #e0ebff;
+    border-color: #0d6efd;
 }
 
 .preview-box {

@@ -11,7 +11,7 @@ return [
                     'path' => '/comprimir-imagenes-online-gratis',
                     'title' => 'Comprimir imágenes online gratis sin perder calidad | Toolbox Codwelt',
                     'description' => 'Reduce el peso de tus imágenes JPG, PNG y WebP sin perder calidad visible. Comprime varias imágenes online gratis con Toolbox de Codwelt.',
-                    'h1' => 'Comprimir imágenes online gratis',
+                    'h1' => '🗜️ Comprimir imágenes online gratis',
                     'keywords' => [
                         'comprimir imágenes online',
                         'reducir peso de imágenes',
@@ -37,7 +37,7 @@ return [
                     'path' => '/quitar-fondo-imagen-gratis',
                     'title' => 'Quitar fondo de imágenes online gratis | Toolbox Codwelt',
                     'description' => 'Elimina el fondo de tus imágenes automáticamente con inteligencia artificial. Descarga tu imagen en PNG transparente en distintos tamaños, lista para usar en tu web o redes sociales.',
-                    'h1' => 'Quitar fondo de imágenes online',
+                    'h1' => '✂️ Quitar fondo de imágenes online',
                     'keywords' => [
                         'quitar fondo imagen',
                         'borrar fondo foto online',
@@ -68,7 +68,7 @@ return [
                     'path' => '/redimensionar-imagenes-online-gratis',
                     'title' => 'Redimensionar imágenes online gratis | Toolbox Codwelt',
                     'description' => 'Cambia el tamaño de tus imágenes online en píxeles o proporción, manteniendo la calidad y el formato. Ideal para redes sociales, páginas web y tiendas virtuales.',
-                    'h1' => 'Redimensionar imágenes online gratis',
+                    'h1' => '📐 Redimensionar imágenes online gratis',
                     'keywords' => [
                         'redimensionar imágenes online',
                         'cambiar tamaño de imágenes',
@@ -95,11 +95,11 @@ return [
 
                 'webp_to_png' => [
                     'route' => 'tools.webp-to-png',
-                    'slug' => 'convertir-webp-a-png-gratis',
-                    'path' => '/convertir-webp-a-png-gratis',
+                    'slug' => 'convertidor-imagenes-universal',
+                    'path' => '/convertidor-imagenes-universal',
                     'title' => 'Convertir imágenes a cualquier formato online gratis | Toolbox Codwelt',
                     'description' => 'Convierte imágenes entre formatos (PNG, JPG, WEBP, GIF, BMP o TIFF) de forma rápida y gratuita. Sube tu archivo o pega una URL y descarga el resultado optimizado.',
-                    'h1' => 'Convertir imágenes a cualquier formato online',
+                    'h1' => '🔄 Convertir imágenes a cualquier formato online',
                     'keywords' => [
                         'convertir imágenes online',
                         'cambiar formato de imagen',
@@ -107,7 +107,7 @@ return [
                         'webp a png',
                         'convertidor de imágenes',
                     ],
-                    'canonical' => 'https://toolsbox.codwelt.com/convertir-webp-a-png-gratis',
+                    'canonical' => 'https://toolsbox.codwelt.com/convertidor-imagenes-universal',
                     'faq' => [
                         [
                             'question' => '¿Qué formatos puedo convertir con esta herramienta?',
@@ -130,7 +130,7 @@ return [
                     'path' => '/poner-marca-de-agua-imagen-gratis',
                     'title' => 'Poner marca de agua a imágenes online gratis | Toolbox Codwelt',
                     'description' => 'Agrega marcas de agua a tus imágenes online de forma fácil y gratuita. Sube tu imagen y tu logo, elige la posición, la opacidad y el tamaño de la marca de agua, y descarga el resultado listo para usar.',
-                    'h1' => 'Poner marca de agua a imágenes online',
+                    'h1' => '💧 Poner marca de agua a imágenes online',
                     'keywords' => [
                         'poner marca de agua imagen',
                         'marca de agua online',
@@ -161,7 +161,7 @@ return [
                     'path' => '/generador-favicons-online',
                     'title' => 'Generador de favicons online gratis | Toolbox Codwelt',
                     'description' => 'Sube una imagen y genera automáticamente tu favicon.ico, iconos PNG en distintos tamaños y el código HTML necesario para integrarlos en tu sitio web.',
-                    'h1' => 'Generador de favicons online',
+                    'h1' => '⭐ Generador de favicons online',
                     'keywords' => [
                         'generar favicon',
                         'crear favicon online',
@@ -187,7 +187,7 @@ return [
                 ],
             ],
         ],
-        'videos' => [
+       /** 'videos' => [
             'label' => 'Videos',
             'items' => [
                 'video_compressor' => [
@@ -196,7 +196,7 @@ return [
                     'path' => '/comprimir-videos-online',
                     'title' => 'Comprimir videos online gratis | Toolbox Codwelt',
                     'description' => 'Reduce el tamaño de tus videos MP4 y MOV online, eligiendo el porcentaje de compresión y la resolución ideal para web, redes sociales o mensajería, y descarga el resultado en MP4.',
-                    'h1' => 'Comprimir videos online gratis',
+                    'h1' => '🎥 Comprimir videos online gratis',
                     'keywords' => [
                         'comprimir videos online',
                         'reducir peso video mp4',
@@ -221,9 +221,224 @@ return [
                     ],
                 ],
             ],
-        ],
+        ], */
         'herramientas' => [
             'label' => 'Herramientas',
+            'items' => [
+                'html_to_text' => [
+                    'route' => 'tools.html-to-text',
+                    'slug' => 'convertir-html-a-texto',
+                    'path' => '/convertir-html-a-texto',
+                    'title' => 'Convertir HTML a texto plano online gratis | Toolbox Codwelt',
+                    'description' => 'Pega código HTML y obtén un texto plano limpio sin etiquetas, ideal para correos, notas rápidas o migrar contenido a editores simples.',
+                    'h1' => '📝 Convertir HTML a texto plano online',
+                    'keywords' => [
+                        'convertir html a texto',
+                        'html a texto plano',
+                        'eliminar etiquetas html',
+                        'limpiar html',
+                        'extraer texto de html',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/convertir-html-a-texto',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué hace el conversor de HTML a texto?',
+                            'answer' => 'Quita etiquetas, estilos y scripts de tu código HTML y te entrega solo el texto plano listo para usar en editores o correos.',
+                        ],
+                        [
+                            'question' => '¿Puedo conservar saltos de línea importantes?',
+                            'answer' => 'Sí, la herramienta respeta los saltos de línea generados por párrafos, listas y saltos manuales para que el texto siga siendo legible.',
+                        ],
+                        [
+                            'question' => '¿La conversión se realiza en el servidor?',
+                            'answer' => 'No, todo el proceso ocurre en tu navegador. Tu código HTML no se envía a ningún servidor ni se almacena.',
+                        ],
+                    ],
+                ],
+                'html_formatter' => [
+                    'route' => 'tools.html-formatter',
+                    'slug' => 'formatear-html-online',
+                    'path' => '/formatear-html-online',
+                    'title' => 'Formatear y validar HTML online gratis | Toolbox Codwelt',
+                    'description' => 'Pega tu HTML, detecta errores comunes y obtén una versión limpia y ordenada lista para copiar o descargar.',
+                    'h1' => '📄 Formatear y validar HTML online',
+                    'keywords' => [
+                        'formatear html',
+                        'validar html online',
+                        'arreglar html',
+                        'beautify html',
+                        'html formatter',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/formatear-html-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo detectar errores en mi HTML?',
+                            'answer' => 'Pega tu código y la herramienta intentará parsearlo como XHTML para reportar etiquetas sin cerrar, atributos mal formados y otros problemas comunes.',
+                        ],
+                        [
+                            'question' => '¿El formateo modifica mi contenido?',
+                            'answer' => 'Solo se reorganizan sangrías y saltos de línea para hacer el código más legible. No se alteran textos ni atributos.',
+                        ],
+                        [
+                            'question' => '¿Se envía mi HTML al servidor?',
+                            'answer' => 'No. Todo el procesamiento y validación ocurre en tu navegador. Nada se almacena en nuestros servidores.',
+                        ],
+                    ],
+                ],
+                'css_formatter' => [
+                    'route' => 'tools.css-formatter',
+                    'slug' => 'formatear-css-online',
+                    'path' => '/formatear-css-online',
+                    'title' => 'Formatear y validar CSS online gratis | Toolbox Codwelt',
+                    'description' => 'Pega tu CSS, detecta reglas con errores y obtén una versión formateada lista para copiar o descargar.',
+                    'h1' => '🎨 Formatear y validar CSS online',
+                    'keywords' => [
+                        'formatear css',
+                        'validar css online',
+                        'arreglar css',
+                        'css formatter',
+                        'css beautify',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/formatear-css-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo detecta errores esta herramienta?',
+                            'answer' => 'Intenta cargar tu CSS en el navegador usando la API CSSStyleSheet. Si hay reglas mal cerradas o sintaxis inválida, se muestra el mensaje de error devuelto por el parser.',
+                        ],
+                        [
+                            'question' => '¿Qué se modifica al formatear?',
+                            'answer' => 'Solo se ajustan sangrías, saltos de línea y espacios alrededor de llaves y puntos y coma. Las propiedades y valores se conservan.',
+                        ],
+                        [
+                            'question' => '¿Mi CSS se envía al servidor?',
+                            'answer' => 'No. Todo se procesa en tu navegador; nada se guarda ni se envía a servidores.',
+                        ],
+                    ],
+                ],
+                'xml_formatter' => [
+                    'route' => 'tools.xml-formatter',
+                    'slug' => 'formatear-xml-online',
+                    'path' => '/formatear-xml-online',
+                    'title' => 'Formatear y validar XML online gratis | Toolbox Codwelt',
+                    'description' => 'Pega tu XML, detecta errores de estructura y obtén una versión formateada lista para copiar o descargar.',
+                    'h1' => '🧾 Formatear y validar XML online',
+                    'keywords' => [
+                        'formatear xml',
+                        'validar xml online',
+                        'arreglar xml',
+                        'xml formatter',
+                        'xml beautify',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/formatear-xml-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo se detectan los errores en mi XML?',
+                            'answer' => 'Se usa el parser XML del navegador para validar la estructura y mostrar mensajes si faltan etiquetas, hay caracteres inválidos o la sintaxis no es correcta.',
+                        ],
+                        [
+                            'question' => '¿Qué modifica el formateo?',
+                            'answer' => 'Solo organiza indentación y saltos de línea para que el XML sea legible; no altera nodos ni atributos.',
+                        ],
+                        [
+                            'question' => '¿Se envía mi XML al servidor?',
+                            'answer' => 'No. Todo se procesa en tu navegador; nada se almacena ni se envía a servidores.',
+                        ],
+                    ],
+                ],
+                'json_formatter' => [
+                    'route' => 'tools.json-formatter',
+                    'slug' => 'formatear-json-online',
+                    'path' => '/formatear-json-online',
+                    'title' => 'Formatear y validar JSON online gratis | Toolbox Codwelt',
+                    'description' => 'Pega tu JSON, detecta errores de sintaxis y obtén una versión formateada lista para copiar o descargar.',
+                    'h1' => '🧩 Formatear y validar JSON online',
+                    'keywords' => [
+                        'formatear json',
+                        'validar json online',
+                        'arreglar json',
+                        'json formatter',
+                        'json beautify',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/formatear-json-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo detecta errores esta herramienta?',
+                            'answer' => 'Usa el parser nativo de JSON en tu navegador. Si hay comas extra, llaves faltantes o tipos inválidos, se muestra el mensaje de error exacto.',
+                        ],
+                        [
+                            'question' => '¿Qué cambia el formateo?',
+                            'answer' => 'Solo agrega saltos de línea e indentación para hacerlo legible; no se alteran valores ni llaves.',
+                        ],
+                        [
+                            'question' => '¿Mi JSON se envía al servidor?',
+                            'answer' => 'No. Todo se procesa en tu navegador, sin almacenar ni enviar tu información.',
+                        ],
+                    ],
+                ],
+                'javascript_formatter' => [
+                    'route' => 'tools.javascript-formatter',
+                    'slug' => 'formatear-javascript-online',
+                    'path' => '/formatear-javascript-online',
+                    'title' => 'Formatear y validar JavaScript online gratis | Toolbox Codwelt',
+                    'description' => 'Pega tu JavaScript, detecta errores de sintaxis y obtén una versión formateada lista para copiar o descargar.',
+                    'h1' => '💻 Formatear y validar JavaScript online',
+                    'keywords' => [
+                        'formatear javascript',
+                        'validar javascript online',
+                        'arreglar js',
+                        'js formatter',
+                        'javascript beautify',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/formatear-javascript-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo detecta errores esta herramienta?',
+                            'answer' => 'Usa el parser nativo de JavaScript en tu navegador (new Function) para validar la sintaxis y mostrar el mensaje de error si hay llaves/comas/parentesis mal ubicados.',
+                        ],
+                        [
+                            'question' => '¿Qué cambia el formateo?',
+                            'answer' => 'Solo agrega indentación y saltos de línea básicos alrededor de llaves, puntos y coma y declaraciones; no se modifican nombres de variables ni lógica.',
+                        ],
+                        [
+                            'question' => '¿Mi código se envía al servidor?',
+                            'answer' => 'No. Todo se procesa en tu navegador; nada se envía ni se guarda en servidores.',
+                        ],
+                    ],
+                ],
+                'json_to_array' => [
+                    'route' => 'tools.json-to-array',
+                    'slug' => 'convertir-json-a-array',
+                    'path' => '/convertir-json-a-array',
+                    'title' => 'Convertir JSON a array online gratis | Toolbox Codwelt',
+                    'description' => 'Pega tu JSON, valida errores y obtén el array listo para copiar o descargar junto al JSON corregido.',
+                    'h1' => '🗂️ Convertir JSON a array online',
+                    'keywords' => [
+                        'convertir json a array',
+                        'json a array online',
+                        'json to array',
+                        'validar json',
+                        'json formatter',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/convertir-json-a-array',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo se validan los errores del JSON?',
+                            'answer' => 'Se usa el parser nativo de JSON en tu navegador para detectar comas extra, llaves faltantes o sintaxis inválida y se muestra el mensaje exacto.',
+                        ],
+                        [
+                            'question' => '¿Cómo se genera el array?',
+                            'answer' => 'Si el JSON es un array, se formatea directamente. Si es un objeto, se convierte a un array de pares [clave, valor] para que puedas iterarlo fácilmente.',
+                        ],
+                        [
+                            'question' => '¿Se envía mi JSON al servidor?',
+                            'answer' => 'No. Todo se procesa en tu navegador; nada se envía ni se almacena en servidores.',
+                        ],
+                    ],
+                ],
+            ]
+        ],
+        'utilities' => [
+            'label' => 'Utilidades',
             'items' => [
                 'whatsapp_link_generator' => [
                     'route' => 'tools.whatsapp-link-generator',
@@ -231,7 +446,7 @@ return [
                     'path' => '/generador-links-whatsapp',
                     'title' => 'Generador de links de WhatsApp para páginas web | Toolbox Codwelt',
                     'description' => 'Crea enlaces de WhatsApp personalizados para tu página web con mensaje predefinido, formato de texto, emojis y plantillas rápidas para ventas, soporte y consultas.',
-                    'h1' => 'Generador de links de WhatsApp para tu página web',
+                    'h1' => '💬 Generador de links de WhatsApp para tu página web',
                     'keywords' => [
                         'generador link whatsapp',
                         'crear enlace whatsapp',
@@ -261,7 +476,7 @@ return [
                     'path' => '/biblioteca-emojis',
                     'title' => 'Biblioteca de emojis estilo WhatsApp con buscador | Toolbox Codwelt',
                     'description' => 'Explora y copia emojis organizados por categorías al estilo WhatsApp. Filtra por tipo de emoji, búscalos por nombre o palabra clave y cópialos con un solo clic para usar en tus mensajes y páginas web.',
-                    'h1' => 'Biblioteca de emojis estilo WhatsApp',
+                    'h1' => '😃 Biblioteca de emojis estilo WhatsApp',
                     'keywords' => [
                         'biblioteca de emojis',
                         'emojis para copiar',
@@ -285,17 +500,12 @@ return [
                         ],
                     ],
                 ],
-            ]
-        ],
-        'utilities' => [
-            'label' => 'Utilidades',
-            'items' => [
                 'country_library' => [
                     'route' => 'tools.country-library',
                     'slug' => 'biblioteca-paises-mundo',
                     'path' => '/biblioteca-paises-mundo',
                     'title' => 'Biblioteca de países del mundo: códigos, indicativos y banderas | Toolbox Codwelt',
-                    'h1' => 'Biblioteca de países del mundo',
+                    'h1' => '🌎 Biblioteca de países del mundo',
                     'description' => 'Consulta países del mundo con su código ISO, indicativo telefónico, bandera y moneda. Ideal para formularios, integraciones de WhatsApp y herramientas digitales.',
                     'keywords' => [
                         'países del mundo',

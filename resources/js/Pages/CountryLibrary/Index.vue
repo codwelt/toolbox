@@ -15,7 +15,14 @@ const props = defineProps({
     },
 });
 
-const { ogImageUrl } = useOgImage(props.seo);
+const seoData = computed(() => props.seo || {});
+const pageTitle = computed(() => seoData.value.title || 'Biblioteca de países del mundo');
+const pageDescription = computed(
+    () =>
+        seoData.value.description ||
+        'Consulta países con código ISO, indicativo telefónico, bandera y moneda en un solo lugar.'
+);
+const { ogImageUrl } = useOgImage(seoData.value);
 
 const search = ref('');
 const copyFeedback = ref('');
@@ -90,7 +97,7 @@ async function copyDialCode(country) {
 const jsonLdScriptEl = ref(null);
 
 onMounted(() => {
-    const faqStructured = (props.seo.faq || []).map((item) => ({
+    const faqStructured = (seoData.value.faq || []).map((item) => ({
         '@type': 'Question',
         name: item.question,
         acceptedAnswer: {
@@ -102,10 +109,10 @@ onMounted(() => {
     const jsonLdObj = {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: props.seo.title,
-        url: props.seo.canonical || props.seo.path || '',
+        name: pageTitle.value,
+        url: seoData.value.canonical || seoData.value.path || '',
         applicationCategory: 'Utility',
-        description: props.seo.description,
+        description: pageDescription.value,
         mainEntity: {
             '@type': 'FAQPage',
             mainEntity: faqStructured,
@@ -130,38 +137,43 @@ onBeforeUnmount(() => {
     <div class="bg-light min-vh-100">
         <!-- HEAD SEO -->
 
-        <Head :title="seo.title">
-            <meta name="description" :content="seo.description" />
-            <meta v-if="seo.keywords && seo.keywords.length" name="keywords" :content="seo.keywords.join(', ')" />
+        <Head :title="pageTitle">
+            <meta name="description" :content="pageDescription" />
+            <meta v-if="seoData.keywords && seoData.keywords.length" name="keywords" :content="seoData.keywords.join(', ')" />
+            <meta name="robots" content="index,follow" />
             <meta property="og:type" content="website" />
-            <meta property="og:title" :content="seo.title" />
-            <meta property="og:description" :content="seo.description" />
-            <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:title" :content="pageTitle" />
+            <meta property="og:description" :content="pageDescription" />
+            <meta property="og:url" :content="seoData.canonical" />
             <meta property="og:image" :content="ogImageUrl" />
-            <meta property="og:image:alt" :content="seo.title" />
+            <meta property="og:image:alt" :content="pageTitle" />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" :content="seo.title" />
-            <meta name="twitter:description" :content="seo.description" />
+            <meta name="twitter:title" :content="pageTitle" />
+            <meta name="twitter:description" :content="pageDescription" />
             <meta name="twitter:image" :content="ogImageUrl" />
-            <link rel="canonical" :href="seo.canonical" />
+            <link rel="canonical" :href="seoData.canonical" />
         </Head>
 
-        <div class="container py-5">
-            <!-- HERO -->
-            <div class="row mb-4">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h1 class="display-5 fw-bold mb-3">
-                        {{ seo.h1 }}
-                    </h1>
-                    <p class="lead text-muted mb-2">
-                        {{ seo.description }}
-                    </p>
-                    <p class="text-secondary">
-                        Filtra por nombre de país, código corto, indicativo telefónico o moneda y
-                        copia el indicativo con un solo clic.
-                    </p>
+        <section class="py-5 bg-dark text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-10">
+                        <p class="text-uppercase small mb-2 text-info fw-semibold">Datos de países</p>
+                        <h1 class="display-5 fw-bold mb-3">{{ seoData.h1 }}</h1>
+                        <p class="lead text-white-50 mb-3">
+                            {{ pageDescription }}
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-info text-dark">Indicativos</span>
+                            <span class="badge bg-info text-dark">ISO y monedas</span>
+                            <span class="badge bg-info text-dark">Optimizado SEO</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="container py-5">
 
             <!-- CONTENIDO PRINCIPAL -->
             <div class="row justify-content-center">
@@ -270,7 +282,7 @@ onBeforeUnmount(() => {
                                 </h2>
 
                                 <div class="accordion" id="accordionFaqCountry">
-                                    <div class="accordion-item" v-for="(item, index) in seo.faq" :key="index">
+                                    <div class="accordion-item" v-for="(item, index) in seoData.faq" :key="index">
                                         <h2 class="accordion-header" :id="`heading-country-${index}`">
                                             <button class="accordion-button collapsed" type="button"
                                                 data-bs-toggle="collapse" :data-bs-target="`#collapse-country-${index}`"

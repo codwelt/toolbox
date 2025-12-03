@@ -14,22 +14,25 @@ const props = defineProps({
     },
 });
 
-const { ogImageUrl } = useOgImage(props.seo);
+const seoData = computed(() => props.seo || {});
 const displayTitle = computed(() =>
-    props.seo.h1?.toLowerCase().includes('webp') && props.seo.h1?.toLowerCase().includes('png')
+    seoData.value.h1?.toLowerCase().includes('webp') && seoData.value.h1?.toLowerCase().includes('png')
         ? 'Convertir imágenes a cualquier formato online'
-        : props.seo.h1
+        : seoData.value.h1
 );
 const displayDescription = computed(() =>
-    props.seo.description?.toLowerCase().includes('webp') && props.seo.description?.toLowerCase().includes('png')
+    seoData.value.description?.toLowerCase().includes('webp') && seoData.value.description?.toLowerCase().includes('png')
         ? 'Convierte imágenes entre formatos (PNG, JPG, WEBP, GIF, BMP o TIFF), subiendo varias a la vez, seleccionando cuáles procesar y descargando cada resultado por separado.'
-        : props.seo.description
+        : seoData.value.description
 );
 const displayHeadTitle = computed(() =>
-    props.seo.title?.toLowerCase().includes('webp') && props.seo.title?.toLowerCase().includes('png')
+    seoData.value.title?.toLowerCase().includes('webp') && seoData.value.title?.toLowerCase().includes('png')
         ? 'Convertir imágenes a cualquier formato online gratis | Toolbox Codwelt'
-        : props.seo.title
+        : seoData.value.title
 );
+const pageTitle = computed(() => displayHeadTitle.value || seoData.value.title);
+const pageDescription = computed(() => displayDescription.value || seoData.value.description);
+const { ogImageUrl } = useOgImage(seoData.value);
 const availableFormats = [
     { value: 'png', label: 'PNG', helper: 'Mantiene transparencia y alta compatibilidad.' },
     { value: 'jpg', label: 'JPG', helper: 'Ideal para fotos y menor peso.' },
@@ -213,7 +216,7 @@ function removeFile(id) {
 
 // -------------------- JSON-LD SEO --------------------
 const jsonLd = computed(() => {
-    const faqStructured = (props.seo.faq || []).map((item) => ({
+    const faqStructured = (seoData.value.faq || []).map((item) => ({
         '@type': 'Question',
         name: item.question,
         acceptedAnswer: {
@@ -225,18 +228,18 @@ const jsonLd = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: displayHeadTitle.value || props.seo.title,
-        url: props.seo.url,
+        name: pageTitle.value,
+        url: seoData.value.url,
         applicationCategory: 'Multimedia',
         offers: {
             '@type': 'Offer',
             price: '0',
             priceCurrency: 'USD',
         },
-        description: displayDescription.value || props.seo.description,
+        description: pageDescription.value,
         potentialAction: {
             '@type': 'UseAction',
-            target: props.seo.url,
+            target: seoData.value.url,
         },
         mainEntity: {
             '@type': 'FAQPage',
@@ -269,38 +272,42 @@ onBeforeUnmount(() => {
     <div class="bg-light min-vh-100">
         <!-- HEAD SEO -->
 
-        <Head :title="displayHeadTitle || seo.title">
-            <meta name="description" :content="displayDescription || seo.description" />
-            <meta v-if="seo.keywords && seo.keywords.length" name="keywords" :content="seo.keywords.join(', ')" />
+        <Head :title="pageTitle">
+            <meta name="description" :content="pageDescription" />
+            <meta v-if="seoData.keywords && seoData.keywords.length" name="keywords" :content="seoData.keywords.join(', ')" />
+            <meta name="robots" content="index,follow" />
             <meta property="og:type" content="website" />
-            <meta property="og:title" :content="displayHeadTitle || seo.title" />
-            <meta property="og:description" :content="displayDescription || seo.description" />
-            <meta property="og:url" :content="seo.canonical" />
+            <meta property="og:title" :content="pageTitle" />
+            <meta property="og:description" :content="pageDescription" />
+            <meta property="og:url" :content="seoData.canonical" />
             <meta property="og:image" :content="ogImageUrl" />
-            <meta property="og:image:alt" :content="displayHeadTitle || seo.title" />
+            <meta property="og:image:alt" :content="pageTitle" />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" :content="displayHeadTitle || seo.title" />
-            <meta name="twitter:description" :content="displayDescription || seo.description" />
+            <meta name="twitter:title" :content="pageTitle" />
+            <meta name="twitter:description" :content="pageDescription" />
             <meta name="twitter:image" :content="ogImageUrl" />
-            <link rel="canonical" :href="seo.canonical" />
+            <link rel="canonical" :href="seoData.canonical" />
         </Head>
-
-        <div class="container py-5">
-            <!-- HERO -->
-            <div class="row mb-4">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h1 class="display-5 fw-bold mb-3">
-                        {{ displayTitle || seo.h1 }}
-                    </h1>
-                    <p class="lead text-muted mb-2">
-                        {{ displayDescription || seo.description }}
-                    </p>
-                    <p class="text-secondary">
-                        Convierte una o varias imágenes al formato que necesites, elige cuáles procesar y descarga cada
-                        resultado listo para editores, CMS o proyectos web.
-                    </p>
+        <section class="py-5 bg-dark text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-10">
+                        <p class="text-uppercase small mb-2 text-info fw-semibold">Conversor de imágenes</p>
+                        <h1 class="display-5 fw-bold mb-3">{{ displayTitle }}</h1>
+                        <p class="lead text-white-50 mb-3">
+                            {{ pageDescription }}
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-info text-dark">Varios formatos</span>
+                            <span class="badge bg-info text-dark">Procesa múltiples archivos</span>
+                            <span class="badge bg-info text-dark">Optimizado SEO</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="container py-5">
 
             <!-- TARJETA PRINCIPAL -->
             <div class="row justify-content-center mb-4">
@@ -536,7 +543,7 @@ onBeforeUnmount(() => {
                         </h2>
 
                         <div class="accordion" id="accordionFaqImageConverter">
-                            <div class="accordion-item" v-for="(item, index) in seo.faq" :key="index">
+                            <div class="accordion-item" v-for="(item, index) in seoData.faq" :key="index">
                                 <h2 class="accordion-header" :id="`heading-image-converter-${index}`">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         :data-bs-target="`#collapse-image-converter-${index}`" aria-expanded="false"

@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
                 <div class="col-lg-10 mx-auto text-center">
                     <h1 class="display-5 fw-bold mb-3">
                         Toolsbox
-                        <img src="/public/unicornio.png" alt="Toolsbox codwelt" style="width: 150px; margin-top: -50px;">
+                        <img src="/public/toolsbox-2.png" alt="Toolsbox codwelt" style="width: 150px; margin-top: -30px;">
                     </h1>
                     <p class="lead text-muted mb-2">
                         Suite de herramientas online para optimizar imágenes y recursos digitales,

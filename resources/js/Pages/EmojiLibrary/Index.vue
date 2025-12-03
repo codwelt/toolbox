@@ -394,7 +394,7 @@ onBeforeUnmount(() => {
                                     <a href="/generador-links-whatsapp" class="link-primary">
                                         generar enlaces de WhatsApp
                                     </a>,
-                                    <a href="/comprimir-imagenes-online" class="link-primary">
+                                    <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                         comprimir imágenes
                                     </a>
                                     y

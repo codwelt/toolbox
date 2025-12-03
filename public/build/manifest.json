@@ -1,11 +1,11 @@
 {
-  "public/img/icono.png": {
-    "file": "assets/icono-B_NOuYom.png",
-    "src": "public/img/icono.png"
+  "public/toolsbox-2.png": {
+    "file": "assets/toolsbox-2-CDMT34jO.png",
+    "src": "public/toolsbox-2.png"
   },
-  "public/unicornio.png": {
-    "file": "assets/unicornio-W8kfl5ug.png",
-    "src": "public/unicornio.png"
+  "public/toolsbox.png": {
+    "file": "assets/toolsbox-BG4Llrt2.png",
+    "src": "public/toolsbox.png"
   },
   "resources/css/app.css": {
     "file": "assets/app-tn0RQdqM.css",
@@ -17,17 +17,17 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-B_P0P3fA.js",
+    "file": "assets/app-Uspddoko.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-B4lAJRsR.css",
+      "assets/app-DLQPOAwq.css",
       "assets/app-tn0RQdqM.css"
     ],
     "assets": [
-      "assets/icono-B_NOuYom.png",
-      "assets/unicornio-W8kfl5ug.png"
+      "assets/toolsbox-BG4Llrt2.png",
+      "assets/toolsbox-2-CDMT34jO.png"
     ]
   }
 }
