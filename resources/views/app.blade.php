@@ -5,16 +5,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @php
-        $serverSeo = null;
         $toolsCategories = config('tools.categories', []);
         $currentPath = '/' . trim(request()->path(), '/');
+        $defaultSeo = [
+            'title' => 'Toolbox Codwelt | Herramientas online gratuitas para imágenes y recursos digitales',
+            'description' => 'Suite de herramientas online gratuitas de Codwelt para comprimir imágenes, redimensionar, quitar fondo, convertir formatos, poner marcas de agua y más.',
+            'canonical' => url()->current(),
+        ];
+
+        $serverSeo = $defaultSeo;
 
         foreach ($toolsCategories as $category) {
             foreach ($category['items'] ?? [] as $tool) {
                 if (($tool['path'] ?? null) === $currentPath) {
                     $serverSeo = [
-                        'title' => $tool['title'] ?? config('app.name', 'ToolsBox'),
-                        'description' => $tool['description'] ?? '',
+                        'title' => $tool['title'] ?? $defaultSeo['title'],
+                        'description' => $tool['description'] ?? $defaultSeo['description'],
                         'canonical' => $tool['canonical'] ?? url()->current(),
                     ];
                     break 2;
@@ -22,7 +28,7 @@
             }
         }
 
-        $ogImage = url('/unicornio.png');
+        $ogImage = asset('toolsbox.png');
     @endphp
 
     <!-- Favicons generados con Toolbox Codwelt -->
