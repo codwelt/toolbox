@@ -32,6 +32,10 @@ use App\Http\Controllers\Web\LoremGeneratorController;
 use App\Http\Controllers\Web\QrGeneratorController;
 use App\Http\Controllers\Web\BarcodeGeneratorController;
 use App\Http\Controllers\Web\TextAnalyzerController;
+use App\Http\Controllers\Web\AiWebsiteDetectorController;
+use App\Http\Controllers\Web\SeoOptimizerCheckerController;
+use App\Http\Controllers\Api\SeoAnalyzerApiController;
+use App\Http\Controllers\Api\AiWebsiteDetectorApiController;
 
 Route::get('/biblioteca-paises-mundo', [CountryLibraryController::class, 'index'])->name('tools.country-library');
 Route::get('/biblioteca-emojis', [EmojiLibraryController::class, 'index'])->name('tools.emoji-library');
@@ -63,3 +67,7 @@ Route::get('/generador-texto-lorem-ipsum', [LoremGeneratorController::class, 'in
 Route::get('/generador-codigo-qr-online', [QrGeneratorController::class, 'index'])->name('tools.qr-generator');
 Route::get('/generador-codigo-barras-online', [BarcodeGeneratorController::class, 'index'])->name('tools.barcode-generator');
 Route::get('/analizador-texto-ia', [TextAnalyzerController::class, 'index'])->name('tools.text-analyzer');
+Route::get('/detector-pagina-web-ia', [AiWebsiteDetectorController::class, 'index'])->name('tools.ai-website-detector');
+Route::get('/analizador-seo-url', [SeoOptimizerCheckerController::class, 'index'])->name('tools.seo-optimizer-checker');
+Route::post('/api/tools/seo-analyzer', [SeoAnalyzerApiController::class, 'analyze'])->name('api.tools.seo-analyzer');
+Route::post('/api/tools/ai-website-detector', [AiWebsiteDetectorApiController::class, 'analyze'])->name('api.tools.ai-website-detector');

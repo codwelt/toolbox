@@ -499,6 +499,66 @@ return [
                         ],
                     ],
                 ],
+                'ai_website_detector' => [
+                    'route' => 'tools.ai-website-detector',
+                    'slug' => 'detector-pagina-web-ia',
+                    'path' => '/detector-pagina-web-ia',
+                    'title' => 'Detector de páginas web creadas con IA online gratis | Toolbox Codwelt',
+                    'description' => 'Ingresa una URL y detecta señales de que el sitio fue generado con IA: tecnologías usadas, metaetiquetas y patrones de texto. Resultado estimado sin enviar datos a servidores.',
+                    'h1' => '🤖 Detector de páginas web hechas con IA',
+                    'keywords' => [
+                        'detectar pagina web con ia',
+                        'ai website detector',
+                        'revisar si una web es hecha con ia',
+                        'analizar sitio web ia',
+                        'detector de inteligencia artificial web',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/detector-pagina-web-ia',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué analiza el detector de páginas con IA?',
+                            'answer' => 'Busca señales en el HTML como metaetiquetas, scripts de constructores web con IA y patrones de texto que suelen usarse en contenido generado automáticamente.',
+                        ],
+                        [
+                            'question' => '¿El análisis es definitivo?',
+                            'answer' => 'No. Es una estimación heurística. Un puntaje alto indica que hay varias señales, pero siempre debes revisar manualmente el sitio para confirmarlo.',
+                        ],
+                        [
+                            'question' => '¿Se envía la URL o el contenido a un servidor?',
+                            'answer' => 'No. El análisis se ejecuta en tu navegador. Solo se hace una petición para obtener el HTML de la URL que ingresas y evaluar sus señales.',
+                        ],
+                    ],
+                ],
+                'seo_optimizer_checker' => [
+                    'route' => 'tools.seo-optimizer-checker',
+                    'slug' => 'analizador-seo-url',
+                    'path' => '/analizador-seo-url',
+                    'title' => 'Analizador SEO de páginas web online gratis | Toolbox Codwelt',
+                    'description' => 'Pega una URL y obtén un porcentaje de optimización SEO: títulos, meta descripciones, encabezados, imágenes con alt, links internos y canónico.',
+                    'h1' => '📈 Analizador SEO rápido por URL',
+                    'keywords' => [
+                        'analizador seo gratis',
+                        'seo checker online',
+                        'analizar seo de una url',
+                        'seo on page analyzer',
+                        'porcentaje optimizacion seo',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/analizador-seo-url',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué evalúa el analizador SEO?',
+                            'answer' => 'Revisa título, meta descripción, etiquetas canónicas, robots, encabezados H1/H2, texto alternativo en imágenes y enlaces internos para estimar un puntaje SEO on-page.',
+                        ],
+                        [
+                            'question' => '¿El puntaje es exacto?',
+                            'answer' => 'Es una estimación heurística. Sirve como checklist rápido; siempre complementa con auditorías manuales y herramientas profesionales.',
+                        ],
+                        [
+                            'question' => '¿Se envía la URL al servidor?',
+                            'answer' => 'No. El HTML se lee en tu navegador; no almacenamos ni enviamos tus datos.',
+                        ],
+                    ],
+                ],
             ]
         ],
         'utilities' => [
