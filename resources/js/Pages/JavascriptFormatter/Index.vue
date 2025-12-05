@@ -29,6 +29,27 @@ const formattedJs = ref('');
 const errors = ref([]);
 const copied = ref(false);
 const downloadUrl = ref('');
+const errorLocation = ref(null);
+const textareaRef = ref(null);
+const lineNumbersRef = ref(null);
+const scrollTop = ref(0);
+const history = ref([]);
+
+const editorLineHeight = 24; // px
+const editorPadding = 12; // px
+const HISTORY_KEY = 'jsFormatterHistory';
+const HISTORY_LIMIT = 10;
+
+const lineCount = computed(() => Math.max(1, jsInput.value.split(/\r?\n/).length));
+const lineNumbersText = computed(() => Array.from({ length: lineCount.value }, (_, idx) => idx + 1).join('\n'));
+const errorHighlightStyle = computed(() => {
+    if (!errorLocation.value?.line) return null;
+    const top = editorPadding + (errorLocation.value.line - 1) * editorLineHeight - scrollTop.value;
+    return {
+        top: `${top}px`,
+        height: `${editorLineHeight}px`,
+    };
+});
 
 const stats = computed(() => ({
     originalLength: jsInput.value.length,
@@ -73,13 +94,67 @@ const jsonLd = computed(() =>
 
 const jsonLdScriptEl = ref(null);
 
+function lineColumnToIndex(text, line, column) {
+    const lines = text.split(/\r?\n/);
+    let index = 0;
+    for (let i = 0; i < line - 1 && i < lines.length; i++) {
+        index += lines[i].length + 1;
+    }
+    index += Math.max(0, (column || 1) - 1);
+    return Math.min(index, text.length);
+}
+
+function getJsErrorLocation(err, text) {
+    const stack = (err && err.stack) || '';
+    const stackMatch = stack.match(/<anonymous>:(\d+):(\d+)/);
+    if (stackMatch) {
+        const line = Number(stackMatch[1]) || 0;
+        const column = Number(stackMatch[2]) || 0;
+        if (line) {
+            return { line, column: column || 1, index: lineColumnToIndex(text, line, column || 1) };
+        }
+    }
+
+    const msgMatch = (err?.message || '').match(/line (\d+)(?: column (\d+))?/i);
+    if (msgMatch) {
+        const line = Number(msgMatch[1]) || 0;
+        const column = Number(msgMatch[2]) || 1;
+        if (line) {
+            return { line, column: column || 1, index: lineColumnToIndex(text, line, column || 1) };
+        }
+    }
+
+    return null;
+}
+
+function translateJsError(message, location) {
+    if (!message) return 'Error de sintaxis en JavaScript.';
+    let friendly = message;
+
+    if (/unexpected token/i.test(message)) {
+        friendly = 'Token inesperado en el código.';
+    } else if (/unexpected end of input/i.test(message)) {
+        friendly = 'El código está incompleto o falta cerrar llaves/paréntesis.';
+    } else if (/invalid or unexpected token/i.test(message)) {
+        friendly = 'Caracter inválido encontrado en el código.';
+    } else if (/missing \)/i.test(message)) {
+        friendly = 'Falta cerrar un paréntesis.';
+    }
+
+    if (location?.line && location?.column) {
+        return `${friendly} (línea ${location.line}, columna ${location.column}).`;
+    }
+    return friendly;
+}
+
 function detectJsErrors(code) {
     try {
         // eslint-disable-next-line no-new-func
         new Function(code);
-        return [];
+        return { messages: [], location: null };
     } catch (err) {
-        return [(err.message || 'Error de sintaxis en JavaScript').trim()];
+        const location = getJsErrorLocation(err, code);
+        return { messages: [translateJsError(err.message, location)], location };
     }
 }
 
@@ -111,30 +186,71 @@ function beautifyJs(code) {
     return lines.join('\n').replace(/\n{3,}/g, '\n\n');
 }
 
+function formatPartialJs(code, stopIndex) {
+    const target = code.slice(0, Math.max(0, stopIndex ?? 0));
+    let indent = 0;
+    const indentChar = '    ';
+    const lines = [];
+    let buffer = '';
+
+    const pushBuffer = () => {
+        const trimmed = buffer.trim();
+        if (!trimmed) {
+            buffer = '';
+            return;
+        }
+        const token = trimmed;
+        if (token.startsWith('}')) {
+            indent = Math.max(indent - 1, 0);
+        }
+        lines.push(`${indentChar.repeat(indent)}${token}`);
+        if (token.endsWith('{')) {
+            indent += 1;
+        }
+        buffer = '';
+    };
+
+    for (let i = 0; i < target.length; i++) {
+        const ch = target[i];
+        buffer += ch;
+        if (ch === ';' || ch === '\n' || ch === '{' || ch === '}') {
+            pushBuffer();
+        }
+    }
+    pushBuffer();
+
+    return lines.join('\n').replace(/\n{3,}/g, '\n\n').trimEnd();
+}
+
 function formatJs() {
     copied.value = false;
     errors.value = [];
     formattedJs.value = '';
     downloadUrl.value = '';
+    errorLocation.value = null;
 
-    const input = (jsInput.value || '').trim();
-    if (!input) {
+    const input = jsInput.value || '';
+    if (!input.trim()) {
         errors.value = ['Pega algún JavaScript para formatear.'];
         return;
     }
 
-    const foundErrors = detectJsErrors(input);
-    errors.value = foundErrors;
+    const { messages, location } = detectJsErrors(input);
+    errors.value = messages;
+    errorLocation.value = location;
+    if (messages.length) {
+        if (location?.index != null) {
+            formattedJs.value = formatPartialJs(input, location.index);
+        }
+        downloadUrl.value = '';
+        return;
+    }
 
     try {
         const pretty = beautifyJs(input);
         formattedJs.value = pretty;
-
-        const blob = new Blob([pretty], { type: 'application/javascript' });
-        if (downloadUrl.value) {
-            URL.revokeObjectURL(downloadUrl.value);
-        }
-        downloadUrl.value = URL.createObjectURL(blob);
+        setDownloadUrl(pretty);
+        addToHistory({ input, output: pretty, timestamp: Date.now() });
     } catch (error) {
         console.error(error);
         errors.value = ['No pudimos procesar el JavaScript.'];
@@ -166,7 +282,74 @@ const previewText = computed(
     () => formattedJs.value || 'El JavaScript formateado aparecerá aquí después de procesarlo.'
 );
 
+function handleScroll(event) {
+    scrollTop.value = event.target.scrollTop;
+    if (lineNumbersRef.value) {
+        lineNumbersRef.value.scrollTop = event.target.scrollTop;
+    }
+}
+
+function formatTimestamp(ts) {
+    try {
+        return new Date(ts).toLocaleString();
+    } catch (error) {
+        return '';
+    }
+}
+
+function setDownloadUrl(content) {
+    const blob = new Blob([content], { type: 'application/javascript' });
+    if (downloadUrl.value) {
+        URL.revokeObjectURL(downloadUrl.value);
+    }
+    downloadUrl.value = URL.createObjectURL(blob);
+}
+
+function loadHistory() {
+    try {
+        const raw = sessionStorage.getItem(HISTORY_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed)) {
+            history.value = parsed.slice(0, HISTORY_LIMIT);
+        }
+    } catch (error) {
+        console.error('No se pudo cargar el historial:', error);
+    }
+}
+
+function persistHistory() {
+    try {
+        sessionStorage.setItem(HISTORY_KEY, JSON.stringify(history.value.slice(0, HISTORY_LIMIT)));
+    } catch (error) {
+        console.error('No se pudo guardar el historial:', error);
+    }
+}
+
+function addToHistory(entry) {
+    const item = {
+        input: entry.input,
+        output: entry.output,
+        timestamp: entry.timestamp || Date.now(),
+    };
+    history.value = [item, ...history.value.filter((h) => h.output !== item.output)].slice(0, HISTORY_LIMIT);
+    persistHistory();
+}
+
+function restoreHistory(item) {
+    jsInput.value = item.input || '';
+    formattedJs.value = item.output || '';
+    errors.value = [];
+    errorLocation.value = null;
+    copied.value = false;
+    if (formattedJs.value) {
+        setDownloadUrl(formattedJs.value);
+    } else {
+        downloadUrl.value = '';
+    }
+}
+
 onMounted(() => {
+    loadHistory();
     formatJs();
 
     const el = document.createElement('script');
@@ -245,13 +428,24 @@ onBeforeUnmount(() => {
                                     </div>
                                 </div>
 
-                                <textarea
-                                    v-model="jsInput"
-                                    spellcheck="false"
-                                    rows="16"
-                                    class="form-control font-monospace"
-                                    placeholder="Pega tu JavaScript aquí..."
-                                ></textarea>
+                                <div class="editor-wrapper border rounded d-flex bg-light-subtle position-relative">
+                                    <div v-if="errorHighlightStyle" class="error-highlight" :style="errorHighlightStyle"></div>
+                                    <pre
+                                        ref="lineNumbersRef"
+                                        class="line-numbers small text-muted mb-0 user-select-none"
+                                        aria-hidden="true"
+                                        v-text="lineNumbersText"
+                                    ></pre>
+                                    <textarea
+                                        ref="textareaRef"
+                                        v-model="jsInput"
+                                        spellcheck="false"
+                                        rows="16"
+                                        class="editor-textarea form-control border-0 rounded-0 flex-grow-1 font-monospace"
+                                        placeholder="Pega tu JavaScript aquí..."
+                                        @scroll="handleScroll"
+                                    ></textarea>
+                                </div>
 
                                 <div v-if="errors.length" class="alert alert-warning mt-3 mb-0" role="alert">
                                     <p class="fw-semibold mb-2 small">Posibles problemas detectados:</p>
@@ -367,7 +561,87 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
                 </div>
+
+                <div class="row g-4 mt-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h2 class="h5 fw-semibold mb-0">Historial de esta sesión</h2>
+                                    <span class="badge bg-secondary-subtle text-dark" v-if="history.length">
+                                        {{ history.length }} entr{{ history.length === 1 ? 'ada' : 'adas' }}
+                                    </span>
+                                </div>
+
+                                <div v-if="!history.length" class="text-muted small">
+                                    Aún no tienes entradas en esta sesión. Formatea un JavaScript para guardarlo aquí.
+                                </div>
+
+                                <ul v-else class="list-group list-group-flush">
+                                    <li v-for="(item, idx) in history" :key="idx" class="list-group-item small d-flex">
+                                        <div class="flex-grow-1">
+                                            <div class="fw-semibold mb-1">
+                                                {{ formatTimestamp(item.timestamp) || 'Hace un momento' }}
+                                            </div>
+                                            <div class="text-muted text-truncate">
+                                                {{ (item.output || '').replace(/\\s+/g, ' ').slice(0, 180) || 'JS vacío' }}
+                                            </div>
+                                        </div>
+                                        <div class="ms-3 d-flex align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm" @click="restoreHistory(item)">
+                                                Restaurar
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
 </template>
+
+<style scoped>
+.editor-wrapper {
+    min-height: 360px;
+    overflow: hidden;
+}
+
+.editor-textarea {
+    resize: vertical;
+    font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    line-height: 24px;
+    padding: 12px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.editor-textarea:focus {
+    box-shadow: none;
+}
+
+.line-numbers {
+    width: 52px;
+    padding: 12px 8px 12px 12px;
+    line-height: 24px;
+    text-align: right;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin: 0;
+    white-space: pre;
+    background-color: #f8f9fa;
+    border-right: 1px solid #e9ecef;
+}
+
+.error-highlight {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: rgba(255, 193, 7, 0.25);
+    pointer-events: none;
+    border-top: 1px solid rgba(255, 193, 7, 0.5);
+    border-bottom: 1px solid rgba(255, 193, 7, 0.5);
+}
+</style>

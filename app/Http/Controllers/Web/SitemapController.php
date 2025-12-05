@@ -10,7 +10,10 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $xml = Cache::remember('sitemap.xml', 3600, function () {
+        $categories = config('tools.categories', []);
+        $cacheKey = 'sitemap.xml.' . md5(json_encode($categories));
+
+        $xml = Cache::remember($cacheKey, 3600, function () use ($categories) {
 
             $urls = [];
 
@@ -33,8 +36,6 @@ class SitemapController extends Controller
             */
 
             // 3) Recorrer categorías y sus herramientas desde config/tools.php
-            $categories = config('tools.categories', []);
-
             foreach ($categories as $categoryKey => $category) {
 
                 $items = $category['items'] ?? [];

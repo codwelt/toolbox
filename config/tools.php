@@ -155,6 +155,70 @@ return [
                     ],
                 ],
 
+                'qr_generator' => [
+                    'route' => 'tools.qr-generator',
+                    'slug' => 'generador-codigo-qr-online',
+                    'path' => '/generador-codigo-qr-online',
+                    'title' => 'Generador de código QR online gratis | Toolbox Codwelt',
+                    'description' => 'Crea códigos QR personalizados con colores, degradados, logo, fondo y marcos. Genera QR para enlaces, texto, correo, ubicación, teléfono, SMS, WhatsApp, Zoom, WiFi, vCard y eventos.',
+                    'h1' => '📱 Generador de código QR online',
+                    'keywords' => [
+                        'generador de codigo qr',
+                        'crear qr gratis',
+                        'qr con logo',
+                        'qr para wifi',
+                        'qr para whatsapp',
+                        'qr vcard',
+                        'qr evento',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/generador-codigo-qr-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué tipos de QR puedo crear?',
+                            'answer' => 'Puedes generar códigos QR para enlaces, texto, email con asunto/mensaje, ubicación, teléfono, SMS, WhatsApp, reuniones de Zoom, WiFi, vCard y eventos.',
+                        ],
+                        [
+                            'question' => '¿Puedo personalizar colores y agregar logo?',
+                            'answer' => 'Sí, elige colores sólidos o degradados (lineal o radial), fondo, marco y sube un logo para centrarlo en el QR.',
+                        ],
+                        [
+                            'question' => '¿Se almacena mi información?',
+                            'answer' => 'No, todo el código se genera en tu navegador y no se envía ni guarda en servidores externos.',
+                        ],
+                    ],
+                ],
+
+                'barcode_generator' => [
+                    'route' => 'tools.barcode-generator',
+                    'slug' => 'generador-codigo-barras-online',
+                    'path' => '/generador-codigo-barras-online',
+                    'title' => 'Generador de códigos de barras online gratis | Toolbox Codwelt',
+                    'description' => 'Crea códigos de barras personalizados (Code 39) con colores, fondo y tamaño ajustable. Genera, copia o descarga tu código en PNG.',
+                    'h1' => '🏷️ Generador de códigos de barras',
+                    'keywords' => [
+                        'generador codigo barras',
+                        'crear barcode online',
+                        'code 39 gratis',
+                        'codigo barras con texto',
+                        'barcode png',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/generador-codigo-barras-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué formato usa el generador?',
+                            'answer' => 'Actualmente usamos Code 39, compatible con lectores comunes y adecuado para textos cortos.',
+                        ],
+                        [
+                            'question' => '¿Puedo personalizar colores y tamaño?',
+                            'answer' => 'Sí, puedes elegir color de barras, fondo, alto, grosor y márgenes antes de descargar.',
+                        ],
+                        [
+                            'question' => '¿Se guarda la información que escribo?',
+                            'answer' => 'No, todo se genera en tu navegador y no se envía a servidores externos.',
+                        ],
+                    ],
+                ],
+
                 'favicons_generator' => [
                     'route' => 'tools.favicons',
                     'slug' => 'generador-favicons-online',
@@ -532,6 +596,72 @@ return [
                     ],
                 ]
             ]
-        ]
+        ],
+        'text' => [
+            'label' => 'Texto',
+            'items' => [
+                'word_counter' => [
+                    'route' => 'tools.word-counter',
+                    'slug' => 'contador-palabras-caracteres-online',
+                    'path' => '/contador-palabras-caracteres-online',
+                    'title' => 'Herramienta gratuita de contador de palabras y caracteres | Toolbox Codwelt',
+                    'description' => 'Cuenta palabras, caracteres, espacios, oraciones y párrafos en tiempo real. Calcula el tiempo de lectura promedio de tu texto y obtén métricas útiles para SEO, blogs y redes sociales.',
+                    'h1' => '📝 Herramienta gratuita de contador de palabras',
+                    'keywords' => [
+                        'contador de palabras online',
+                        'contador de caracteres',
+                        'tiempo de lectura de texto',
+                        'contador de párrafos',
+                        'contador de oraciones',
+                        'herramienta SEO texto',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/contador-palabras-caracteres-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo contar palabras y caracteres en línea?',
+                            'answer' => 'Pega tu texto y la herramienta mostrará en tiempo real el número de palabras, caracteres con y sin espacios, además de párrafos y oraciones.',
+                        ],
+                        [
+                            'question' => '¿Cómo se calcula el tiempo de lectura?',
+                            'answer' => 'Estimamos el tiempo de lectura usando un promedio de 200 palabras por minuto, útil para planificar artículos y publicaciones.',
+                        ],
+                        [
+                            'question' => '¿Mis textos se almacenan en el servidor?',
+                            'answer' => 'No. Todo el análisis ocurre en tu navegador y no se guarda ni envía el contenido a servidores externos.',
+                        ],
+                    ],
+                ],
+                'lorem_generator' => [
+                    'route' => 'tools.lorem-generator',
+                    'slug' => 'generador-texto-lorem-ipsum',
+                    'path' => '/generador-texto-lorem-ipsum',
+                    'title' => 'Generador de texto Lorem Ipsum en español | Toolbox Codwelt',
+                    'description' => 'Crea texto de prueba en segundos: títulos, párrafos, listas, por número de palabras, párrafos o bytes. Copia y descarga fácilmente tu Lorem Ipsum.',
+                    'h1' => '✍️ Generador de texto Lorem Ipsum',
+                    'keywords' => [
+                        'generador lorem ipsum',
+                        'texto de prueba',
+                        'generar párrafos lorem',
+                        'lorem ipsum online',
+                        'texto ficticio para diseño',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/generador-texto-lorem-ipsum',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué puedo generar con esta herramienta?',
+                            'answer' => 'Puedes generar títulos, párrafos, listas y texto según número de palabras, párrafos o bytes. Solo elige la configuración y haz clic en generar.',
+                        ],
+                        [
+                            'question' => '¿Puedo copiar o descargar el Lorem Ipsum?',
+                            'answer' => 'Sí. Luego de generar, puedes copiar el resultado al portapapeles o descargarlo como archivo de texto.',
+                        ],
+                        [
+                            'question' => '¿Se guarda el texto en el servidor?',
+                            'answer' => 'No, todo se genera en tu navegador y no se envía ni almacena en servidores externos.',
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

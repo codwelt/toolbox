@@ -30,12 +30,17 @@ class AppServiceProvider extends ServiceProvider
                 return [
                     'key' => $categoryKey,
                     'label' => $category['label'] ?? ucfirst($categoryKey),
-                    'items' => $items->map(function ($tool, $toolKey) {
+                    'items' => $items->map(function ($tool, $toolKey) use ($categoryKey, $category) {
                         return [
                             'key' => $toolKey,
                             'name' => $tool['h1'] ?? $tool['title'] ?? ucfirst(str_replace('_', ' ', $toolKey)),
                             'path' => $tool['path'] ?? null,
                             'route' => $tool['route'] ?? null,
+                            'description' => $tool['description'] ?? '',
+                            'category' => [
+                                'key' => $categoryKey,
+                                'label' => $category['label'] ?? ucfirst($categoryKey),
+                            ],
                         ];
                     })->values(),
                 ];

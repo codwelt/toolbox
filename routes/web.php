@@ -27,6 +27,10 @@ use App\Http\Controllers\Web\WatermarkController;
 use App\Http\Controllers\Web\FaviconsController;
 use App\Http\Controllers\Web\SitemapController;
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\WordCounterController;
+use App\Http\Controllers\Web\LoremGeneratorController;
+use App\Http\Controllers\Web\QrGeneratorController;
+use App\Http\Controllers\Web\BarcodeGeneratorController;
 
 Route::get('/biblioteca-paises-mundo', [CountryLibraryController::class, 'index'])->name('tools.country-library');
 Route::get('/biblioteca-emojis', [EmojiLibraryController::class, 'index'])->name('tools.emoji-library');
@@ -53,3 +57,7 @@ Route::post('/api/tools/webp-to-png', [WebpToPngApiController::class, 'process']
 Route::post('/webp-to-png', [WebpToPngSimpleController::class, 'convert'])->name('webp.to.png');
 Route::get('/poner-marca-de-agua-imagen-gratis', [WatermarkController::class, 'index'])->name('tools.watermark');
 Route::post('/api/tools/watermark', [WatermarkApiController::class, 'process'])->name('api.tools.watermark');
+Route::get('/contador-palabras-caracteres-online', [WordCounterController::class, 'index'])->name('tools.word-counter');
+Route::get('/generador-texto-lorem-ipsum', [LoremGeneratorController::class, 'index'])->name('tools.lorem-generator');
+Route::get('/generador-codigo-qr-online', [QrGeneratorController::class, 'index'])->name('tools.qr-generator');
+Route::get('/generador-codigo-barras-online', [BarcodeGeneratorController::class, 'index'])->name('tools.barcode-generator');
