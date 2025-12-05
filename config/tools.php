@@ -564,6 +564,36 @@ return [
         'utilities' => [
             'label' => 'Utilidades',
             'items' => [
+                'ip_info' => [
+                    'route' => 'tools.ip-info',
+                    'slug' => 'cual-es-mi-ip-publica',
+                    'path' => '/cual-es-mi-ip-publica',
+                    'title' => 'Cuál es mi IP pública y datos relacionados | Toolbox Codwelt',
+                    'description' => 'Consulta tu IP pública, verifica si es IPv4 o IPv6, si es privada/reservada y revisa las cabeceras básicas de la petición.',
+                    'h1' => '🌐 Mi IP pública y detalles básicos',
+                    'keywords' => [
+                        'cual es mi ip',
+                        'mi ip publica',
+                        'ver ip',
+                        'ip v4 v6',
+                        'consultar ip',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/cual-es-mi-ip-publica',
+                    'faq' => [
+                        [
+                            'question' => '¿De dónde se obtiene mi IP pública?',
+                            'answer' => 'La IP se toma de la cabecera de tu petición (X-Forwarded-For o REMOTE_ADDR) sin usar servicios externos.',
+                        ],
+                        [
+                            'question' => '¿Se guarda mi IP?',
+                            'answer' => 'No. Solo se usa para mostrarla en pantalla durante la sesión; no se almacena en servidores.',
+                        ],
+                        [
+                            'question' => '¿La IP mostrada puede ser la de un proxy?',
+                            'answer' => 'Sí, si navegas detrás de un proxy o VPN, verás la IP pública de ese servicio y no necesariamente la de tu dispositivo.',
+                        ],
+                    ],
+                ],
                 'whatsapp_link_generator' => [
                     'route' => 'tools.whatsapp-link-generator',
                     'slug' => 'generador-links-whatsapp',
