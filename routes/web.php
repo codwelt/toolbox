@@ -31,6 +31,7 @@ use App\Http\Controllers\Web\WordCounterController;
 use App\Http\Controllers\Web\LoremGeneratorController;
 use App\Http\Controllers\Web\QrGeneratorController;
 use App\Http\Controllers\Web\BarcodeGeneratorController;
+use App\Http\Controllers\Web\TextAnalyzerController;
 
 Route::get('/biblioteca-paises-mundo', [CountryLibraryController::class, 'index'])->name('tools.country-library');
 Route::get('/biblioteca-emojis', [EmojiLibraryController::class, 'index'])->name('tools.emoji-library');
@@ -61,3 +62,4 @@ Route::get('/contador-palabras-caracteres-online', [WordCounterController::class
 Route::get('/generador-texto-lorem-ipsum', [LoremGeneratorController::class, 'index'])->name('tools.lorem-generator');
 Route::get('/generador-codigo-qr-online', [QrGeneratorController::class, 'index'])->name('tools.qr-generator');
 Route::get('/generador-codigo-barras-online', [BarcodeGeneratorController::class, 'index'])->name('tools.barcode-generator');
+Route::get('/analizador-texto-ia', [TextAnalyzerController::class, 'index'])->name('tools.text-analyzer');

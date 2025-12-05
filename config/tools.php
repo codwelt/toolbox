@@ -661,6 +661,36 @@ return [
                         ],
                     ],
                 ],
+                'text_analyzer' => [
+                    'route' => 'tools.text-analyzer',
+                    'slug' => 'analizador-texto-ia',
+                    'path' => '/analizador-texto-ia',
+                    'title' => 'Analizador de texto: detección IA y mejoras de redacción | Toolbox Codwelt',
+                    'description' => 'Analiza tu texto y muestra un estimado de similitud con escritura de IA, métricas de claridad y sugerencias para mejorar la redacción.',
+                    'h1' => '🧠 Analizador de texto con detección IA',
+                    'keywords' => [
+                        'detectar texto ia',
+                        'analizador de redacción',
+                        'mejorar texto online',
+                        'detector inteligencia artificial',
+                        'calidad de escritura',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/analizador-texto-ia',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo estima si un texto se parece a uno generado con IA?',
+                            'answer' => 'Calculamos heurísticas como repetición de palabras, longitud promedio de oraciones y variedad léxica para estimar la probabilidad. No es un veredicto definitivo, solo una guía.',
+                        ],
+                        [
+                            'question' => '¿Se guarda el texto que analizo?',
+                            'answer' => 'No, el análisis ocurre únicamente en tu navegador y no enviamos el contenido a servidores.',
+                        ],
+                        [
+                            'question' => '¿Cómo mejorar mi redacción?',
+                            'answer' => 'El resultado incluye recomendaciones concretas basadas en claridad, variedad de vocabulario, longitud de oraciones y uso de conectores.',
+                        ],
+                    ],
+                ],
             ],
         ],
     ],
