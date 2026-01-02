@@ -34,7 +34,9 @@ use App\Http\Controllers\Web\BarcodeGeneratorController;
 use App\Http\Controllers\Web\TextAnalyzerController;
 use App\Http\Controllers\Web\AiWebsiteDetectorController;
 use App\Http\Controllers\Web\SeoOptimizerCheckerController;
+use App\Http\Controllers\Web\SeoHeadingStructureController;
 use App\Http\Controllers\Api\SeoAnalyzerApiController;
+use App\Http\Controllers\Api\SeoHeadingStructureApiController;
 use App\Http\Controllers\Api\AiWebsiteDetectorApiController;
 use App\Http\Controllers\Web\IpInfoController;
 use App\Http\Controllers\Api\IpInfoApiController;
@@ -72,6 +74,8 @@ Route::get('/analizador-texto-ia', [TextAnalyzerController::class, 'index'])->na
 Route::get('/detector-pagina-web-ia', [AiWebsiteDetectorController::class, 'index'])->name('tools.ai-website-detector');
 Route::get('/analizador-seo-url', [SeoOptimizerCheckerController::class, 'index'])->name('tools.seo-optimizer-checker');
 Route::post('/api/tools/seo-analyzer', [SeoAnalyzerApiController::class, 'analyze'])->name('api.tools.seo-analyzer');
+Route::get('/analizador-estructura-titulos', [SeoHeadingStructureController::class, 'index'])->name('tools.seo-heading-structure');
+Route::post('/api/tools/seo-heading-structure', [SeoHeadingStructureApiController::class, 'analyze'])->name('api.tools.seo-heading-structure');
 Route::post('/api/tools/ai-website-detector', [AiWebsiteDetectorApiController::class, 'analyze'])->name('api.tools.ai-website-detector');
 Route::get('/cual-es-mi-ip-publica', [IpInfoController::class, 'index'])->name('tools.ip-info');
 Route::get('/api/tools/ip-info', [IpInfoApiController::class, 'show'])->name('api.tools.ip-info');

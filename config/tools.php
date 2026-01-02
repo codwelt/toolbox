@@ -529,6 +529,11 @@ return [
                         ],
                     ],
                 ],
+            ]
+        ],
+        'seo' => [
+            'label' => 'SEO',
+            'items' => [
                 'seo_optimizer_checker' => [
                     'route' => 'tools.seo-optimizer-checker',
                     'slug' => 'analizador-seo-url',
@@ -556,6 +561,36 @@ return [
                         [
                             'question' => '¿Se envía la URL al servidor?',
                             'answer' => 'No. El HTML se lee en tu navegador; no almacenamos ni enviamos tus datos.',
+                        ],
+                    ],
+                ],
+                'heading_structure_analyzer' => [
+                    'route' => 'tools.seo-heading-structure',
+                    'slug' => 'analizador-estructura-titulos',
+                    'path' => '/analizador-estructura-titulos',
+                    'title' => 'Analizador de estructura de títulos SEO por URL | Toolbox Codwelt',
+                    'description' => 'Analiza los encabezados H1-H6 de una URL, valida la jerarquía y recibe consejos claros para mejorar la estructura de títulos.',
+                    'h1' => '🧭 Analizador de estructura de títulos SEO',
+                    'keywords' => [
+                        'analizador estructura de titulos',
+                        'estructura headings seo',
+                        'jerarquia h1 h2 h3',
+                        'auditoria de headings',
+                        'analizar titulos h1 h2',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/analizador-estructura-titulos',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué analiza la herramienta de estructura de títulos?',
+                            'answer' => 'Revisa la jerarquía de encabezados H1-H6, detecta saltos de nivel, H1 múltiples y headings vacíos para evaluar buenas prácticas SEO.',
+                        ],
+                        [
+                            'question' => '¿Cuántos H1 debe tener una página?',
+                            'answer' => 'Lo recomendado es un solo H1 que represente el tema principal de la página.',
+                        ],
+                        [
+                            'question' => '¿Se envía la URL a un servidor externo?',
+                            'answer' => 'No. La herramienta intenta leer el HTML directamente; si el sitio bloquea la lectura, usa un lector público como fallback.',
                         ],
                     ],
                 ],

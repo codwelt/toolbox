@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class SeoOptimizerCheckerController extends Controller
+class SeoHeadingStructureController extends Controller
 {
     public function index(Request $request)
     {
-        $tool = config('tools.categories.seo.items.seo_optimizer_checker');
+        $tool = config('tools.categories.seo.items.heading_structure_analyzer');
 
         $seo = [
             'title' => $tool['title'],
@@ -22,7 +22,7 @@ class SeoOptimizerCheckerController extends Controller
             'url' => $tool['canonical'],
         ];
 
-        return Inertia::render('SeoOptimizerChecker/Index', [
+        return Inertia::render('SeoHeadingStructure/Index', [
             'seo' => $seo,
         ]);
     }

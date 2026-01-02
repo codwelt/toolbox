@@ -108,13 +108,6 @@ watchEffect(() => {
                 <!-- Menú -->
                 <div class="collapse navbar-collapse" :class="{ show: !isNavCollapsed }" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center w-100">
-                        <!-- Inicio -->
-                        <li class="nav-item">
-                            <Link href="/" class="nav-link" :class="{ active: currentPath === '/' }">
-                            Inicio
-                            </Link>
-                        </li>
-
                         <!-- Categorías (Imágenes, Desarrollo, Finanzas, etc.) -->
                         <li v-for="category in toolCategories" :key="category.key" class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" :id="'navbarDropdown-' + category.key"
