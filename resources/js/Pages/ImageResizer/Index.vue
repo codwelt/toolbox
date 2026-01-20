@@ -37,11 +37,35 @@ const errorMessage = ref(null);
 
 // -------------------- HELPERS --------------------
 function onFileChange(e) {
-    const selected = Array.from(e.target.files || []);
-    files.value = selected;
-    resized.value = [];
-    errorMessage.value = null;
+    addFilesFromFileList(e.target.files);
+    e.target.value = '';
 }
+
+const isDragActive = ref(false);
+
+const handleDragEnter = () => {
+    isDragActive.value = true;
+};
+
+const handleDragLeave = (event) => {
+    if (event.target === event.currentTarget) {
+        isDragActive.value = false;
+    }
+};
+
+const handleDragOver = (event) => {
+    event.preventDefault();
+    if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'copy';
+    }
+};
+
+const handleDrop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    isDragActive.value = false;
+    addFilesFromFileList(event.dataTransfer?.files);
+};
 
 function formatBytes(bytes) {
     if (!bytes && bytes !== 0) return '';
@@ -54,6 +78,18 @@ function formatBytes(bytes) {
 const hasSizeConfig = computed(() => {
     return !!targetWidth.value || !!targetHeight.value || preset.value !== 'none';
 });
+
+function addFilesFromFileList(fileList) {
+    const selected = Array.from(fileList || []).filter((file) => file.type.startsWith('image/'));
+    if (!selected.length) {
+        errorMessage.value = 'Solo puedes subir imágenes (JPG, PNG, WebP).';
+        return;
+    }
+
+    errorMessage.value = null;
+    files.value = [...files.value, ...selected];
+    resized.value = [];
+}
 
 // -------------------- PRESETS --------------------
 function applyPreset() {
@@ -324,9 +360,15 @@ onBeforeUnmount(() => {
                                         </p>
                                     </div>
 
-                                    <div class="upload-area mb-3 mx-auto mx-lg-0">
-                                        <label
-                                            class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer">
+                                    <div
+                                        class="upload-area mb-3 mx-auto mx-lg-0"
+                                        :class="{ 'drag-active': isDragActive }"
+                                        @dragenter.prevent="handleDragEnter"
+                                        @dragleave.prevent="handleDragLeave"
+                                        @dragover="handleDragOver"
+                                        @drop="handleDrop"
+                                    >
+                                        <label class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer">
                                             <div class="mb-2 display-6 text-primary">
                                                 📐
                                             </div>
@@ -336,8 +378,7 @@ onBeforeUnmount(() => {
                                             <p class="small text-muted mb-0">
                                                 Se aplicará la misma configuración de tamaño a todas.
                                             </p>
-                                            <input type="file" class="d-none" multiple accept="image/*"
-                                                @change="onFileChange" />
+                                            <input type="file" class="d-none" multiple accept="image/*" @change="onFileChange" />
                                         </label>
                                     </div>
 
@@ -580,5 +621,11 @@ onBeforeUnmount(() => {
     border-color: #0d6efd;
     transform: translateY(-1px);
     cursor: pointer;
+}
+
+.upload-area.drag-active {
+    border-color: #0d6efd;
+    background-color: #e3f2ff;
+    transform: translateY(-1px);
 }
 </style>

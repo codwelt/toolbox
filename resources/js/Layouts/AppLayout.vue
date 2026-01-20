@@ -71,6 +71,30 @@ const searchResults = computed(() => {
 
 const showSearchDropdown = computed(() => searchQuery.value.trim().length >= 4 && searchResults.value.length > 0);
 
+const showFeedbackModal = ref(false);
+const feedbackTool = ref(rawTitle.value);
+const feedbackMessage = ref('');
+
+const openFeedbackModal = () => {
+    feedbackTool.value = rawTitle.value;
+    feedbackMessage.value = '';
+    showFeedbackModal.value = true;
+};
+
+const closeFeedbackModal = () => {
+    showFeedbackModal.value = false;
+};
+
+const sendFeedback = () => {
+    if (typeof window === 'undefined') return;
+    const subject = encodeURIComponent(`Retroalimentación Toolsbox - ${feedbackTool.value || 'General'}`);
+    const body = encodeURIComponent(
+        `Herramienta: ${feedbackTool.value || 'General'}\n\nProblema o feedback:\n${feedbackMessage.value}`
+    );
+    window.location.href = `mailto:info@codwelt.com?subject=${subject}&body=${body}`;
+    showFeedbackModal.value = false;
+};
+
 const handleResultClick = () => {
     isNavCollapsed.value = true;
 };
@@ -190,9 +214,53 @@ watchEffect(() => {
                         </a>
                     </li>
                 </ul>
+                <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm feedback-btn"
+                    @click="openFeedbackModal"
+                >
+                    Sugerencias / Soporte
+                </button>
                 <span>Desarrollado por <a href="https://codwelt.com/" target="_blank">codwelt.com</a></span>
             </div>
         </footer>
+
+        <div
+            v-if="showFeedbackModal"
+            class="feedback-modal-backdrop"
+            @click.self="closeFeedbackModal"
+        >
+            <div class="feedback-modal-card">
+                <div class="feedback-modal-header">
+                    <h5 class="mb-1">Retroalimentación de Toolsbox</h5>
+                    <button type="button" class="btn-close" aria-label="Cerrar" @click="closeFeedbackModal"></button>
+                </div>
+                <div class="feedback-modal-body">
+                    <label class="form-label">Herramienta o sección</label>
+                    <input
+                        v-model="feedbackTool"
+                        type="text"
+                        class="form-control mb-3"
+                        placeholder="Ej. Herramienta de SEO"
+                    />
+                    <label class="form-label">Describe el problema o feedback</label>
+                    <textarea
+                        v-model="feedbackMessage"
+                        class="form-control mb-3"
+                        rows="4"
+                        placeholder="Cuéntanos qué ocurrió y qué esperabas que pasara..."
+                    ></textarea>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" @click="closeFeedbackModal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" @click="sendFeedback">
+                            Enviar correo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -285,5 +353,41 @@ watchEffect(() => {
 .search-nav-item {
     flex: 1 1 320px;
     min-width: 260px;
+}
+
+.feedback-btn {
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+}
+
+.feedback-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.feedback-modal-card {
+    background: #fff;
+    border-radius: 12px;
+    width: min(420px, 100%);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+    overflow: hidden;
+}
+
+.feedback-modal-header {
+    padding: 1rem 1.25rem 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedback-modal-body {
+    padding: 0.75rem 1.25rem 1.25rem;
 }
 </style>
