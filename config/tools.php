@@ -286,6 +286,41 @@ return [
                 ],
             ],
         ], */
+        'colors' => [
+            'label' => 'Colores',
+            'items' => [
+                'color_palette' => [
+                    'route' => 'tools.color-palette',
+                    'slug' => 'paleta-de-colores-online',
+                    'path' => '/paleta-de-colores-online',
+                    'title' => 'Convertidor y paleta de colores online gratis | Toolbox Codwelt',
+                    'description' => 'Escribe o pega un color en hexadecimal y recibe sus equivalencias RGB, HSL, HSV, CMYK y más, junto a tonos complementarios para tu paleta digital.',
+                    'h1' => '🎨 Convertidor y paleta tonal de colores',
+                    'keywords' => [
+                        'convertidor de colores online',
+                        'paleta de colores hexadecimal',
+                        'hex a rgb',
+                        'colores relacionados',
+                        'herramienta de tonos',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/paleta-de-colores-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué formatos muestra esta herramienta cuando ingreso un hexadecimal?',
+                            'answer' => 'Convierte automáticamente el hexadecimal a RGB, RGBA, HSL, HSV y CMYK para que puedas usarlo en diseño web, impresión o edición digital.',
+                        ],
+                        [
+                            'question' => '¿Puedo ver colores que combinen con el tono que ingreso?',
+                            'answer' => 'Sí. Abajo se genera una paleta tonal que oscurece y aclara el color base respetando su matiz principal, lo que te ayuda a mantener coherencia cromática.',
+                        ],
+                        [
+                            'question' => '¿Se almacenan mis colores en el servidor?',
+                            'answer' => 'No. El análisis y las conversiones ocurren en tu navegador, así que no guardamos ni compartimos tus valores de color.',
+                        ],
+                    ],
+                ],
+            ],
+        ],
         'herramientas' => [
             'label' => 'Herramientas',
             'items' => [

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Web\WhatsappLinkGeneratorController;
 use App\Http\Controllers\Api\BackgroundRemoverApiController;
+use App\Http\Controllers\Api\ColorFeedbackController;
 use App\Http\Controllers\Api\VideoCompressorApiController;
 use App\Http\Controllers\Web\BackgroundRemoverController;
 use App\Http\Controllers\Web\ImageCompressorController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Web\JavascriptFormatterController;
 use App\Http\Controllers\Web\JsonToArrayController;
 use App\Http\Controllers\Web\VideoCompressorController;
 use App\Http\Controllers\Web\CountryLibraryController;
+use App\Http\Controllers\Web\ColorPaletteController;
 use App\Http\Controllers\Web\EmojiLibraryController;
 use App\Http\Controllers\Web\ImageResizerController;
 use App\Http\Controllers\Api\WebpToPngApiController;
@@ -70,6 +72,7 @@ Route::get('/contador-palabras-caracteres-online', [WordCounterController::class
 Route::get('/generador-texto-lorem-ipsum', [LoremGeneratorController::class, 'index'])->name('tools.lorem-generator');
 Route::get('/generador-codigo-qr-online', [QrGeneratorController::class, 'index'])->name('tools.qr-generator');
 Route::get('/generador-codigo-barras-online', [BarcodeGeneratorController::class, 'index'])->name('tools.barcode-generator');
+Route::get('/paleta-de-colores-online', [ColorPaletteController::class, 'index'])->name('tools.color-palette');
 Route::get('/analizador-texto-ia', [TextAnalyzerController::class, 'index'])->name('tools.text-analyzer');
 Route::get('/detector-pagina-web-ia', [AiWebsiteDetectorController::class, 'index'])->name('tools.ai-website-detector');
 Route::get('/analizador-seo-url', [SeoOptimizerCheckerController::class, 'index'])->name('tools.seo-optimizer-checker');
@@ -77,5 +80,6 @@ Route::post('/api/tools/seo-analyzer', [SeoAnalyzerApiController::class, 'analyz
 Route::get('/analizador-estructura-titulos', [SeoHeadingStructureController::class, 'index'])->name('tools.seo-heading-structure');
 Route::post('/api/tools/seo-heading-structure', [SeoHeadingStructureApiController::class, 'analyze'])->name('api.tools.seo-heading-structure');
 Route::post('/api/tools/ai-website-detector', [AiWebsiteDetectorApiController::class, 'analyze'])->name('api.tools.ai-website-detector');
+Route::post('/api/tools/color-feedback', [ColorFeedbackController::class, 'send'])->name('api.tools.color-feedback');
 Route::get('/cual-es-mi-ip-publica', [IpInfoController::class, 'index'])->name('tools.ip-info');
 Route::get('/api/tools/ip-info', [IpInfoApiController::class, 'show'])->name('api.tools.ip-info');

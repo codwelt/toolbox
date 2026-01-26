@@ -16,6 +16,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    toolCount: {
+        type: Number,
+        required: true,
+    },
 });
 
 const { ogImageUrl } = useOgImage(props.seo);
@@ -24,6 +28,8 @@ const { ogImageUrl } = useOgImage(props.seo);
 const allTools = computed(() =>
     (props.categories || []).flatMap((category) => category.items || [])
 );
+
+const heroTitle = computed(() => `Toolsbox · ${props.toolCount} herramientas publicadas`);
 
 // JSON-LD ItemList de herramientas
 const jsonLd = computed(() => {
@@ -82,7 +88,7 @@ onBeforeUnmount(() => {
             <div class="row mb-4">
                 <div class="col-lg-10 mx-auto text-center">
                     <h1 class="display-5 fw-bold mb-3">
-                        Toolsbox
+                        {{ heroTitle }}
                         <img src="/public/toolsbox-2.png" alt="Toolsbox codwelt" style="width: 150px; margin-top: -30px;">
                     </h1>
                     <p class="lead text-muted mb-2">

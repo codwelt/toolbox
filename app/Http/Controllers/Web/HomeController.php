@@ -54,9 +54,14 @@ class HomeController extends Controller
             'canonical' => url('/'),
         ];
 
+        $toolCount = $categories->sum(function ($category) {
+            return count($category['items'] ?? []);
+        });
+
         return Inertia::render('Home/Index', [
             'seo' => $seo,
             'categories' => $categories,
+            'toolCount' => $toolCount,
         ]);
     }
 }

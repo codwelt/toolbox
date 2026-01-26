@@ -41,7 +41,17 @@ const errorMessage = ref(null);
 function onFileChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
+    applySelectedFile(file);
+}
 
+function onFileDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer?.files?.[0];
+    if (!file) return;
+    applySelectedFile(file);
+}
+
+function applySelectedFile(file) {
     selectedFile.value = file;
     errorMessage.value = null;
     previewResult.value = null;
@@ -235,6 +245,9 @@ onBeforeUnmount(() => {
                                     <div class="upload-area mb-3 mx-auto mx-lg-0">
                                         <label
                                             class="w-100 h-100 d-flex flex-column align-items-center justify-content-center cursor-pointer"
+                                            @dragover.prevent
+                                            @dragenter.prevent
+                                            @drop="onFileDrop"
                                         >
                                             <div class="mb-2 display-6 text-primary">
                                                 🖼️
