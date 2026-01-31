@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Web\Base64DecoderController;
+use App\Http\Controllers\Web\Base64EncoderController;
+use App\Http\Controllers\Web\ImageToBase64Controller;
 use App\Http\Controllers\Web\WhatsappLinkGeneratorController;
 use App\Http\Controllers\Api\BackgroundRemoverApiController;
 use App\Http\Controllers\Api\ColorFeedbackController;
-use App\Http\Controllers\Api\VideoCompressorApiController;
 use App\Http\Controllers\Web\BackgroundRemoverController;
 use App\Http\Controllers\Web\ImageCompressorController;
 use App\Http\Controllers\Api\WebpToPngSimpleController;
@@ -16,7 +18,6 @@ use App\Http\Controllers\Web\XmlFormatterController;
 use App\Http\Controllers\Web\JsonFormatterController;
 use App\Http\Controllers\Web\JavascriptFormatterController;
 use App\Http\Controllers\Web\JsonToArrayController;
-use App\Http\Controllers\Web\VideoCompressorController;
 use App\Http\Controllers\Web\CountryLibraryController;
 use App\Http\Controllers\Web\ColorPaletteController;
 use App\Http\Controllers\Web\EmojiLibraryController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\Web\BarcodeGeneratorController;
 use App\Http\Controllers\Web\TextAnalyzerController;
 use App\Http\Controllers\Web\AiWebsiteDetectorController;
 use App\Http\Controllers\Web\SeoOptimizerCheckerController;
+use App\Http\Controllers\Web\PageNotFoundController;
 use App\Http\Controllers\Web\SeoHeadingStructureController;
 use App\Http\Controllers\Api\SeoAnalyzerApiController;
 use App\Http\Controllers\Api\SeoHeadingStructureApiController;
@@ -47,14 +49,15 @@ Route::get('/biblioteca-paises-mundo', [CountryLibraryController::class, 'index'
 Route::get('/biblioteca-emojis', [EmojiLibraryController::class, 'index'])->name('tools.emoji-library');
 Route::get('/generador-links-whatsapp', [WhatsappLinkGeneratorController::class, 'index'])->name('tools.whatsapp-link-generator');
 Route::get('/convertir-html-a-texto', [HtmlToTextController::class, 'index'])->name('tools.html-to-text');
+Route::get('/codificar-base64-online', [Base64EncoderController::class, 'index'])->name('tools.base64-encoder');
+Route::get('/decodificar-base64-online', [Base64DecoderController::class, 'index'])->name('tools.base64-decoder');
+Route::get('/convertir-imagen-base64-online', [ImageToBase64Controller::class, 'index'])->name('tools.image-to-base64');
 Route::get('/formatear-html-online', [HtmlFormatterController::class, 'index'])->name('tools.html-formatter');
 Route::get('/formatear-css-online', [CssFormatterController::class, 'index'])->name('tools.css-formatter');
 Route::get('/formatear-xml-online', [XmlFormatterController::class, 'index'])->name('tools.xml-formatter');
 Route::get('/formatear-json-online', [JsonFormatterController::class, 'index'])->name('tools.json-formatter');
 Route::get('/formatear-javascript-online', [JavascriptFormatterController::class, 'index'])->name('tools.javascript-formatter');
 Route::get('/convertir-json-a-array', [JsonToArrayController::class, 'index'])->name('tools.json-to-array');
-Route::get('/comprimir-videos-online', [VideoCompressorController::class, 'index'])->name('tools.video-compressor');
-Route::post('/api/tools/video-compressor', [VideoCompressorApiController::class, 'process'])->name('api.tools.video-compressor');
 Route::get('/generador-favicons-online', [FaviconsController::class, 'index'])->name('tools.favicons');
 Route::post('/api/tools/favicons', [FaviconsApiController::class, 'generate'])->name('api.tools.favicons');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
@@ -83,3 +86,5 @@ Route::post('/api/tools/ai-website-detector', [AiWebsiteDetectorApiController::c
 Route::post('/api/tools/color-feedback', [ColorFeedbackController::class, 'send'])->name('api.tools.color-feedback');
 Route::get('/cual-es-mi-ip-publica', [IpInfoController::class, 'index'])->name('tools.ip-info');
 Route::get('/api/tools/ip-info', [IpInfoApiController::class, 'show'])->name('api.tools.ip-info');
+
+Route::fallback([PageNotFoundController::class, '__invoke']);

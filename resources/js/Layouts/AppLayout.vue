@@ -261,6 +261,13 @@ const submitFeedback = async () => {
                         </a>
                     </li>
                 </ul>
+                <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm feedback-btn"
+                    @click="openFeedbackModal"
+                >
+                    Sugerencias / Soporte
+                </button>
                 <span>Desarrollado por <a href="https://codwelt.com/" target="_blank">codwelt.com</a></span>
             </div>
         </footer>
@@ -429,5 +436,41 @@ const submitFeedback = async () => {
 .search-nav-item {
     flex: 1 1 320px;
     min-width: 260px;
+}
+
+.feedback-btn {
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+}
+
+.feedback-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.feedback-modal-card {
+    background: #fff;
+    border-radius: 12px;
+    width: min(420px, 100%);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+    overflow: hidden;
+}
+
+.feedback-modal-header {
+    padding: 1rem 1.25rem 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedback-modal-body {
+    padding: 0.75rem 1.25rem 1.25rem;
 }
 </style>

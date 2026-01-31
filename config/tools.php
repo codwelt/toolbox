@@ -251,6 +251,7 @@ return [
                 ],
             ],
         ],
+<<<<<<< HEAD
        /** 'videos' => [
             'label' => 'Videos',
             'items' => [
@@ -321,6 +322,8 @@ return [
                 ],
             ],
         ],
+=======
+>>>>>>> 97562d0
         'herramientas' => [
             'label' => 'Herramientas',
             'items' => [
@@ -351,6 +354,95 @@ return [
                         [
                             'question' => '¿La conversión se realiza en el servidor?',
                             'answer' => 'No, todo el proceso ocurre en tu navegador. Tu código HTML no se envía a ningún servidor ni se almacena.',
+                        ],
+                    ],
+                ],
+                'base64_encoder' => [
+                    'route' => 'tools.base64-encoder',
+                    'slug' => 'codificar-base64-online',
+                    'path' => '/codificar-base64-online',
+                    'title' => 'Codificar Base64 online gratis | Toolbox Codwelt',
+                    'description' => 'Convierte texto plano a Base64 sin salir del navegador. Ideal para preparar datos seguros para APIs, URL o credenciales.',
+                    'h1' => '🧩 Codificar Base64 online',
+                    'keywords' => [
+                        'base64 encode online',
+                        'codificar base64 gratis',
+                        'texto a base64',
+                        'generar base64',
+                        'encode base64',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/codificar-base64-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué datos puedo convertir a Base64?',
+                            'answer' => 'Puedes codificar cualquier texto plano, como credenciales, fragmentos JSON o URIs, siempre que estén en UTF-8.',
+                        ],
+                        [
+                            'question' => '¿Dónde puedo usar el resultado en Base64?',
+                            'answer' => 'Úsalo en encabezados HTTP, payloads JSON, variables de entorno o cualquier lugar que requiera datos codificados.',
+                        ],
+                        [
+                            'question' => '¿Esta herramienta almacena mis datos?',
+                            'answer' => 'No. Todo el proceso ocurre en tu navegador; nunca enviamos ni almacenamos el texto que ingresas.',
+                        ],
+                    ],
+                ],
+                'base64_decoder' => [
+                    'route' => 'tools.base64-decoder',
+                    'slug' => 'decodificar-base64-online',
+                    'path' => '/decodificar-base64-online',
+                    'title' => 'Decodificar Base64 online gratis | Toolbox Codwelt',
+                    'description' => 'Convierte texto Base64 en texto plano sin salir del navegador. Ideal para revisar respuestas codificadas o recuperar credenciales.',
+                    'h1' => '🧩 Decodificar Base64 online',
+                    'keywords' => [
+                        'base64 decode online',
+                        'decodificar base64 gratis',
+                        'base64 a texto',
+                        'decode base64',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/decodificar-base64-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué puedo decodificar con esta herramienta?',
+                            'answer' => 'Puedes decodificar cualquier cadena Base64 válida que represente texto en UTF-8.',
+                        ],
+                        [
+                            'question' => '¿Es seguro usarlo?',
+                            'answer' => 'Sí, todo ocurre en tu navegador. No almacenamos ni transmitimos los datos decodificados.',
+                        ],
+                        [
+                            'question' => '¿Puedo pegar grandes cantidades de Base64?',
+                            'answer' => 'El formulario soporta textos largos; si se excede la capacidad de tu navegador, prueba con porciones más pequeñas.',
+                        ],
+                    ],
+                ],
+                'image_to_base64' => [
+                    'route' => 'tools.image-to-base64',
+                    'slug' => 'convertir-imagen-base64-online',
+                    'path' => '/convertir-imagen-base64-online',
+                    'title' => 'Convertir imagen a Base64 gratis | Toolbox Codwelt',
+                    'description' => 'Convierte imágenes a Base64 directamente en tu navegador para incrustarlas en CSS, JSON o envíos web.',
+                    'h1' => '🖼️ Imagen a Base64 online',
+                    'keywords' => [
+                        'imagen base64 online',
+                        'convertir imagen a base64',
+                        'image to base64',
+                        'base64 foto',
+                        'embed image base64',
+                    ],
+                    'canonical' => 'https://toolsbox.codwelt.com/convertir-imagen-base64-online',
+                    'faq' => [
+                        [
+                            'question' => '¿Qué formatos de imagen admite?',
+                            'answer' => 'Puedes subir JPG, PNG, WebP o GIF. Mantiene transparencia cuando está disponible.',
+                        ],
+                        [
+                            'question' => '¿Para qué sirve el resultado?',
+                            'answer' => 'Perfecto para incrustar imágenes en HTML/CSS/JSON sin depender de URLs externas.',
+                        ],
+                        [
+                            'question' => '¿La imagen se envía a servidores?',
+                            'answer' => 'No. Todo se procesa en tu navegador, así tus archivos nunca abandonan tu equipo.',
                         ],
                     ],
                 ],
