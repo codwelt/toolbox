@@ -251,42 +251,6 @@ return [
                 ],
             ],
         ],
-<<<<<<< HEAD
-       /** 'videos' => [
-            'label' => 'Videos',
-            'items' => [
-                'video_compressor' => [
-                    'route' => 'tools.video-compressor',
-                    'slug' => 'comprimir-videos-online',
-                    'path' => '/comprimir-videos-online',
-                    'title' => 'Comprimir videos online gratis | Toolbox Codwelt',
-                    'description' => 'Reduce el tamaño de tus videos MP4 y MOV online, eligiendo el porcentaje de compresión y la resolución ideal para web, redes sociales o mensajería, y descarga el resultado en MP4.',
-                    'h1' => '🎥 Comprimir videos online gratis',
-                    'keywords' => [
-                        'comprimir videos online',
-                        'reducir peso video mp4',
-                        'comprimir video para whatsapp',
-                        'comprimir video para redes sociales',
-                        'comprimir video mov a mp4',
-                    ],
-                    'canonical' => 'https://toolsbox.codwelt.com/comprimir-videos-online',
-                    'faq' => [
-                        [
-                            'question' => '¿Qué formatos de video puedo comprimir?',
-                            'answer' => 'La herramienta está optimizada para comprimir videos en formato MP4 y MOV. El resultado final siempre se entrega en MP4 por compatibilidad.',
-                        ],
-                        [
-                            'question' => '¿Puedo elegir el tamaño y calidad del video comprimido?',
-                            'answer' => 'Sí. Puedes elegir un porcentaje de compresión, una resolución máxima y también usar configuraciones recomendadas para WhatsApp, redes sociales o YouTube.',
-                        ],
-                        [
-                            'question' => '¿Hay un límite de peso para los videos?',
-                            'answer' => 'Por defecto se recomienda trabajar con videos de hasta 200 MB, pero puedes ajustar los límites según los recursos de tu servidor y configuración de PHP.',
-                        ],
-                    ],
-                ],
-            ],
-        ], */
         'colors' => [
             'label' => 'Colores',
             'items' => [
@@ -322,8 +286,6 @@ return [
                 ],
             ],
         ],
-=======
->>>>>>> 97562d0
         'herramientas' => [
             'label' => 'Herramientas',
             'items' => [
@@ -940,6 +902,37 @@ return [
                         [
                             'question' => '¿Cómo mejorar mi redacción?',
                             'answer' => 'El resultado incluye recomendaciones concretas basadas en claridad, variedad de vocabulario, longitud de oraciones y uso de conectores.',
+                        ],
+                    ],
+                ],
+                'orthography_checker' => [
+                    'route' => 'tools.orthography-checker',
+                    'slug' => 'corrector-ortografico-web',
+                    'path' => '/corrector-ortografico-web',
+                    'title' => 'Corrector ortográfico para páginas web y textos | Toolbox Codwelt',
+                    'description' => 'Analiza la ortografía de páginas completas o fragmentos de texto, resalta errores y sugiere correcciones sin salir del navegador.',
+                    'h1' => '📘 Corrector ortográfico de páginas web',
+                    'keywords' => [
+                        'corrector ortografico',
+                        'analizar ortografia online',
+                        'corregir texto web',
+                        'herramienta de ortografia',
+                        'LanguageTool español',
+                    ],
+                    'language' => 'es',
+                    'canonical' => 'https://toolsbox.codwelt.com/corrector-ortografico-web',
+                    'faq' => [
+                        [
+                            'question' => '¿Cómo analizo la ortografía de una página completa?',
+                            'answer' => 'Pega la URL de la página o su texto en el área de entrada y el corrector cargará el contenido y mostrará los errores detectados.',
+                        ],
+                        [
+                            'question' => '¿Mis datos se guardan en algún servidor?',
+                            'answer' => 'No. Todo el texto se analiza desde tu navegador y solo se envía temporalmente a LanguageTool para detectar errores.',
+                        ],
+                        [
+                            'question' => '¿Qué tipos de errores detecta?',
+                            'answer' => 'Marca faltas de ortografía, uso incorrecto de mayúsculas, palabras duplicadas y ofrece alternativas recomendadas.',
                         ],
                     ],
                 ],
