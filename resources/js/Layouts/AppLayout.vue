@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { Link, usePage } from '@inertiajs/vue3';
-import { computed, ref, watchEffect } from 'vue';
+import { computed, nextTick, ref, watch, watchEffect } from 'vue';
 
 const page = usePage();
 
@@ -30,7 +30,23 @@ const isCategoryActive = (category) => {
     return category.items.some((tool) => isToolActive(tool));
 };
 
-const rawTitle = computed(() => page.props.seo?.title || page.props.title || 'Toolsbox');
+const activeTool = computed(() => {
+    for (const category of toolCategories.value) {
+        const match = (category.items || []).find((tool) => isToolActive(tool));
+        if (match) return match;
+    }
+
+    return null;
+});
+
+const rawTitle = computed(() => page.props.seo?.title || page.props.title || activeTool.value?.name || 'Toolsbox');
+const rawDescription = computed(
+    () =>
+        page.props.seo?.description ||
+        page.props.description ||
+        activeTool.value?.description ||
+        'Suite de herramientas online para optimizar imágenes y recursos digitales.'
+);
 const emojiForTitle = (title) => {
     const t = (title || '').toLowerCase();
     if (t.includes('imagen')) return '🖼️';
@@ -76,9 +92,266 @@ const handleResultClick = () => {
     isNavCollapsed.value = true;
 };
 
+const SHARE_QUERY_KEY = 'report';
+const shareStatus = ref(null);
+const shareMessage = ref('');
+const shareSubmitting = ref(false);
+const lastAppliedShareToken = ref('');
+let shareMessageTimeout = null;
+
+const canShareReport = computed(() => Boolean(activeTool.value));
+const shareMessageClass = computed(() => {
+    if (shareStatus.value === 'success') return 'text-success';
+    if (shareStatus.value === 'error') return 'text-danger';
+    return 'text-muted';
+});
+
+const updateShareMessage = (status, message) => {
+    if (shareMessageTimeout) {
+        clearTimeout(shareMessageTimeout);
+    }
+
+    shareStatus.value = status;
+    shareMessage.value = message;
+    shareMessageTimeout = setTimeout(() => {
+        shareStatus.value = null;
+        shareMessage.value = '';
+    }, 4500);
+};
+
+const isShareableField = (field) => {
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement)) {
+        return false;
+    }
+
+    if (field.disabled) {
+        return false;
+    }
+
+    if (field instanceof HTMLInputElement) {
+        const blockedTypes = ['button', 'file', 'hidden', 'image', 'password', 'reset', 'submit'];
+        if (blockedTypes.includes((field.type || '').toLowerCase())) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const getShareableFields = () => {
+    if (typeof document === 'undefined') {
+        return [];
+    }
+
+    return Array.from(document.querySelectorAll('main input, main textarea, main select')).filter(isShareableField);
+};
+
+const getFieldKey = (field, index) => {
+    const explicitKey = field.getAttribute('data-share-key');
+    if (explicitKey) {
+        return explicitKey;
+    }
+
+    const nameOrId = field.getAttribute('name') || field.getAttribute('id') || 'field';
+    const type = field instanceof HTMLInputElement ? field.type || 'input' : field.tagName.toLowerCase();
+    return `${type}:${nameOrId}:${index}`;
+};
+
+const encodeSharePayload = (payload) => {
+    const utf8 = new TextEncoder().encode(JSON.stringify(payload));
+    let binary = '';
+    utf8.forEach((byte) => {
+        binary += String.fromCharCode(byte);
+    });
+
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+};
+
+const decodeSharePayload = (encodedPayload) => {
+    const base64 = encodedPayload.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+    const binary = atob(padded);
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+    return JSON.parse(new TextDecoder().decode(bytes));
+};
+
+const collectCurrentReportState = () => {
+    const fields = getShareableFields();
+    if (!fields.length) {
+        return null;
+    }
+
+    const values = {};
+    fields.forEach((field, index) => {
+        const key = getFieldKey(field, index);
+
+        if (field instanceof HTMLInputElement && (field.type === 'checkbox' || field.type === 'radio')) {
+            values[key] = field.checked;
+            return;
+        }
+
+        if (field instanceof HTMLSelectElement && field.multiple) {
+            values[key] = Array.from(field.selectedOptions).map((option) => option.value);
+            return;
+        }
+
+        values[key] = field.value;
+    });
+
+    return {
+        version: 1,
+        path: currentPath.value,
+        values,
+    };
+};
+
+const triggerAutoRunFromSharedReport = async () => {
+    if (typeof document === 'undefined') {
+        return false;
+    }
+
+    await nextTick();
+    const trigger = document.querySelector('main [data-share-auto-run="true"]');
+    if (!(trigger instanceof HTMLElement) || trigger.hasAttribute('disabled')) {
+        return false;
+    }
+
+    trigger.click();
+    return true;
+};
+
+const applySharedReportState = async (encodedPayload) => {
+    if (!encodedPayload) {
+        return false;
+    }
+
+    const parsed = decodeSharePayload(encodedPayload);
+    if (!parsed || typeof parsed !== 'object' || !parsed.values || typeof parsed.values !== 'object') {
+        return false;
+    }
+    if (parsed.path && parsed.path !== currentPath.value) {
+        return false;
+    }
+
+    await nextTick();
+    const fields = getShareableFields();
+    fields.forEach((field, index) => {
+        const key = getFieldKey(field, index);
+        if (!(key in parsed.values)) {
+            return;
+        }
+
+        const value = parsed.values[key];
+
+        if (field instanceof HTMLInputElement && (field.type === 'checkbox' || field.type === 'radio')) {
+            field.checked = Boolean(value);
+            field.dispatchEvent(new Event('change', { bubbles: true }));
+            return;
+        }
+
+        if (field instanceof HTMLSelectElement && field.multiple && Array.isArray(value)) {
+            Array.from(field.options).forEach((option) => {
+                option.selected = value.includes(option.value);
+            });
+            field.dispatchEvent(new Event('change', { bubbles: true }));
+            return;
+        }
+
+        field.value = value ?? '';
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+        field.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    await triggerAutoRunFromSharedReport();
+
+    return true;
+};
+
+const restoreSharedReportFromUrl = async () => {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    const url = new URL(window.location.href);
+    const token = url.searchParams.get(SHARE_QUERY_KEY);
+    if (!token || token === lastAppliedShareToken.value) {
+        return;
+    }
+
+    try {
+        const restored = await applySharedReportState(token);
+        lastAppliedShareToken.value = token;
+
+        if (restored) {
+            updateShareMessage('success', 'Se cargó la consulta compartida.');
+        }
+    } catch {
+        lastAppliedShareToken.value = token;
+        updateShareMessage('error', 'El enlace compartido no es válido o está incompleto.');
+    }
+};
+
+const shareCurrentReport = async () => {
+    if (typeof window === 'undefined' || shareSubmitting.value) {
+        return;
+    }
+
+    try {
+        shareSubmitting.value = true;
+
+        const reportState = collectCurrentReportState();
+        if (!reportState) {
+            updateShareMessage('error', 'No hay datos del informe para compartir todavía.');
+            return;
+        }
+
+        const encodedState = encodeSharePayload(reportState);
+        const shareUrl = new URL(window.location.href);
+        shareUrl.searchParams.set(SHARE_QUERY_KEY, encodedState);
+
+        const shareUrlString = shareUrl.toString();
+        if (shareUrlString.length > 7800) {
+            updateShareMessage('error', 'El informe es muy grande para compartir por enlace. Reduce la consulta e intenta de nuevo.');
+            return;
+        }
+
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(shareUrlString);
+            updateShareMessage('success', 'URL del informe copiada al portapapeles.');
+            return;
+        }
+
+        window.prompt('Copia y comparte este enlace:', shareUrlString);
+        updateShareMessage('success', 'Copia manualmente la URL del informe.');
+    } catch (error) {
+        if (error?.name !== 'AbortError') {
+            updateShareMessage('error', 'No se pudo copiar la URL del informe. Intenta nuevamente.');
+        }
+    } finally {
+        shareSubmitting.value = false;
+    }
+};
+
+watch(
+    currentPath,
+    async () => {
+        await restoreSharedReportFromUrl();
+    },
+    { immediate: true }
+);
+
 watchEffect(() => {
     if (typeof document !== 'undefined') {
         document.title = titleWithEmoji.value;
+
+        let descriptionMetaTag = document.querySelector('meta[name="description"]');
+        if (!descriptionMetaTag) {
+            descriptionMetaTag = document.createElement('meta');
+            descriptionMetaTag.setAttribute('name', 'description');
+            document.head.appendChild(descriptionMetaTag);
+        }
+
+        descriptionMetaTag.setAttribute('content', rawDescription.value);
     }
 });
 
@@ -224,27 +497,51 @@ const submitFeedback = async () => {
                 </div>
             </div>
         </nav>
+        <section v-if="canShareReport" class="share-report-banner border-bottom bg-white">
+            <div class="container py-2 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-2">
+                <div class="small text-muted">
+                    Comparte esta consulta con tu equipo usando un enlace directo.
+                </div>
+                <div class="d-flex flex-column align-items-lg-end">
+                    <button
+                        type="button"
+                        class="btn btn-success btn-sm share-report-btn"
+                        :disabled="shareSubmitting"
+                        @click="shareCurrentReport"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            class="me-2"
+                            aria-hidden="true"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07L10 5" />
+                            <path d="M14 11a5 5 0 0 0-7.07 0l-3.54 3.54a5 5 0 1 0 7.07 7.07L14 19" />
+                        </svg>
+                        {{ shareSubmitting ? 'Preparando URL...' : 'Copiar URL del informe' }}
+                    </button>
+                    <span
+                        v-if="shareMessage"
+                        class="small mt-1 text-lg-end"
+                        :class="shareMessageClass"
+                    >
+                        {{ shareMessage }}
+                    </span>
+                </div>
+            </div>
+        </section>
 
         <!-- Contenido -->
         <main class="flex-fill">
             <slot />
         </main>
-
-        <section class="bg-white border-top">
-            <div class="container py-4 text-center">
-                <button
-                    type="button"
-                    class="btn btn-link text-decoration-none text-primary fw-semibold fs-5"
-                    @click="openFeedbackModal"
-                >
-                    ¿Tienes algún problema? <span class="fs-4">🤔</span>
-                </button>
-                <p class="small text-muted mb-0">
-                    Déjanos tus dudas, quejas o solicitudes y te respondemos directamente por correo.
-                </p>
-            </div>
-        </section>
-
         <!-- Footer -->
         <footer class="border-top bg-white mt-4">
             <div class="container py-3 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 small text-muted">
@@ -352,6 +649,15 @@ const submitFeedback = async () => {
     margin: 0 15px;
 }
 
+.navbar {
+    position: relative;
+    z-index: 1040;
+}
+
+.navbar .dropdown-menu {
+    z-index: 1050;
+}
+
 .nav-link:hover,
 .dropdown-item:hover {
     color: #0dcaf0 !important;
@@ -441,6 +747,21 @@ const submitFeedback = async () => {
 .feedback-btn {
     border-radius: 999px;
     padding: 0.35rem 1rem;
+}
+
+.share-report-banner {
+    position: sticky;
+    top: 0;
+    z-index: 1010;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.share-report-btn {
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 0.45rem 1rem;
+    display: inline-flex;
+    align-items: center;
 }
 
 .feedback-modal-backdrop {

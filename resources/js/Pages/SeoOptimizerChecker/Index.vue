@@ -161,7 +161,13 @@ onBeforeUnmount(() => {
                                         placeholder="https://tusitio.com"
                                         :disabled="loading"
                                     />
-                                    <button class="btn btn-primary btn-lg" type="button" :disabled="loading" @click="analyzeUrl">
+                                    <button
+                                        class="btn btn-primary btn-lg"
+                                        type="button"
+                                        :disabled="loading"
+                                        data-share-auto-run="true"
+                                        @click="analyzeUrl"
+                                    >
                                         <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                         {{ loading ? 'Analizando...' : 'Analizar SEO' }}
                                     </button>
