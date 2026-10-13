@@ -1,8 +1,9 @@
 <a href="https://toolsbox.codwelt.com">
-  <img src=".github/assets/banner.svg" alt="Toolbox Codwelt — Herramientas digitales gratuitas" width="100%">
+  <img src=".github/assets/banner.svg" alt="Toolsbox Codwelt — Herramientas digitales gratuitas" width="100%">
 </a>
 
 <p align="center">
+  <a href="https://codwelt.com/toolsbox-herramientas-digitales-gratis/"><img src="https://img.shields.io/badge/conoce%20el%20proyecto-landing-fbbf24?style=for-the-badge" alt="Landing del proyecto"></a>
   <a href="https://toolsbox.codwelt.com"><img src="https://img.shields.io/badge/demo-toolsbox.codwelt.com-0e7c86?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Demo"></a>
   <a href="https://codwelt.com/"><img src="https://img.shields.io/badge/hecho%20por-codwelt.com-f97316?style=for-the-badge" alt="Codwelt"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/licencia-MIT-062a33?style=for-the-badge" alt="Licencia MIT"></a>
@@ -19,7 +20,7 @@
 </p>
 
 <p align="center">
-  <a href="#-qué-es-toolbox"><b>Qué es</b></a> ·
+  <a href="#-qué-es-toolsbox"><b>Qué es</b></a> ·
   <a href="#-herramientas-disponibles"><b>Herramientas</b></a> ·
   <a href="#-instalación-local"><b>Instalación</b></a> ·
   <a href="#-cómo-funciona-por-dentro"><b>Arquitectura</b></a> ·
@@ -29,15 +30,17 @@
 
 <br>
 
-## 🚀 ¿Qué es Toolbox?
+## 🚀 ¿Qué es Toolsbox?
 
-<img src="public/toolsbox.png" alt="Mascota de Toolbox" width="170" align="right">
+<img src="public/toolsbox.png" alt="Mascota de Toolsbox" width="170" align="right">
 
-**Toolbox** es una iniciativa de **[Codwelt](https://codwelt.com/)** para reunir en un solo lugar **todas las herramientas que una agencia de publicidad, una agencia de desarrollo o cualquier profesional digital necesita en su día a día**: optimizar imágenes, formatear código, analizar SEO, generar códigos QR, crear paletas de colores y mucho más.
+**Toolsbox** es una iniciativa de **[Codwelt](https://codwelt.com/)** para reunir en un solo lugar **todas las herramientas que una agencia de publicidad, una agencia de desarrollo o cualquier profesional digital necesita en su día a día**: optimizar imágenes, formatear código, analizar SEO, generar códigos QR, crear paletas de colores y mucho más.
 
 La idea es que **toda la comunidad de desarrolladores** pueda sumar sus propias herramientas, mejorar las existentes y mantener este proyecto vivo. Si alguna vez programaste un script útil para tu trabajo, **¡este es el lugar para compartirlo!**
 
 > [!NOTE]
+> Conoce más del proyecto en su landing: **[https://codwelt.com/toolsbox-herramientas-digitales-gratis/](https://codwelt.com/toolsbox-herramientas-digitales-gratis/)**
+>
 > Este proyecto es desarrollado y mantenido por **[Codwelt — https://codwelt.com/](https://codwelt.com/)**, con el aporte de la comunidad.
 
 <br clear="right">
@@ -120,7 +123,7 @@ La idea es que **toda la comunidad de desarrolladores** pueda sumar sus propias 
 |:-:|---|---|
 | 🐘 | **PHP 8.2+** | Con la extensión **Imagick** (quitar fondo y favicons) |
 | 🎼 | **Composer** | [getcomposer.org](https://getcomposer.org) |
-| 🟢 | **Node.js 20+** y npm | Para compilar el frontend con Vite |
+| 🟢 | **Node.js 20.19+ o 22.12+** y npm | Para compilar el frontend con Vite |
 | 🌱 | **Git** | Para clonar y contribuir |
 
 ### En 3 comandos
@@ -248,7 +251,7 @@ Dentro de la categoría que corresponda:
     'route' => 'tools.svg-to-png',
     'slug' => 'convertir-svg-a-png-online',
     'path' => '/convertir-svg-a-png-online',
-    'title' => 'Convertir SVG a PNG online gratis | Toolbox Codwelt',
+    'title' => 'Convertir SVG a PNG online gratis | Toolsbox Codwelt',
     'description' => 'Convierte tus archivos SVG a PNG en segundos, directamente en tu navegador.',
     'h1' => '🖼️ Convertir SVG a PNG online',
     'keywords' => ['svg a png', 'convertir svg', 'svg to png'],
@@ -335,7 +338,7 @@ Distribuido bajo la licencia [MIT](https://opensource.org/licenses/MIT).
 <br>
 
 <p align="center">
-  <a href="https://codwelt.com/"><img src="public/toolsbox.png" alt="Toolbox" width="90"></a>
+  <a href="https://codwelt.com/"><img src="public/toolsbox.png" alt="Toolsbox" width="90"></a>
 </p>
 
 <p align="center">

@@ -565,7 +565,7 @@ onBeforeUnmount(() => {
                             <a href="/redimensionar-imagenes-online-gratis" class="link-primary">redimensionar imágenes</a>
                             y
                             <a href="/quitar-fondo-imagen-gratis" class="link-primary">quitar fondos de imágenes</a>
-                            para optimizar todo tu contenido visual en Toolbox Codwelt.
+                            para optimizar todo tu contenido visual en Toolsbox Codwelt.
                         </p>
                     </section>
                 </div>

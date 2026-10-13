@@ -423,7 +423,7 @@ onBeforeUnmount(() => {
                     <section aria-label="otras-herramientas">
                         <p class="small text-muted">
                             Complementa tus favicons con otras herramientas gratuitas de
-                            Toolbox Codwelt, como
+                            Toolsbox Codwelt, como
                             <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                 comprimir imágenes online
                             </a>,

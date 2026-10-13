@@ -309,7 +309,7 @@ onBeforeUnmount(() => {
                         <div class="col-12">
                             <section aria-label="otras-herramientas">
                                 <p class="small text-muted">
-                                    En Toolbox Codwelt también encuentras herramientas gratuitas
+                                    En Toolsbox Codwelt también encuentras herramientas gratuitas
                                     para generar enlaces de WhatsApp, comprimir imágenes y gestionar
                                     emojis, para centralizar toda la operación digital de tu marca.
                                 </p>

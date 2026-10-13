@@ -9,8 +9,8 @@ return [
                     'route' => 'tools.image-compressor',
                     'slug' => 'comprimir-imagenes-online-gratis',
                     'path' => '/comprimir-imagenes-online-gratis',
-                    'title' => 'Comprimir imágenes online gratis sin perder calidad | Toolbox Codwelt',
-                    'description' => 'Reduce el peso de tus imágenes JPG, PNG y WebP sin perder calidad visible. Comprime varias imágenes online gratis con Toolbox de Codwelt.',
+                    'title' => 'Comprimir imágenes online gratis sin perder calidad | Toolsbox Codwelt',
+                    'description' => 'Reduce el peso de tus imágenes JPG, PNG y WebP sin perder calidad visible. Comprime varias imágenes online gratis con Toolsbox de Codwelt.',
                     'h1' => '🗜️ Comprimir imágenes online gratis',
                     'keywords' => [
                         'comprimir imágenes online',
@@ -35,7 +35,7 @@ return [
                     'route' => 'tools.background-remover',
                     'slug' => 'quitar-fondo-imagen-gratis',
                     'path' => '/quitar-fondo-imagen-gratis',
-                    'title' => 'Quitar fondo de imágenes online gratis | Toolbox Codwelt',
+                    'title' => 'Quitar fondo de imágenes online gratis | Toolsbox Codwelt',
                     'description' => 'Elimina el fondo de tus imágenes automáticamente con inteligencia artificial. Descarga tu imagen en PNG transparente en distintos tamaños, lista para usar en tu web o redes sociales.',
                     'h1' => '✂️ Quitar fondo de imágenes online',
                     'keywords' => [
@@ -66,7 +66,7 @@ return [
                     'route' => 'tools.image-resizer',
                     'slug' => 'redimensionar-imagenes-online-gratis',
                     'path' => '/redimensionar-imagenes-online-gratis',
-                    'title' => 'Redimensionar imágenes online gratis | Toolbox Codwelt',
+                    'title' => 'Redimensionar imágenes online gratis | Toolsbox Codwelt',
                     'description' => 'Cambia el tamaño de tus imágenes online en píxeles o proporción, manteniendo la calidad y el formato. Ideal para redes sociales, páginas web y tiendas virtuales.',
                     'h1' => '📐 Redimensionar imágenes online gratis',
                     'keywords' => [
@@ -97,7 +97,7 @@ return [
                     'route' => 'tools.webp-to-png',
                     'slug' => 'convertidor-imagenes-universal',
                     'path' => '/convertidor-imagenes-universal',
-                    'title' => 'Convertir imágenes a cualquier formato online gratis | Toolbox Codwelt',
+                    'title' => 'Convertir imágenes a cualquier formato online gratis | Toolsbox Codwelt',
                     'description' => 'Convierte imágenes entre formatos (PNG, JPG, WEBP, GIF, BMP o TIFF) de forma rápida y gratuita. Sube tu archivo o pega una URL y descarga el resultado optimizado.',
                     'h1' => '🔄 Convertir imágenes a cualquier formato online',
                     'keywords' => [
@@ -128,7 +128,7 @@ return [
                     'route' => 'tools.watermark',
                     'slug' => 'poner-marca-de-agua-imagen-gratis',
                     'path' => '/poner-marca-de-agua-imagen-gratis',
-                    'title' => 'Poner marca de agua a imágenes online gratis | Toolbox Codwelt',
+                    'title' => 'Poner marca de agua a imágenes online gratis | Toolsbox Codwelt',
                     'description' => 'Agrega marcas de agua a tus imágenes online de forma fácil y gratuita. Sube tu imagen y tu logo, elige la posición, la opacidad y el tamaño de la marca de agua, y descarga el resultado listo para usar.',
                     'h1' => '💧 Poner marca de agua a imágenes online',
                     'keywords' => [
@@ -159,7 +159,7 @@ return [
                     'route' => 'tools.qr-generator',
                     'slug' => 'generador-codigo-qr-online',
                     'path' => '/generador-codigo-qr-online',
-                    'title' => 'Generador de código QR online gratis | Toolbox Codwelt',
+                    'title' => 'Generador de código QR online gratis | Toolsbox Codwelt',
                     'description' => 'Crea códigos QR personalizados con colores, degradados, logo, fondo y marcos. Genera QR para enlaces, texto, correo, ubicación, teléfono, SMS, WhatsApp, Zoom, WiFi, vCard y eventos.',
                     'h1' => '📱 Generador de código QR online',
                     'keywords' => [
@@ -192,7 +192,7 @@ return [
                     'route' => 'tools.barcode-generator',
                     'slug' => 'generador-codigo-barras-online',
                     'path' => '/generador-codigo-barras-online',
-                    'title' => 'Generador de códigos de barras online gratis | Toolbox Codwelt',
+                    'title' => 'Generador de códigos de barras online gratis | Toolsbox Codwelt',
                     'description' => 'Crea códigos de barras personalizados (Code 39) con colores, fondo y tamaño ajustable. Genera, copia o descarga tu código en PNG.',
                     'h1' => '🏷️ Generador de códigos de barras',
                     'keywords' => [
@@ -223,7 +223,7 @@ return [
                     'route' => 'tools.favicons',
                     'slug' => 'generador-favicons-online',
                     'path' => '/generador-favicons-online',
-                    'title' => 'Generador de favicons online gratis | Toolbox Codwelt',
+                    'title' => 'Generador de favicons online gratis | Toolsbox Codwelt',
                     'description' => 'Sube una imagen y genera automáticamente tu favicon.ico, iconos PNG en distintos tamaños y el código HTML necesario para integrarlos en tu sitio web.',
                     'h1' => '⭐ Generador de favicons online',
                     'keywords' => [
@@ -258,7 +258,7 @@ return [
                     'route' => 'tools.color-palette',
                     'slug' => 'paleta-de-colores-online',
                     'path' => '/paleta-de-colores-online',
-                    'title' => 'Convertidor y paleta de colores online gratis | Toolbox Codwelt',
+                    'title' => 'Convertidor y paleta de colores online gratis | Toolsbox Codwelt',
                     'description' => 'Escribe o pega un color en hexadecimal y recibe sus equivalencias RGB, HSL, HSV, CMYK y más, junto a tonos complementarios para tu paleta digital.',
                     'h1' => '🎨 Convertidor y paleta tonal de colores',
                     'keywords' => [
@@ -293,7 +293,7 @@ return [
                     'route' => 'tools.html-to-text',
                     'slug' => 'convertir-html-a-texto',
                     'path' => '/convertir-html-a-texto',
-                    'title' => 'Convertir HTML a texto plano online gratis | Toolbox Codwelt',
+                    'title' => 'Convertir HTML a texto plano online gratis | Toolsbox Codwelt',
                     'description' => 'Pega código HTML y obtén un texto plano limpio sin etiquetas, ideal para correos, notas rápidas o migrar contenido a editores simples.',
                     'h1' => '📝 Convertir HTML a texto plano online',
                     'keywords' => [
@@ -323,7 +323,7 @@ return [
                     'route' => 'tools.base64-encoder',
                     'slug' => 'codificar-base64-online',
                     'path' => '/codificar-base64-online',
-                    'title' => 'Codificar Base64 online gratis | Toolbox Codwelt',
+                    'title' => 'Codificar Base64 online gratis | Toolsbox Codwelt',
                     'description' => 'Convierte texto plano a Base64 sin salir del navegador. Ideal para preparar datos seguros para APIs, URL o credenciales.',
                     'h1' => '🧩 Codificar Base64 online',
                     'keywords' => [
@@ -353,7 +353,7 @@ return [
                     'route' => 'tools.base64-decoder',
                     'slug' => 'decodificar-base64-online',
                     'path' => '/decodificar-base64-online',
-                    'title' => 'Decodificar Base64 online gratis | Toolbox Codwelt',
+                    'title' => 'Decodificar Base64 online gratis | Toolsbox Codwelt',
                     'description' => 'Convierte texto Base64 en texto plano sin salir del navegador. Ideal para revisar respuestas codificadas o recuperar credenciales.',
                     'h1' => '🧩 Decodificar Base64 online',
                     'keywords' => [
@@ -382,7 +382,7 @@ return [
                     'route' => 'tools.image-to-base64',
                     'slug' => 'convertir-imagen-base64-online',
                     'path' => '/convertir-imagen-base64-online',
-                    'title' => 'Convertir imagen a Base64 gratis | Toolbox Codwelt',
+                    'title' => 'Convertir imagen a Base64 gratis | Toolsbox Codwelt',
                     'description' => 'Convierte imágenes a Base64 directamente en tu navegador para incrustarlas en CSS, JSON o envíos web.',
                     'h1' => '🖼️ Imagen a Base64 online',
                     'keywords' => [
@@ -412,7 +412,7 @@ return [
                     'route' => 'tools.html-formatter',
                     'slug' => 'formatear-html-online',
                     'path' => '/formatear-html-online',
-                    'title' => 'Formatear y validar HTML online gratis | Toolbox Codwelt',
+                    'title' => 'Formatear y validar HTML online gratis | Toolsbox Codwelt',
                     'description' => 'Pega tu HTML, detecta errores comunes y obtén una versión limpia y ordenada lista para copiar o descargar.',
                     'h1' => '📄 Formatear y validar HTML online',
                     'keywords' => [
@@ -442,7 +442,7 @@ return [
                     'route' => 'tools.css-formatter',
                     'slug' => 'formatear-css-online',
                     'path' => '/formatear-css-online',
-                    'title' => 'Formatear y validar CSS online gratis | Toolbox Codwelt',
+                    'title' => 'Formatear y validar CSS online gratis | Toolsbox Codwelt',
                     'description' => 'Pega tu CSS, detecta reglas con errores y obtén una versión formateada lista para copiar o descargar.',
                     'h1' => '🎨 Formatear y validar CSS online',
                     'keywords' => [
@@ -472,7 +472,7 @@ return [
                     'route' => 'tools.xml-formatter',
                     'slug' => 'formatear-xml-online',
                     'path' => '/formatear-xml-online',
-                    'title' => 'Formatear y validar XML online gratis | Toolbox Codwelt',
+                    'title' => 'Formatear y validar XML online gratis | Toolsbox Codwelt',
                     'description' => 'Pega tu XML, detecta errores de estructura y obtén una versión formateada lista para copiar o descargar.',
                     'h1' => '🧾 Formatear y validar XML online',
                     'keywords' => [
@@ -502,7 +502,7 @@ return [
                     'route' => 'tools.json-formatter',
                     'slug' => 'formatear-json-online',
                     'path' => '/formatear-json-online',
-                    'title' => 'Formatear y validar JSON online gratis | Toolbox Codwelt',
+                    'title' => 'Formatear y validar JSON online gratis | Toolsbox Codwelt',
                     'description' => 'Pega tu JSON, detecta errores de sintaxis y obtén una versión formateada lista para copiar o descargar.',
                     'h1' => '🧩 Formatear y validar JSON online',
                     'keywords' => [
@@ -532,7 +532,7 @@ return [
                     'route' => 'tools.javascript-formatter',
                     'slug' => 'formatear-javascript-online',
                     'path' => '/formatear-javascript-online',
-                    'title' => 'Formatear y validar JavaScript online gratis | Toolbox Codwelt',
+                    'title' => 'Formatear y validar JavaScript online gratis | Toolsbox Codwelt',
                     'description' => 'Pega tu JavaScript, detecta errores de sintaxis y obtén una versión formateada lista para copiar o descargar.',
                     'h1' => '💻 Formatear y validar JavaScript online',
                     'keywords' => [
@@ -562,7 +562,7 @@ return [
                     'route' => 'tools.json-to-array',
                     'slug' => 'convertir-json-a-array',
                     'path' => '/convertir-json-a-array',
-                    'title' => 'Convertir JSON a array online gratis | Toolbox Codwelt',
+                    'title' => 'Convertir JSON a array online gratis | Toolsbox Codwelt',
                     'description' => 'Pega tu JSON, valida errores y obtén el array listo para copiar o descargar junto al JSON corregido.',
                     'h1' => '🗂️ Convertir JSON a array online',
                     'keywords' => [
@@ -592,7 +592,7 @@ return [
                     'route' => 'tools.ai-website-detector',
                     'slug' => 'detector-pagina-web-ia',
                     'path' => '/detector-pagina-web-ia',
-                    'title' => 'Detector de páginas web creadas con IA online gratis | Toolbox Codwelt',
+                    'title' => 'Detector de páginas web creadas con IA online gratis | Toolsbox Codwelt',
                     'description' => 'Ingresa una URL y detecta señales de que el sitio fue generado con IA: tecnologías usadas, metaetiquetas y patrones de texto. Resultado estimado sin enviar datos a servidores.',
                     'h1' => '🤖 Detector de páginas web hechas con IA',
                     'keywords' => [
@@ -627,7 +627,7 @@ return [
                     'route' => 'tools.seo-optimizer-checker',
                     'slug' => 'analizador-seo-url',
                     'path' => '/analizador-seo-url',
-                    'title' => 'Analizador SEO de páginas web online gratis | Toolbox Codwelt',
+                    'title' => 'Analizador SEO de páginas web online gratis | Toolsbox Codwelt',
                     'description' => 'Pega una URL y obtén un porcentaje de optimización SEO: títulos, meta descripciones, encabezados, imágenes con alt, links internos y canónico.',
                     'h1' => '📈 Analizador SEO rápido por URL',
                     'keywords' => [
@@ -657,7 +657,7 @@ return [
                     'route' => 'tools.seo-heading-structure',
                     'slug' => 'analizador-estructura-titulos',
                     'path' => '/analizador-estructura-titulos',
-                    'title' => 'Analizador de estructura de títulos SEO por URL | Toolbox Codwelt',
+                    'title' => 'Analizador de estructura de títulos SEO por URL | Toolsbox Codwelt',
                     'description' => 'Analiza los encabezados H1-H6 de una URL, valida la jerarquía y recibe consejos claros para mejorar la estructura de títulos.',
                     'h1' => '🧭 Analizador de estructura de títulos SEO',
                     'keywords' => [
@@ -692,7 +692,7 @@ return [
                     'route' => 'tools.ip-info',
                     'slug' => 'cual-es-mi-ip-publica',
                     'path' => '/cual-es-mi-ip-publica',
-                    'title' => 'Cuál es mi IP pública y datos relacionados | Toolbox Codwelt',
+                    'title' => 'Cuál es mi IP pública y datos relacionados | Toolsbox Codwelt',
                     'description' => 'Consulta tu IP pública, verifica si es IPv4 o IPv6, si es privada/reservada y revisa las cabeceras básicas de la petición.',
                     'h1' => '🌐 Mi IP pública y detalles básicos',
                     'keywords' => [
@@ -722,7 +722,7 @@ return [
                     'route' => 'tools.whatsapp-link-generator',
                     'slug' => 'generador-links-whatsapp',
                     'path' => '/generador-links-whatsapp',
-                    'title' => 'Generador de links de WhatsApp para páginas web | Toolbox Codwelt',
+                    'title' => 'Generador de links de WhatsApp para páginas web | Toolsbox Codwelt',
                     'description' => 'Crea enlaces de WhatsApp personalizados para tu página web con mensaje predefinido, formato de texto, emojis y plantillas rápidas para ventas, soporte y consultas.',
                     'h1' => '💬 Generador de links de WhatsApp para tu página web',
                     'keywords' => [
@@ -752,7 +752,7 @@ return [
                     'route' => 'tools.emoji-library',
                     'slug' => 'biblioteca-emojis',
                     'path' => '/biblioteca-emojis',
-                    'title' => 'Biblioteca de emojis estilo WhatsApp con buscador | Toolbox Codwelt',
+                    'title' => 'Biblioteca de emojis estilo WhatsApp con buscador | Toolsbox Codwelt',
                     'description' => 'Explora y copia emojis organizados por categorías al estilo WhatsApp. Filtra por tipo de emoji, búscalos por nombre o palabra clave y cópialos con un solo clic para usar en tus mensajes y páginas web.',
                     'h1' => '😃 Biblioteca de emojis estilo WhatsApp',
                     'keywords' => [
@@ -782,7 +782,7 @@ return [
                     'route' => 'tools.country-library',
                     'slug' => 'biblioteca-paises-mundo',
                     'path' => '/biblioteca-paises-mundo',
-                    'title' => 'Biblioteca de países del mundo: códigos, indicativos y banderas | Toolbox Codwelt',
+                    'title' => 'Biblioteca de países del mundo: códigos, indicativos y banderas | Toolsbox Codwelt',
                     'h1' => '🌎 Biblioteca de países del mundo',
                     'description' => 'Consulta países del mundo con su código ISO, indicativo telefónico, bandera y moneda. Ideal para formularios, integraciones de WhatsApp y herramientas digitales.',
                     'keywords' => [
@@ -796,7 +796,7 @@ return [
                     'canonical' => 'https://toolsbox.codwelt.com/biblioteca-paises-mundo',
                     'faq' => [
                         [
-                            'question' => '¿Para qué sirve la biblioteca de países de Toolbox Codwelt?',
+                            'question' => '¿Para qué sirve la biblioteca de países de Toolsbox Codwelt?',
                             'answer' => 'Te permite consultar de forma rápida el indicativo telefónico, código ISO, bandera y moneda de cada país del mundo para usarlos en formularios, integraciones o automatizaciones.',
                         ],
                         [
@@ -818,7 +818,7 @@ return [
                     'route' => 'tools.word-counter',
                     'slug' => 'contador-palabras-caracteres-online',
                     'path' => '/contador-palabras-caracteres-online',
-                    'title' => 'Herramienta gratuita de contador de palabras y caracteres | Toolbox Codwelt',
+                    'title' => 'Herramienta gratuita de contador de palabras y caracteres | Toolsbox Codwelt',
                     'description' => 'Cuenta palabras, caracteres, espacios, oraciones y párrafos en tiempo real. Calcula el tiempo de lectura promedio de tu texto y obtén métricas útiles para SEO, blogs y redes sociales.',
                     'h1' => '📝 Herramienta gratuita de contador de palabras',
                     'keywords' => [
@@ -849,7 +849,7 @@ return [
                     'route' => 'tools.lorem-generator',
                     'slug' => 'generador-texto-lorem-ipsum',
                     'path' => '/generador-texto-lorem-ipsum',
-                    'title' => 'Generador de texto Lorem Ipsum en español | Toolbox Codwelt',
+                    'title' => 'Generador de texto Lorem Ipsum en español | Toolsbox Codwelt',
                     'description' => 'Crea texto de prueba en segundos: títulos, párrafos, listas, por número de palabras, párrafos o bytes. Copia y descarga fácilmente tu Lorem Ipsum.',
                     'h1' => '✍️ Generador de texto Lorem Ipsum',
                     'keywords' => [
@@ -879,7 +879,7 @@ return [
                     'route' => 'tools.text-analyzer',
                     'slug' => 'analizador-texto-ia',
                     'path' => '/analizador-texto-ia',
-                    'title' => 'Analizador de texto: detección IA y mejoras de redacción | Toolbox Codwelt',
+                    'title' => 'Analizador de texto: detección IA y mejoras de redacción | Toolsbox Codwelt',
                     'description' => 'Analiza tu texto y muestra un estimado de similitud con escritura de IA, métricas de claridad y sugerencias para mejorar la redacción.',
                     'h1' => '🧠 Analizador de texto con detección IA',
                     'keywords' => [
@@ -909,7 +909,7 @@ return [
                     'route' => 'tools.orthography-checker',
                     'slug' => 'corrector-ortografico-web',
                     'path' => '/corrector-ortografico-web',
-                    'title' => 'Corrector ortográfico para páginas web y textos | Toolbox Codwelt',
+                    'title' => 'Corrector ortográfico para páginas web y textos | Toolsbox Codwelt',
                     'description' => 'Analiza la ortografía de páginas completas o fragmentos de texto, resalta errores y sugiere correcciones sin salir del navegador.',
                     'h1' => '📘 Corrector ortográfico de páginas web',
                     'keywords' => [

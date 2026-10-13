@@ -103,7 +103,7 @@ class FaviconsApiController extends Controller
             $zipUrl         = $disk->url($zipRelative);
 
             $html = <<<HTML
-<!-- Favicons generados con Toolbox Codwelt -->
+<!-- Favicons generados con Toolsbox Codwelt -->
 <link rel="icon" type="image/x-icon" href="{$faviconBaseUrl}/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="{$faviconBaseUrl}/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="{$faviconBaseUrl}/favicon-32x32.png">

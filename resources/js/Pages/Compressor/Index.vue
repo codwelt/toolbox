@@ -708,7 +708,7 @@ onBeforeUnmount(() => {
                     <div class="col-lg-8 mx-auto">
                         <section aria-labelledby="how-it-works">
                             <h2 id="how-it-works" class="h4 fw-bold mb-3">
-                                ¿Cómo funciona el compresor de imágenes de Toolbox Codwelt?
+                                ¿Cómo funciona el compresor de imágenes de Toolsbox Codwelt?
                             </h2>
                             <p class="text-muted small mb-2">
                                 La compresión se realiza directamente en tu navegador utilizando
@@ -757,7 +757,7 @@ onBeforeUnmount(() => {
                     <div class="col-lg-8 mx-auto">
                         <section aria-label="otras-herramientas">
                             <p class="small text-muted">
-                                Próximamente encontrarás en Toolbox Codwelt otras herramientas
+                                Próximamente encontrarás en Toolsbox Codwelt otras herramientas
                                 gratuitas como
                                 <a href="/redimensionar-imagenes-online-gratis" class="link-primary">
                                     redimensionar imágenes online

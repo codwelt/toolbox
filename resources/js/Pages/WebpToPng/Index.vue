@@ -27,7 +27,7 @@ const displayDescription = computed(() =>
 );
 const displayHeadTitle = computed(() =>
     seoData.value.title?.toLowerCase().includes('webp') && seoData.value.title?.toLowerCase().includes('png')
-        ? 'Convertir imágenes a cualquier formato online gratis | Toolbox Codwelt'
+        ? 'Convertir imágenes a cualquier formato online gratis | Toolsbox Codwelt'
         : seoData.value.title
 );
 const pageTitle = computed(() => displayHeadTitle.value || seoData.value.title);
@@ -520,7 +520,7 @@ onBeforeUnmount(() => {
                 <div class="col-lg-10 mx-auto">
                     <section aria-labelledby="how-it-works">
                         <h2 id="how-it-works" class="h4 fw-bold mb-3">
-                            ¿Cómo funciona el conversor de imágenes de Toolbox Codwelt?
+                            ¿Cómo funciona el conversor de imágenes de Toolsbox Codwelt?
                         </h2>
                         <p class="text-muted small mb-2">
                             La herramienta recibe tus imágenes (subidas en bloque o desde una URL), las procesa en el
@@ -570,7 +570,7 @@ onBeforeUnmount(() => {
                 <div class="col-lg-10 mx-auto">
                     <section aria-label="otras-herramientas">
                         <p class="small text-muted">
-                            Explora otras herramientas gratuitas de Toolbox Codwelt como
+                            Explora otras herramientas gratuitas de Toolsbox Codwelt como
                             <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                 comprimir imágenes online
                             </a>,

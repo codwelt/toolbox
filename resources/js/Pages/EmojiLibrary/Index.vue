@@ -390,7 +390,7 @@ onBeforeUnmount(() => {
                         <div class="col-12">
                             <section aria-label="otras-herramientas">
                                 <p class="small text-muted">
-                                    En Toolbox Codwelt también encuentras herramientas gratuitas para
+                                    En Toolsbox Codwelt también encuentras herramientas gratuitas para
                                     <a href="/generador-links-whatsapp" class="link-primary">
                                         generar enlaces de WhatsApp
                                     </a>,

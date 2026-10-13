@@ -49,7 +49,7 @@ class HomeController extends Controller
             ->values();
 
         $seo = [
-            'title' => 'Toolbox Codwelt | Herramientas online gratuitas para imágenes y recursos digitales',
+            'title' => 'Toolsbox Codwelt | Herramientas online gratuitas para imágenes y recursos digitales',
             'description' => 'Suite de herramientas online gratuitas de Codwelt para comprimir imágenes, redimensionar, quitar fondo, convertir formatos, poner marcas de agua y más.',
             'canonical' => url('/'),
         ];

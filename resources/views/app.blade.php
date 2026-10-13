@@ -8,7 +8,7 @@
         $toolsCategories = config('tools.categories', []);
         $currentPath = '/' . trim(request()->path(), '/');
         $defaultSeo = [
-            'title' => 'Toolbox Codwelt | Herramientas online gratuitas para imágenes y recursos digitales',
+            'title' => 'Toolsbox Codwelt | Herramientas online gratuitas para imágenes y recursos digitales',
             'description' => 'Suite de herramientas online gratuitas de Codwelt para comprimir imágenes, redimensionar, quitar fondo, convertir formatos, poner marcas de agua y más.',
             'canonical' => url()->current(),
         ];
@@ -31,7 +31,7 @@
         $ogImage = asset('toolsbox.png');
     @endphp
 
-    <!-- Favicons generados con Toolbox Codwelt -->
+    <!-- Favicons generados con Toolsbox Codwelt -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

@@ -76,7 +76,7 @@ class OrthographyCheckerService
     {
         $headers = [
             'Accept' => 'text/html,application/xhtml+xml',
-            'User-Agent' => 'Toolbox-OrthographyChecker/1.0',
+            'User-Agent' => 'Toolsbox-OrthographyChecker/1.0',
         ];
 
         try {
@@ -147,7 +147,7 @@ class OrthographyCheckerService
 
         $response = Http::asForm()
             ->timeout(15)
-            ->withHeaders(['User-Agent' => 'Toolbox-OrthographyChecker/1.0'])
+            ->withHeaders(['User-Agent' => 'Toolsbox-OrthographyChecker/1.0'])
             ->post('https://api.languagetool.org/v2/check', $payload);
 
         if (!$response->successful()) {

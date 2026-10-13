@@ -531,7 +531,7 @@ onBeforeUnmount(() => {
                 <div class="col-lg-10 mx-auto">
                     <section aria-label="otras-herramientas">
                         <p class="small text-muted">
-                            También puedes probar otras herramientas gratuitas de Toolbox Codwelt,
+                            También puedes probar otras herramientas gratuitas de Toolsbox Codwelt,
                             como
                             <a href="/comprimir-imagenes-online-gratis" class="link-primary">
                                 comprimir imágenes online
